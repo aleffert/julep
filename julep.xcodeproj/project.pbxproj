@@ -1,0 +1,291 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		77225DFE1401AFA80003ECDE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77225DFD1401AFA80003ECDE /* UIKit.framework */; };
+		77225E001401AFA80003ECDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77225DFF1401AFA80003ECDE /* Foundation.framework */; };
+		77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77225E041401AFA80003ECDE /* InfoPlist.strings */; };
+		77225E081401AFA80003ECDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E071401AFA80003ECDE /* main.m */; };
+		77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */; };
+		77225E0F1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */; };
+		77225E121401AFA80003ECDE /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */; };
+		77225E151401AFA80003ECDE /* ADLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E141401AFA80003ECDE /* ADLViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		77225DF91401AFA80003ECDE /* julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		77225DFD1401AFA80003ECDE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		77225DFF1401AFA80003ECDE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		77225E031401AFA80003ECDE /* julep-Info.plist */ = {isa = PBXFileReference; path = "julep-Info.plist"; sourceTree = "<group>"; };
+		77225E051401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		77225E071401AFA80003ECDE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		77225E091401AFA80003ECDE /* julep-Prefix.pch */ = {isa = PBXFileReference; path = "julep-Prefix.pch"; sourceTree = "<group>"; };
+		77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */ = {isa = PBXFileReference; path = ADLAppDelegate.h; sourceTree = "<group>"; };
+		77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
+		77225E0E1401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
+		77225E111401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
+		77225E131401AFA80003ECDE /* ADLViewController.h */ = {isa = PBXFileReference; path = ADLViewController.h; sourceTree = "<group>"; };
+		77225E141401AFA80003ECDE /* ADLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		77225DF61401AFA80003ECDE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77225DFE1401AFA80003ECDE /* UIKit.framework in Frameworks */,
+				77225E001401AFA80003ECDE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		77225DEE1401AFA80003ECDE = {
+			isa = PBXGroup;
+			children = (
+				77225E011401AFA80003ECDE /* julep */,
+				77225DFC1401AFA80003ECDE /* Frameworks */,
+				77225DFA1401AFA80003ECDE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		77225DFA1401AFA80003ECDE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				77225DF91401AFA80003ECDE /* julep.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		77225DFC1401AFA80003ECDE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				77225DFD1401AFA80003ECDE /* UIKit.framework */,
+				77225DFF1401AFA80003ECDE /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		77225E011401AFA80003ECDE /* julep */ = {
+			isa = PBXGroup;
+			children = (
+				77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */,
+				77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */,
+				77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */,
+				77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */,
+				77225E131401AFA80003ECDE /* ADLViewController.h */,
+				77225E141401AFA80003ECDE /* ADLViewController.m */,
+				77225E021401AFA80003ECDE /* Supporting Files */,
+			);
+			path = julep;
+			sourceTree = "<group>";
+		};
+		77225E021401AFA80003ECDE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				77225E031401AFA80003ECDE /* julep-Info.plist */,
+				77225E041401AFA80003ECDE /* InfoPlist.strings */,
+				77225E071401AFA80003ECDE /* main.m */,
+				77225E091401AFA80003ECDE /* julep-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		77225DF81401AFA80003ECDE /* julep */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77225E181401AFA80003ECDE /* Build configuration list for PBXNativeTarget "julep" */;
+			buildPhases = (
+				77225DF51401AFA80003ECDE /* Sources */,
+				77225DF61401AFA80003ECDE /* Frameworks */,
+				77225DF71401AFA80003ECDE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = julep;
+			productName = julep;
+			productReference = 77225DF91401AFA80003ECDE /* julep.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		77225DF01401AFA80003ECDE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
+			buildConfigurationList = 77225DF31401AFA80003ECDE /* Build configuration list for PBXProject "julep" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 77225DEE1401AFA80003ECDE;
+			productRefGroup = 77225DFA1401AFA80003ECDE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				77225DF81401AFA80003ECDE /* julep */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		77225DF71401AFA80003ECDE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */,
+				77225E0F1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard in Resources */,
+				77225E121401AFA80003ECDE /* MainStoryboard_iPad.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		77225DF51401AFA80003ECDE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77225E081401AFA80003ECDE /* main.m in Sources */,
+				77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */,
+				77225E151401AFA80003ECDE /* ADLViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		77225E041401AFA80003ECDE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				77225E051401AFA80003ECDE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				77225E0E1401AFA80003ECDE /* en */,
+			);
+			name = MainStoryboard_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				77225E111401AFA80003ECDE /* en */,
+			);
+			name = MainStoryboard_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		77225E161401AFA80003ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		77225E171401AFA80003ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		77225E191401AFA80003ECDE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
+				INFOPLIST_FILE = "julep/julep-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		77225E1A1401AFA80003ECDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
+				INFOPLIST_FILE = "julep/julep-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		77225DF31401AFA80003ECDE /* Build configuration list for PBXProject "julep" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77225E161401AFA80003ECDE /* Debug */,
+				77225E171401AFA80003ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		77225E181401AFA80003ECDE /* Build configuration list for PBXNativeTarget "julep" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77225E191401AFA80003ECDE /* Debug */,
+				77225E1A1401AFA80003ECDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 77225DF01401AFA80003ECDE /* Project object */;
+}
