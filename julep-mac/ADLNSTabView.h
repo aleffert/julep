@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLNSTabView : NSView
+#import "ADLTabView.h"
+
+@protocol ADLTabViewDelegate;
+
+@interface ADLNSTabView : NSView <ADLTabView, NSTextFieldDelegate>
+
+@property (assign, nonatomic) id <ADLTabViewDelegate> delegate;
 
 @end

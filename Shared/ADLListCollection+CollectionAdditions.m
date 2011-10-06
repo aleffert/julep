@@ -6,8 +6,13 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ADLListCollection+CollectionAdditions.h"
+#import "ADLListCollection.h"
 
-@implementation ADLListCollection (ADLListCollection_CollectionAdditions)
+@implementation ADLListCollection (CollectionAdditions)
+
+- (void)mutateListsSet:(void (^)(NSMutableOrderedSet* set))mutator {
+    NSMutableOrderedSet* set = [self mutableOrderedSetValueForKey:@"lists"];
+    mutator(set);
+}
 
 @end

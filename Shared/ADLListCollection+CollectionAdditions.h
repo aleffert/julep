@@ -8,6 +8,8 @@
 
 #import "ADLListCollection.h"
 
-@interface ADLListCollection (ADLListCollection_CollectionAdditions)
+@interface ADLListCollection (CollectionAdditions)
+
+- (void)mutateListsSet:(void (^)(NSMutableOrderedSet* set))mutator;
 
 @end

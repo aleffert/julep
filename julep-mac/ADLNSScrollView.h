@@ -8,6 +8,8 @@
 
 #import <AppKit/AppKit.h>
 
-@interface ADLNSScrollView : NSScrollView
+#import "ADLScrollView.h"
+
+@interface ADLNSScrollView : NSScrollView <ADLScrollView>
 
 @end

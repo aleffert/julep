@@ -8,6 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLListsWindowController : NSWindowController
+@class ADLListsDocument;
+
+@interface ADLListsWindowController : NSWindowController <NSWindowDelegate>
+
+@end
+
+@interface ADLListsWindowController (ADLCast)
+
+- (ADLListsDocument*)document;
 
 @end

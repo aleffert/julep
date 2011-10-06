@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "ADLModelAccess.h"
+
+@class ADLColorView;
+
 @interface ADLListViewController : NSViewController
+
+@property (retain, nonatomic) ADLListID* listID;
 
 @end

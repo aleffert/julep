@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @protocol ADLView <NSObject>
+
+@property (readonly, nonatomic) CALayer* layer;
+@property (assign, nonatomic, getter=isHidden) BOOL hidden;
+
+- (void)removeFromSuperview;
 
 @end

@@ -7,7 +7,11 @@
 //
 
 
+#import "ADLPileViewController.h"
+#import "ADLModelAccess.h"
 
-@interface ADLDocumentViewController : ADLDocumentViewController
+@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener>
+
+- (id)initWithModel:(ADLModelAccess*)modelAccess;
 
 @end

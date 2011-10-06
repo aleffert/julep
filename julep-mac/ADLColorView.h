@@ -10,4 +10,6 @@
 
 @interface ADLColorView : NSView
 
+@property (assign, nonatomic) CGColorRef backgroundColor;
+
 @end

@@ -10,4 +10,12 @@
 
 @implementation NSShadow (ADLExtensions)
 
++ (NSShadow*)standardShadow {
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [NSColor blackColor];
+    shadow.shadowBlurRadius = 3.;
+    shadow.shadowOffset = NSMakeSize(0, 3);
+    return [shadow autorelease];
+}
+
 @end

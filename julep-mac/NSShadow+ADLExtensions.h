@@ -10,4 +10,7 @@
 
 @interface NSShadow (ADLExtensions)
 
+// Default properties. Same as CALayer defaults modulo flipped coordinates, but with opacity = 1., black, blur 3, (0, 3) offset
++ (NSShadow*)standardShadow;
+
 @end

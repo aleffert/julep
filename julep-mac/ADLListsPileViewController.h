@@ -8,6 +8,17 @@
 
 #import "ADLPileViewController.h"
 
+@class ADLListViewController;
+
 @interface ADLListsPileViewController : ADLPileViewController
+
+@end
+
+
+@interface ADLListsPileViewController (ADLCast)
+
+@property (retain, nonatomic) ADLListViewController* currentViewController;
+@property (retain, nonatomic) ADLListViewController* nextViewController;
+@property (retain, nonatomic) ADLListViewController* prevViewController;
 
 @end

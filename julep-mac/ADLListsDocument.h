@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLListsDocument : NSDocument
+@class ADLModelAccess;
+
+@interface ADLListsDocument : NSPersistentDocument
+
+- (NSApplicationTerminateReply)shouldApplicationTerminate;
+
+@property (readonly, retain, nonatomic) ADLModelAccess* modelAccess;
 
 @end

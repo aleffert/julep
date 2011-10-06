@@ -6,9 +6,4 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef julep_ADLFloatUtilities_h
-#define julep_ADLFloatUtilities_h
-
-
-
-#endif
+BOOL ADLFloatsAlmostEqual(CGFloat left, CGFloat right);

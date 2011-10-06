@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol ADLScrollView <NSObject>
+#import "ADLView.h"
+
+@protocol ADLScrollView <ADLView>
 
 @end

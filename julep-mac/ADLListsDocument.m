@@ -8,59 +8,76 @@
 
 #import "ADLListsDocument.h"
 
+#import "ADLListsWindowController.h"
+#import "ADLModelAccess.h"
+
+@interface ADLListsDocument ()
+
+@property (retain, nonatomic) ADLModelAccess* modelAccess;
+
+@end
+
 @implementation ADLListsDocument
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        // Add your subclass-specific initialization here.
-        // If an error occurs here, send a [self release] message and return nil.
+@synthesize modelAccess = mModelAccess;
+
+- (void)makeWindowControllers {
+    ADLListsWindowController* windowController = [[ADLListsWindowController alloc] initWithWindowNibName:@"ADLListsWindowController"];
+    
+    [self addWindowController:windowController];
+    
+    [windowController release];
+}
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
+   [super setManagedObjectContext:managedObjectContext];
+    NSAssert(self.modelAccess == nil, @"Changing object context on document");
+    self.modelAccess = [[[ADLModelAccess alloc] initWithManagedObjectContext:self.managedObjectContext] autorelease];
+}
+
+- (BOOL)isDocumentEdited {
+    return NO;
+}
+
+- (NSApplicationTerminateReply)shouldApplicationTerminate {
+    NSManagedObjectContext* managedObjectContext = self.managedObjectContext;
+    if (![managedObjectContext commitEditing]) {
+        NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
+        return NSTerminateCancel;
     }
-    return self;
-}
-
-- (NSString *)windowNibName
-{
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-    return @"ADLListsDocument";
-}
-
-- (void)windowControllerDidLoadNib:(NSWindowController *)aController
-{
-    [super windowControllerDidLoadNib:aController];
-    // Add any code here that needs to be executed once the windowController has loaded the document's window.
-}
-
-- (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
-{
-    /*
-     Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-    You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-    */
-    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
+    
+    if (![managedObjectContext hasChanges]) {
+        return NSTerminateNow;
     }
-    return nil;
-}
-
-- (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
-{
-    /*
-    Insert code here to read your document from the given data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning NO.
-    You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead.
-    If you override either of these, you should also override -isEntireFileLoaded to return NO if the contents are lazily loaded.
-    */
-    if (outError) {
-        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+        
+        // Customize this code block to include application-specific recovery steps.              
+        BOOL result = [NSApp presentError:error];
+        if (result) {
+            return NSTerminateCancel;
+        }
+        
+        NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
+        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
+        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
+        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:question];
+        [alert setInformativeText:info];
+        [alert addButtonWithTitle:quitButton];
+        [alert addButtonWithTitle:cancelButton];
+        
+        NSInteger answer = [alert runModal];
+        [alert release];
+        
+        if (answer == NSAlertAlternateReturn) {
+            return NSTerminateCancel;
+        }
     }
-    return YES;
-}
-
-+ (BOOL)autosavesInPlace
-{
-    return YES;
+    
+    return NSTerminateNow;
 }
 
 @end

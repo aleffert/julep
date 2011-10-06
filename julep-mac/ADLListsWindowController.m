@@ -8,23 +8,51 @@
 
 #import "ADLListsWindowController.h"
 
+#import "ADLDocumentViewController.h"
+#import "ADLListsDocument.h"
+#import "ADLModelAccess.h"
+
+
+static NSString* kADLJulepTitle = @"Julep";
+
+@interface ADLListsWindowController ()
+
+@property (retain, nonatomic) ADLDocumentViewController* documentViewController;
+
+@end
+
+
 @implementation ADLListsWindowController
 
-- (id)initWithWindow:(NSWindow *)window
-{
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+@synthesize documentViewController = mDocumentViewController;
+
+- (void)dealloc {
+    self.documentViewController = nil;
+    [super dealloc];
 }
 
 - (void)windowDidLoad
 {
     [super windowDidLoad];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    self.documentViewController = [[[ADLDocumentViewController alloc] initWithModel:self.document.modelAccess] autorelease];
+    
+    NSView* contentView = self.window.contentView;
+    
+    self.documentViewController.view.frame = contentView.bounds;
+    [self.window.contentView addSubview:self.documentViewController.view];
+    
+    self.documentViewController.nextResponder = self.nextResponder;
+    self.nextResponder = self.documentViewController;
+}
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return self.document.managedObjectContext.undoManager;
+}
+
+- (void)synchronizeWindowTitleWithDocumentName {
+    self.window.title = kADLJulepTitle;
+    self.window.representedURL = nil;
 }
 
 @end

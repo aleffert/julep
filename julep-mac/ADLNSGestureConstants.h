@@ -6,9 +6,4 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef julep_ADLNSGestureConstants_h
-#define julep_ADLNSGestureConstants_h
-
-
-
-#endif
+#define kADLDragInterval .3

@@ -1,5 +1,5 @@
 //
-//  NSImage+NSImage_ADLExtensions.h
+//  NSImage+ADLExtensions.h
 //  julep
 //
 //  Created by Akiva Leffert on 8/24/11.
@@ -8,6 +8,8 @@
 
 #import <AppKit/AppKit.h>
 
-@interface NSImage (NSImage_ADLExtensions)
+@interface NSImage (ADLExtensions)
+
+- (CGImageRef)CGImage;
 
 @end

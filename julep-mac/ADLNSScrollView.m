@@ -10,4 +10,7 @@
 
 @implementation ADLNSScrollView
 
+@dynamic layer;
+@dynamic hidden;
+
 @end

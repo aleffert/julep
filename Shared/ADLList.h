@@ -2,14 +2,14 @@
 //  ADLList.h
 //  julep
 //
-//  Created by Akiva Leffert on 9/28/11.
+//  Created by Akiva Leffert on 9/30/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class ADLItem;
+@class ADLItem, ADLListCollection;
 
 @interface ADLList : NSManagedObject {
 @private
@@ -17,8 +17,8 @@
 @property (nonatomic) BOOL countsForBadge;
 @property (nonatomic) int32_t kind;
 @property (nonatomic, retain) NSString * title;
-@property (nonatomic) int32_t index;
 @property (nonatomic, retain) NSOrderedSet *items;
+@property (nonatomic, retain) ADLListCollection *list;
 @end
 
 @interface ADLList (CoreDataGeneratedAccessors)

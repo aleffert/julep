@@ -7,30 +7,152 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7709CE26143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */; };
+		7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */; };
+		7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */; };
+		7721D81A1402DBF90008A02D /* ADLNSScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721D8191402DBF90008A02D /* ADLNSScrollView.m */; };
+		7721D81E1402DDA20008A02D /* ADLNSViewManipulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721D81D1402DDA20008A02D /* ADLNSViewManipulator.m */; };
 		77225DFE1401AFA80003ECDE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77225DFD1401AFA80003ECDE /* UIKit.framework */; };
-		77225E001401AFA80003ECDE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77225DFF1401AFA80003ECDE /* Foundation.framework */; };
 		77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77225E041401AFA80003ECDE /* InfoPlist.strings */; };
 		77225E081401AFA80003ECDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E071401AFA80003ECDE /* main.m */; };
 		77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */; };
 		77225E0F1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */; };
 		77225E121401AFA80003ECDE /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */; };
 		77225E151401AFA80003ECDE /* ADLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E141401AFA80003ECDE /* ADLViewController.m */; };
+		7722BF331402A431003498D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF311402A431003498D8 /* InfoPlist.strings */; };
+		7722BF351402A431003498D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF341402A431003498D8 /* main.m */; };
+		7722BF391402A431003498D8 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF371402A431003498D8 /* Credits.rtf */; };
+		7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF3B1402A431003498D8 /* ADLAppDelegate.m */; };
+		7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF3D1402A431003498D8 /* MainMenu.xib */; };
+		7722BF421402A431003498D8 /* julep_mac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */; };
+		7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
+		77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 77262CFB14314AB800392054 /* ADLListsDocument.m */; };
+		772C683D1427D45200CEF932 /* ADLColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C683C1427D45200CEF932 /* ADLColorView.m */; };
+		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
+		772C68431427E34F00CEF932 /* ADLListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C68411427E34F00CEF932 /* ADLListViewController.m */; };
+		772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772C68421427E34F00CEF932 /* ADLListViewController.xib */; };
+		774520851405809800B993F1 /* NSImage+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 774520841405809800B993F1 /* NSImage+ADLExtensions.m */; };
+		77530FE614229B3200C0645F /* ADLTabSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE414229B3200C0645F /* ADLTabSelected.png */; };
+		77530FE714229B3200C0645F /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
+		77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77530FE814229CF700C0645F /* Cocoa.framework */; };
+		77748AE814365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
+		77748AE914365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
+		77748AEC14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
+		77748AED14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
+		77748AF014365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
+		77748AF114365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
+		777FC29614082DE900B29B4B /* ADLFloatUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 777FC29514082DE900B29B4B /* ADLFloatUtilities.m */; };
+		777FC29714082DE900B29B4B /* ADLFloatUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 777FC29514082DE900B29B4B /* ADLFloatUtilities.m */; };
+		778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778897661402D33D00493E14 /* QuartzCore.framework */; };
+		7788976B1402D39600493E14 /* ADLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7788976A1402D39600493E14 /* ADLColor.m */; };
+		7788976C1402D39600493E14 /* ADLColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7788976A1402D39600493E14 /* ADLColor.m */; };
+		778D82691432F76C0053BC49 /* ADLModelAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D826614324D540053BC49 /* ADLModelAccess.m */; };
+		778D828C1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */; };
+		778D828D1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */; };
+		778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
+		778D82951433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
+		77B986C81402BAB2004A2293 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
+		77B986CD1402C56D004A2293 /* ADLNSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */; };
+		77B986CE1402C56D004A2293 /* ADLNSTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */; };
+		77B986D21402CCFD004A2293 /* ADLNSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986D11402CCFD004A2293 /* ADLNSTabView.m */; };
+		77D883941424361B00544311 /* ADLPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883921424361A00544311 /* ADLPileViewController.m */; };
+		77D883951424361B00544311 /* ADLPileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D883931424361B00544311 /* ADLPileViewController.xib */; };
+		77D883991424383300544311 /* NSShadow+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883981424383300544311 /* NSShadow+ADLExtensions.m */; };
+		77D8839C142545B500544311 /* ADLListsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D8839B142545B500544311 /* ADLListsWindowController.m */; };
+		77D8839E14255FD900544311 /* ADLListsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D8839D14255FD900544311 /* ADLListsWindowController.xib */; };
+		77E51ADE142FB28B005A445E /* ADLDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		77225DF91401AFA80003ECDE /* julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7709CE24143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLAgnosticDocumentViewController.h; path = Shared/ADLAgnosticDocumentViewController.h; sourceTree = "<group>"; };
+		7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLAgnosticDocumentViewController.m; path = Shared/ADLAgnosticDocumentViewController.m; sourceTree = "<group>"; };
+		7709CE33143BAF4D002DB3B6 /* ADLListsPileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsPileViewController.h; sourceTree = "<group>"; };
+		7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsPileViewController.m; sourceTree = "<group>"; };
+		7721D8181402DBF90008A02D /* ADLNSScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSScrollView.h; sourceTree = "<group>"; };
+		7721D8191402DBF90008A02D /* ADLNSScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSScrollView.m; sourceTree = "<group>"; };
+		7721D81C1402DDA20008A02D /* ADLNSViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSViewManipulator.h; sourceTree = "<group>"; };
+		7721D81D1402DDA20008A02D /* ADLNSViewManipulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSViewManipulator.m; sourceTree = "<group>"; wrapsLines = 0; };
+		77225DF91401AFA80003ECDE /* Julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77225DFD1401AFA80003ECDE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		77225DFF1401AFA80003ECDE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		77225E031401AFA80003ECDE /* julep-Info.plist */ = {isa = PBXFileReference; path = "julep-Info.plist"; sourceTree = "<group>"; };
+		77225E031401AFA80003ECDE /* julep-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "julep-Info.plist"; sourceTree = "<group>"; };
 		77225E051401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		77225E071401AFA80003ECDE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		77225E091401AFA80003ECDE /* julep-Prefix.pch */ = {isa = PBXFileReference; path = "julep-Prefix.pch"; sourceTree = "<group>"; };
-		77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */ = {isa = PBXFileReference; path = ADLAppDelegate.h; sourceTree = "<group>"; };
+		77225E091401AFA80003ECDE /* julep-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "julep-Prefix.pch"; sourceTree = "<group>"; };
+		77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLAppDelegate.h; sourceTree = "<group>"; };
 		77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
 		77225E0E1401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
 		77225E111401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		77225E131401AFA80003ECDE /* ADLViewController.h */ = {isa = PBXFileReference; path = ADLViewController.h; sourceTree = "<group>"; };
+		77225E131401AFA80003ECDE /* ADLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLViewController.h; sourceTree = "<group>"; };
 		77225E141401AFA80003ECDE /* ADLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLViewController.m; sourceTree = "<group>"; };
+		7722BF261402A431003498D8 /* Julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7722BF281402A431003498D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		7722BF2B1402A431003498D8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		7722BF2C1402A431003498D8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		7722BF2D1402A431003498D8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		7722BF301402A431003498D8 /* julep-mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "julep-mac-Info.plist"; sourceTree = "<group>"; };
+		7722BF321402A431003498D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		7722BF341402A431003498D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7722BF361402A431003498D8 /* julep-mac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "julep-mac-Prefix.pch"; sourceTree = "<group>"; };
+		7722BF381402A431003498D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		7722BF3A1402A431003498D8 /* ADLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLAppDelegate.h; sourceTree = "<group>"; };
+		7722BF3B1402A431003498D8 /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
+		7722BF3E1402A431003498D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		7722BF411402A431003498D8 /* julep_mac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = julep_mac.xcdatamodel; sourceTree = "<group>"; };
+		7722BF4B1402A431003498D8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		7722BF4D1402A431003498D8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		7722BF4F1402A431003498D8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		7722BF681402A60E003498D8 /* ADLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLView.h; path = Shared/ADLView.h; sourceTree = SOURCE_ROOT; };
+		7722BF6A1402A77B003498D8 /* ADLTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLTabController.h; path = Shared/ADLTabController.h; sourceTree = SOURCE_ROOT; };
+		7722BF6B1402A77B003498D8 /* ADLTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLTabController.m; path = Shared/ADLTabController.m; sourceTree = SOURCE_ROOT; };
+		7722BF6D1402AA97003498D8 /* ADLViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLViewManipulator.h; path = Shared/ADLViewManipulator.h; sourceTree = "<group>"; };
+		77262CFA14314AB800392054 /* ADLListsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsDocument.h; sourceTree = "<group>"; };
+		77262CFB14314AB800392054 /* ADLListsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsDocument.m; sourceTree = "<group>"; };
+		772C683B1427D45200CEF932 /* ADLColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLColorView.h; sourceTree = "<group>"; };
+		772C683C1427D45200CEF932 /* ADLColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLColorView.m; sourceTree = "<group>"; };
+		772C683E1427D9A900CEF932 /* ADLLinen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLLinen.png; path = Resources/ADLLinen.png; sourceTree = "<group>"; };
+		772C68401427E34F00CEF932 /* ADLListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListViewController.h; sourceTree = "<group>"; };
+		772C68411427E34F00CEF932 /* ADLListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListViewController.m; sourceTree = "<group>"; };
+		772C68421427E34F00CEF932 /* ADLListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListViewController.xib; sourceTree = "<group>"; };
+		774520831405809800B993F1 /* NSImage+ADLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+ADLExtensions.h"; sourceTree = "<group>"; };
+		774520841405809800B993F1 /* NSImage+ADLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+ADLExtensions.m"; sourceTree = "<group>"; };
+		77530FE414229B3200C0645F /* ADLTabSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabSelected.png; path = Resources/ADLTabSelected.png; sourceTree = "<group>"; };
+		77530FE514229B3200C0645F /* ADLTabUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabUnselected.png; path = Resources/ADLTabUnselected.png; sourceTree = "<group>"; };
+		77530FE814229CF700C0645F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		77748AE614365A680048918F /* ADLList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLList.h; path = Shared/ADLList.h; sourceTree = SOURCE_ROOT; };
+		77748AE714365A680048918F /* ADLList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLList.m; path = Shared/ADLList.m; sourceTree = SOURCE_ROOT; };
+		77748AEA14365A680048918F /* ADLItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLItem.h; path = Shared/ADLItem.h; sourceTree = SOURCE_ROOT; };
+		77748AEB14365A680048918F /* ADLItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLItem.m; path = Shared/ADLItem.m; sourceTree = SOURCE_ROOT; };
+		77748AEE14365A680048918F /* ADLListCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListCollection.h; path = Shared/ADLListCollection.h; sourceTree = SOURCE_ROOT; };
+		77748AEF14365A680048918F /* ADLListCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListCollection.m; path = Shared/ADLListCollection.m; sourceTree = SOURCE_ROOT; };
+		777FC29514082DE900B29B4B /* ADLFloatUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLFloatUtilities.m; path = Shared/ADLFloatUtilities.m; sourceTree = "<group>"; };
+		777FC29914082F9300B29B4B /* ADLFloatUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLFloatUtilities.h; path = Shared/ADLFloatUtilities.h; sourceTree = "<group>"; };
+		778897661402D33D00493E14 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		778897691402D39600493E14 /* ADLColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLColor.h; path = Shared/ADLColor.h; sourceTree = SOURCE_ROOT; };
+		7788976A1402D39600493E14 /* ADLColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLColor.m; path = Shared/ADLColor.m; sourceTree = SOURCE_ROOT; };
+		778D826514324D540053BC49 /* ADLModelAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLModelAccess.h; path = Shared/ADLModelAccess.h; sourceTree = SOURCE_ROOT; };
+		778D826614324D540053BC49 /* ADLModelAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLModelAccess.m; path = Shared/ADLModelAccess.m; sourceTree = SOURCE_ROOT; };
+		778D828A1433B77A0053BC49 /* NSArray+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+ADLAdditions.h"; path = "Shared/NSArray+ADLAdditions.h"; sourceTree = "<group>"; };
+		778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+ADLAdditions.m"; path = "Shared/NSArray+ADLAdditions.m"; sourceTree = "<group>"; };
+		778D82921433F8C90053BC49 /* ADLListCollection+CollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADLListCollection+CollectionAdditions.h"; path = "Shared/ADLListCollection+CollectionAdditions.h"; sourceTree = "<group>"; };
+		778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ADLListCollection+CollectionAdditions.m"; path = "Shared/ADLListCollection+CollectionAdditions.m"; sourceTree = "<group>"; };
+		779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSGestureConstants.h; sourceTree = "<group>"; };
+		77B986C71402BA9B004A2293 /* ADLScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ADLScrollView.h; path = Shared/ADLScrollView.h; sourceTree = "<group>"; };
+		77B986C91402C14E004A2293 /* ADLTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLTabView.h; path = Shared/ADLTabView.h; sourceTree = "<group>"; };
+		77B986CA1402C56D004A2293 /* ADLNSTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSTabViewController.h; sourceTree = "<group>"; };
+		77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSTabViewController.m; sourceTree = "<group>"; };
+		77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLNSTabViewController.xib; sourceTree = "<group>"; };
+		77B986D01402CCFD004A2293 /* ADLNSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSTabView.h; sourceTree = "<group>"; };
+		77B986D11402CCFD004A2293 /* ADLNSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSTabView.m; sourceTree = "<group>"; };
+		77D883911424361A00544311 /* ADLPileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLPileViewController.h; sourceTree = "<group>"; };
+		77D883921424361A00544311 /* ADLPileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLPileViewController.m; sourceTree = "<group>"; };
+		77D883931424361B00544311 /* ADLPileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLPileViewController.xib; sourceTree = "<group>"; };
+		77D883971424383300544311 /* NSShadow+ADLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSShadow+ADLExtensions.h"; sourceTree = "<group>"; };
+		77D883981424383300544311 /* NSShadow+ADLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSShadow+ADLExtensions.m"; sourceTree = "<group>"; };
+		77D8839A142545B500544311 /* ADLListsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsWindowController.h; sourceTree = "<group>"; };
+		77D8839B142545B500544311 /* ADLListsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsWindowController.m; sourceTree = "<group>"; };
+		77D8839D14255FD900544311 /* ADLListsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListsWindowController.xib; sourceTree = "<group>"; };
+		77E51ADA142FB27C005A445E /* ADLDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLDocumentViewController.h; sourceTree = "<group>"; };
+		77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLDocumentViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +161,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				77225DFE1401AFA80003ECDE /* UIKit.framework in Frameworks */,
-				77225E001401AFA80003ECDE /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7722BF231402A430003498D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */,
+				778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				77225E011401AFA80003ECDE /* julep */,
+				7722BF2E1402A431003498D8 /* julep-mac */,
+				7722BF691402A62D003498D8 /* Shared */,
 				77225DFC1401AFA80003ECDE /* Frameworks */,
 				77225DFA1401AFA80003ECDE /* Products */,
 			);
@@ -58,7 +190,8 @@
 		77225DFA1401AFA80003ECDE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				77225DF91401AFA80003ECDE /* julep.app */,
+				77225DF91401AFA80003ECDE /* Julep.app */,
+				7722BF261402A431003498D8 /* Julep.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,7 +200,12 @@
 			isa = PBXGroup;
 			children = (
 				77225DFD1401AFA80003ECDE /* UIKit.framework */,
-				77225DFF1401AFA80003ECDE /* Foundation.framework */,
+				77530FEA14229D0700C0645F /* Desktop */,
+				7722BF281402A431003498D8 /* Cocoa.framework */,
+				7722BF4B1402A431003498D8 /* CoreServices.framework */,
+				7722BF4D1402A431003498D8 /* CoreFoundation.framework */,
+				7722BF4F1402A431003498D8 /* CoreData.framework */,
+				7722BF2A1402A431003498D8 /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -97,6 +235,154 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		7722BF2A1402A431003498D8 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7722BF2B1402A431003498D8 /* AppKit.framework */,
+				7722BF2C1402A431003498D8 /* CoreData.framework */,
+				7722BF2D1402A431003498D8 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		7722BF2E1402A431003498D8 /* julep-mac */ = {
+			isa = PBXGroup;
+			children = (
+				7722BF3A1402A431003498D8 /* ADLAppDelegate.h */,
+				7722BF3B1402A431003498D8 /* ADLAppDelegate.m */,
+				779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */,
+				7770675F140830850088AB85 /* Views */,
+				7745208A140585C300B993F1 /* Utilities */,
+				7722BF2F1402A431003498D8 /* Supporting Files */,
+				777067601408308F0088AB85 /* Main View */,
+				77452089140585AF00B993F1 /* Resources */,
+			);
+			path = "julep-mac";
+			sourceTree = "<group>";
+		};
+		7722BF2F1402A431003498D8 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7722BF301402A431003498D8 /* julep-mac-Info.plist */,
+				7722BF311402A431003498D8 /* InfoPlist.strings */,
+				7722BF341402A431003498D8 /* main.m */,
+				7722BF361402A431003498D8 /* julep-mac-Prefix.pch */,
+				7722BF371402A431003498D8 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7722BF691402A62D003498D8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				778D828A1433B77A0053BC49 /* NSArray+ADLAdditions.h */,
+				778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */,
+				778D82891433B4300053BC49 /* Model */,
+				778897691402D39600493E14 /* ADLColor.h */,
+				7788976A1402D39600493E14 /* ADLColor.m */,
+				777FC29514082DE900B29B4B /* ADLFloatUtilities.m */,
+				777FC29914082F9300B29B4B /* ADLFloatUtilities.h */,
+				7722BF6A1402A77B003498D8 /* ADLTabController.h */,
+				7722BF6B1402A77B003498D8 /* ADLTabController.m */,
+				77B986C91402C14E004A2293 /* ADLTabView.h */,
+				77B986C71402BA9B004A2293 /* ADLScrollView.h */,
+				7722BF681402A60E003498D8 /* ADLView.h */,
+				7722BF6D1402AA97003498D8 /* ADLViewManipulator.h */,
+				7709CE24143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.h */,
+				7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */,
+			);
+			name = Shared;
+			sourceTree = "<group>";
+		};
+		77452089140585AF00B993F1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				7722BF3D1402A431003498D8 /* MainMenu.xib */,
+				7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */,
+				77D8839D14255FD900544311 /* ADLListsWindowController.xib */,
+				77D883931424361B00544311 /* ADLPileViewController.xib */,
+				77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */,
+				77530FE414229B3200C0645F /* ADLTabSelected.png */,
+				77530FE514229B3200C0645F /* ADLTabUnselected.png */,
+				772C683E1427D9A900CEF932 /* ADLLinen.png */,
+				772C68421427E34F00CEF932 /* ADLListViewController.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		7745208A140585C300B993F1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				774520831405809800B993F1 /* NSImage+ADLExtensions.h */,
+				774520841405809800B993F1 /* NSImage+ADLExtensions.m */,
+				77D883971424383300544311 /* NSShadow+ADLExtensions.h */,
+				77D883981424383300544311 /* NSShadow+ADLExtensions.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		77530FEA14229D0700C0645F /* Desktop */ = {
+			isa = PBXGroup;
+			children = (
+				77530FE814229CF700C0645F /* Cocoa.framework */,
+				778897661402D33D00493E14 /* QuartzCore.framework */,
+			);
+			name = Desktop;
+			sourceTree = "<group>";
+		};
+		7770675F140830850088AB85 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7721D8181402DBF90008A02D /* ADLNSScrollView.h */,
+				7721D8191402DBF90008A02D /* ADLNSScrollView.m */,
+				7721D81C1402DDA20008A02D /* ADLNSViewManipulator.h */,
+				7721D81D1402DDA20008A02D /* ADLNSViewManipulator.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		777067601408308F0088AB85 /* Main View */ = {
+			isa = PBXGroup;
+			children = (
+				7709CE33143BAF4D002DB3B6 /* ADLListsPileViewController.h */,
+				7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */,
+				77D883911424361A00544311 /* ADLPileViewController.h */,
+				77D883921424361A00544311 /* ADLPileViewController.m */,
+				772C683B1427D45200CEF932 /* ADLColorView.h */,
+				772C683C1427D45200CEF932 /* ADLColorView.m */,
+				77E51ADA142FB27C005A445E /* ADLDocumentViewController.h */,
+				77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */,
+				77B986CA1402C56D004A2293 /* ADLNSTabViewController.h */,
+				77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */,
+				77B986D01402CCFD004A2293 /* ADLNSTabView.h */,
+				77B986D11402CCFD004A2293 /* ADLNSTabView.m */,
+				77D8839A142545B500544311 /* ADLListsWindowController.h */,
+				77D8839B142545B500544311 /* ADLListsWindowController.m */,
+				772C68401427E34F00CEF932 /* ADLListViewController.h */,
+				772C68411427E34F00CEF932 /* ADLListViewController.m */,
+				77262CFA14314AB800392054 /* ADLListsDocument.h */,
+				77262CFB14314AB800392054 /* ADLListsDocument.m */,
+			);
+			name = "Main View";
+			sourceTree = "<group>";
+		};
+		778D82891433B4300053BC49 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				77748AEE14365A680048918F /* ADLListCollection.h */,
+				77748AEF14365A680048918F /* ADLListCollection.m */,
+				77748AEA14365A680048918F /* ADLItem.h */,
+				77748AEB14365A680048918F /* ADLItem.m */,
+				77748AE614365A680048918F /* ADLList.h */,
+				77748AE714365A680048918F /* ADLList.m */,
+				778D82921433F8C90053BC49 /* ADLListCollection+CollectionAdditions.h */,
+				778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */,
+				778D826514324D540053BC49 /* ADLModelAccess.h */,
+				778D826614324D540053BC49 /* ADLModelAccess.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -114,7 +400,24 @@
 			);
 			name = julep;
 			productName = julep;
-			productReference = 77225DF91401AFA80003ECDE /* julep.app */;
+			productReference = 77225DF91401AFA80003ECDE /* Julep.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7722BF251402A430003498D8 /* julep-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7722BF661402A431003498D8 /* Build configuration list for PBXNativeTarget "julep-mac" */;
+			buildPhases = (
+				7722BF221402A430003498D8 /* Sources */,
+				7722BF231402A430003498D8 /* Frameworks */,
+				7722BF241402A430003498D8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "julep-mac";
+			productName = "julep-mac";
+			productReference = 7722BF261402A431003498D8 /* Julep.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -138,6 +441,7 @@
 			projectRoot = "";
 			targets = (
 				77225DF81401AFA80003ECDE /* julep */,
+				7722BF251402A430003498D8 /* julep-mac */,
 			);
 		};
 /* End PBXProject section */
@@ -153,6 +457,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		7722BF241402A430003498D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7722BF331402A431003498D8 /* InfoPlist.strings in Resources */,
+				7722BF391402A431003498D8 /* Credits.rtf in Resources */,
+				7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */,
+				77B986CE1402C56D004A2293 /* ADLNSTabViewController.xib in Resources */,
+				77530FE614229B3200C0645F /* ADLTabSelected.png in Resources */,
+				77530FE714229B3200C0645F /* ADLTabUnselected.png in Resources */,
+				77D883951424361B00544311 /* ADLPileViewController.xib in Resources */,
+				77D8839E14255FD900544311 /* ADLListsWindowController.xib in Resources */,
+				772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */,
+				772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -163,6 +484,48 @@
 				77225E081401AFA80003ECDE /* main.m in Sources */,
 				77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */,
 				77225E151401AFA80003ECDE /* ADLViewController.m in Sources */,
+				7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */,
+				7788976B1402D39600493E14 /* ADLColor.m in Sources */,
+				774520851405809800B993F1 /* NSImage+ADLExtensions.m in Sources */,
+				777FC29614082DE900B29B4B /* ADLFloatUtilities.m in Sources */,
+				778D828C1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */,
+				778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */,
+				77748AE814365A680048918F /* ADLList.m in Sources */,
+				77748AEC14365A680048918F /* ADLItem.m in Sources */,
+				77748AF014365A680048918F /* ADLListCollection.m in Sources */,
+				7709CE26143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7722BF221402A430003498D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7722BF351402A431003498D8 /* main.m in Sources */,
+				7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */,
+				7722BF421402A431003498D8 /* julep_mac.xcdatamodeld in Sources */,
+				77B986C81402BAB2004A2293 /* ADLTabController.m in Sources */,
+				77B986CD1402C56D004A2293 /* ADLNSTabViewController.m in Sources */,
+				77B986D21402CCFD004A2293 /* ADLNSTabView.m in Sources */,
+				7788976C1402D39600493E14 /* ADLColor.m in Sources */,
+				7721D81A1402DBF90008A02D /* ADLNSScrollView.m in Sources */,
+				7721D81E1402DDA20008A02D /* ADLNSViewManipulator.m in Sources */,
+				777FC29714082DE900B29B4B /* ADLFloatUtilities.m in Sources */,
+				77D883941424361B00544311 /* ADLPileViewController.m in Sources */,
+				77D883991424383300544311 /* NSShadow+ADLExtensions.m in Sources */,
+				77D8839C142545B500544311 /* ADLListsWindowController.m in Sources */,
+				772C683D1427D45200CEF932 /* ADLColorView.m in Sources */,
+				772C68431427E34F00CEF932 /* ADLListViewController.m in Sources */,
+				77E51ADE142FB28B005A445E /* ADLDocumentViewController.m in Sources */,
+				77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */,
+				778D82691432F76C0053BC49 /* ADLModelAccess.m in Sources */,
+				778D828D1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */,
+				778D82951433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */,
+				77748AE914365A680048918F /* ADLList.m in Sources */,
+				77748AED14365A680048918F /* ADLItem.m in Sources */,
+				77748AF114365A680048918F /* ADLListCollection.m in Sources */,
+				7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
+				7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +556,30 @@
 			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
+		7722BF311402A431003498D8 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7722BF321402A431003498D8 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		7722BF371402A431003498D8 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7722BF381402A431003498D8 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		7722BF3D1402A431003498D8 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7722BF3E1402A431003498D8 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -201,7 +588,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -217,6 +603,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -227,7 +614,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CLANG_ENABLE_OBJC_ARC = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -237,6 +623,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -246,10 +633,18 @@
 		77225E191401AFA80003ECDE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "julep/julep-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Julep;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -257,10 +652,74 @@
 		77225E1A1401AFA80003ECDE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
+				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "julep/julep-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Julep;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		7722BF611402A431003498D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_SHADOW = YES;
+				INFOPLIST_FILE = "julep-mac/julep-mac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Julep;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		7722BF621402A431003498D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_SHADOW = YES;
+				INFOPLIST_FILE = "julep-mac/julep-mac-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				PRODUCT_NAME = Julep;
+				RUN_CLANG_STATIC_ANALYZER = YES;
+				SDKROOT = "";
+				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -284,8 +743,31 @@
 				77225E1A1401AFA80003ECDE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7722BF661402A431003498D8 /* Build configuration list for PBXNativeTarget "julep-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7722BF611402A431003498D8 /* Debug */,
+				7722BF621402A431003498D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				7722BF411402A431003498D8 /* julep_mac.xcdatamodel */,
+			);
+			currentVersion = 7722BF411402A431003498D8 /* julep_mac.xcdatamodel */;
+			path = julep_mac.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 77225DF01401AFA80003ECDE /* Project object */;
 }

@@ -8,6 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLNSTabViewController : NSViewController
+#import "ADLTabController.h"
+
+#import "ADLNSScrollView.h"
+
+@interface ADLNSTabViewController : NSViewController <ADLTabControllerDelegate>
+
+- (id)initWithDataSource:(id <ADLTabControllerDataSource>)dataSource;
+
+@property (retain, nonatomic) id <ADLViewManipulator> viewManipulator;
+
+@property (readonly, retain, nonatomic) ADLTabController* agnostic;
 
 @end

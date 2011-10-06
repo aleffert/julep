@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ADLNSViewManipulator : NSObject
+#import "ADLViewManipulator.h"
+
+@interface ADLNSViewManipulator : NSObject <ADLViewManipulator>
 
 @end
