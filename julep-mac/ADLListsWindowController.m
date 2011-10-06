@@ -38,9 +38,10 @@ static NSString* kADLJulepTitle = @"Julep";
     self.documentViewController = [[[ADLDocumentViewController alloc] initWithModel:self.document.modelAccess] autorelease];
     
     NSView* contentView = self.window.contentView;
+    [self.window.contentView addSubview:self.documentViewController.view];
+    [self.documentViewController wasAddedToWindow];
     
     self.documentViewController.view.frame = contentView.bounds;
-    [self.window.contentView addSubview:self.documentViewController.view];
     
     self.documentViewController.nextResponder = self.nextResponder;
     self.nextResponder = self.documentViewController;

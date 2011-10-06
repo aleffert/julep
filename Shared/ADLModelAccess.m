@@ -21,6 +21,7 @@ static NSString* kADLSelectedListKey = @"kADLSelectedListKey";
 @property (readonly, nonatomic) ADLListCollection* defaultCollection;
 @property (retain, nonatomic) NSManagedObjectID* defaultCollectionID;
 @property (retain, nonatomic) NSMutableArray* collectionChangedListeners;
+@property (retain, nonatomic) NSMutableArray* listChangedListeners;
 
 - (ADLListID*)setupDefaultSelection;
 
@@ -36,12 +37,14 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 @synthesize managedObjectContext = mManagedObjectContext;
 @synthesize defaultCollectionID = mDefaultCollectionID;
 @synthesize collectionChangedListeners = mCollectionChangedListeners;
+@synthesize listChangedListeners = mListChangedListeners;
 
 - (ADLModelAccess*)initWithManagedObjectContext:(NSManagedObjectContext*)context {
     self = [super init];
     if(self) {
         self.managedObjectContext = context;
         self.collectionChangedListeners = [NSMutableArray nonretainingMutableArray];
+        self.listChangedListeners = [NSMutableArray nonretainingMutableArray];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChangesSaved:) name:NSManagedObjectContextDidSaveNotification object:self.managedObjectContext];
     }
     return self;
@@ -50,6 +53,7 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:NSManagedObjectContextDidSaveNotification object:self.managedObjectContext];
     self.collectionChangedListeners = nil;
+    self.listChangedListeners = nil;
     self.defaultCollectionID = nil;
     self.managedObjectContext = nil;
     [super dealloc];
@@ -175,6 +179,13 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
     }];
 }
 
+- (void)setText:(NSString*)text ofList:(ADLListID*)listID {
+    [self performMutation:^(void) {
+        ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
+        list.body = text;
+    }];
+}
+
 - (void)addListAtIndex:(NSUInteger)index {
     [self addList:^(ADLList* list) {
         list.title = @"Untitled";
@@ -189,6 +200,15 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 
 - (void)removeCollectionChangedListener:(id <ADLCollectionChangedListener>)listener {
     [self.collectionChangedListeners removeObject:listener];
+}
+
+
+- (void)addListChangedListener:(id <ADLListChangedListener>)listener {
+    [self.listChangedListeners addObject:listener];
+}
+
+- (void)removeListChangedListener:(id <ADLListChangedListener>)listener {
+    [self.listChangedListeners removeObject:listener];
 }
 
 - (void)modelChangesSaved:(NSNotification*)notification {
@@ -209,7 +229,11 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
     }
     for(NSManagedObject* object in updatedObjects) {
         if([object isKindOfClass:[ADLList class]]) {
+            ADLList* list = (ADLList*)object;
             [updatedLists addObject:object.objectID];
+            for(id <ADLListChangedListener> listener in self.listChangedListeners) {
+                [listener changedListWithID:list.objectID bodyText:list.body];
+            }
         }
         else if([object isKindOfClass:[ADLListCollection class]]) {
             changedCollection = YES;
@@ -228,7 +252,6 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
             }
         }
     }
-    
     
 }
 
@@ -256,6 +279,11 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
             }
         }
     }
+}
+
+- (NSString*)bodyTextForListID:(ADLListID*)listID {
+    ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
+    return list.body;
 }
 
 - (ADLListID*)setupDefaultSelection {

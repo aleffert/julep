@@ -24,6 +24,7 @@
 @property (retain, nonatomic) ADLAgnosticDocumentViewController* agnostic;
 
 - (void)updateActivePileViewsForSelection:(ADLListID*)currentID;
+- (ADLListViewController*)listViewControllerWithID:(ADLListID*)listID;
 
 @end
 
@@ -77,6 +78,7 @@
     self.pileController.nextResponder = self.pileController.view.nextResponder;
     self.pileController.view.nextResponder = self.pileController;
     
+    self.agnostic.tabController.selectedInfo = self.agnostic.selectedListID;
     [self updateActivePileViewsForSelection:self.agnostic.selectedListID];
 }
 
@@ -88,13 +90,35 @@
     [self viewDidLoad];
 }
 
+- (void)wasAddedToWindow {
+    [self.pileController.currentViewController didActivate];
+}
+
+#pragma mark List View Controllers
+
+- (void)listViewControllerWillDealloc:(ADLListViewController *)controller {
+    [self.agnostic.modelAccess removeListChangedListener:controller];
+}
+
+- (void)listViewController:(ADLListViewController *)controller textChangedTo:(NSString *)text {
+    [self.agnostic.modelAccess setText:text ofList:controller.listID];
+}
+
+- (ADLListViewController*)listViewControllerWithID:(ADLListID*)listID {
+    ADLListViewController* lvc = [[ADLListViewController alloc] init];
+    lvc.delegate = self;
+    lvc.listID = listID;
+    lvc.bodyText = [self.agnostic.modelAccess bodyTextForListID:listID];
+    [self.agnostic.modelAccess addListChangedListener:lvc];
+    return [lvc autorelease];
+}
+
 - (void)updateActivePileViewsForSelection:(ADLListID*)currentID {
     ADLListID* currentVisibleID = self.pileController.currentViewController.listID;
     if(![currentVisibleID isEqual:currentID]) {
-        ADLListViewController* lvc = [[ADLListViewController alloc] init];
-        lvc.listID = currentID;
+        ADLListViewController* lvc = [self listViewControllerWithID:currentID];
         self.pileController.currentViewController = lvc;
-        [lvc release];
+        [lvc didActivate];
     }
     
     NSUInteger index = [self.agnostic indexOfListID:currentID];
@@ -104,10 +128,8 @@
         ADLListID* prevVisibleID = self.pileController.prevViewController.listID;
         ADLListID* prevID = [self.agnostic listIDAtIndex:prevIndex];
         if(![prevID isEqual:prevVisibleID]) {
-            ADLListViewController* lvc = [[ADLListViewController alloc] init];
-            lvc.listID = prevID;
+            ADLListViewController* lvc = [self listViewControllerWithID:prevID];
             self.pileController.prevViewController = lvc;
-            [lvc release];
         }
     }
     else if(self.pileController.prevViewController != nil) {
@@ -119,10 +141,8 @@
         ADLListID* nextVisibleID = self.pileController.nextViewController.listID;
         ADLListID* nextID = [self.agnostic listIDAtIndex:nextIndex];
         if(![nextID isEqual:nextVisibleID]) {
-            ADLListViewController* lvc = [[ADLListViewController alloc] init];
-            lvc.listID = nextID;
+            ADLListViewController* lvc = [self listViewControllerWithID:nextID];
             self.pileController.nextViewController = lvc;
-            [lvc release];
         }
     }
     else if(self.pileController.nextViewController != nil) {
@@ -138,9 +158,9 @@
     self.agnostic.modelAccess.selectedListID = newCurrentList.listID;
     
     if(index + 1 < self.agnostic.listIDs.count) {
-        ADLListViewController* lvc = [[ADLListViewController alloc] init];
-        lvc.listID = [self.agnostic listIDAtIndex:index + 1];
-        return [lvc autorelease];
+        ADLListID* listID = [self.agnostic listIDAtIndex:index + 1];
+        ADLListViewController* lvc = [self listViewControllerWithID:listID];
+        return lvc;
     }
     else {
         return nil;
@@ -153,9 +173,9 @@
     self.agnostic.modelAccess.selectedListID = newCurrentList.listID;
     
     if(index > 0) {
-        ADLListViewController* lvc = [[ADLListViewController alloc] init];
-        lvc.listID = [self.agnostic listIDAtIndex:index - 1];
-        return [lvc autorelease];
+        ADLListID* listID = [self.agnostic listIDAtIndex:index - 1];
+        ADLListViewController* lvc = [self listViewControllerWithID:listID];
+        return lvc;
     }
     else {
         return nil;

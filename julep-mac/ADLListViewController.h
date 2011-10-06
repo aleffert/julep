@@ -10,10 +10,23 @@
 
 #import "ADLModelAccess.h"
 
-@class ADLColorView;
+@protocol ADLListViewControllerDelegate;
 
-@interface ADLListViewController : NSViewController
+@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTextViewDelegate>
 
 @property (retain, nonatomic) ADLListID* listID;
+@property (assign, nonatomic) id <ADLListViewControllerDelegate> delegate;
+
+@property (retain, nonatomic) NSString* bodyText;
+
+- (void)didActivate;
+
+@end
+
+
+@protocol ADLListViewControllerDelegate <NSObject>
+
+- (void)listViewControllerWillDealloc:(ADLListViewController*)controller;
+- (void)listViewController:(ADLListViewController*)controller textChangedTo:(NSString*)text;
 
 @end

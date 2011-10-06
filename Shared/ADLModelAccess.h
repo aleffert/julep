@@ -12,6 +12,7 @@
 typedef NSManagedObjectID ADLListID;
 
 @protocol ADLCollectionChangedListener;
+@protocol ADLListChangedListener;
 
 @interface ADLModelAccess : NSObject
 
@@ -26,9 +27,15 @@ typedef NSManagedObjectID ADLListID;
 - (void)deleteListWithID:(ADLListID*)listID;
 
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
+- (void)setText:(NSString*)text ofList:(ADLListID*)listID;
 
 - (void)addCollectionChangedListener:(id <ADLCollectionChangedListener>)listener;
 - (void)removeCollectionChangedListener:(id <ADLCollectionChangedListener>)listener;
+
+- (void)addListChangedListener:(id <ADLListChangedListener>)listener;
+- (void)removeListChangedListener:(id <ADLListChangedListener>)listener;
+
+- (NSString*)bodyTextForListID:(ADLListID*)listID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
 
@@ -40,5 +47,11 @@ typedef NSManagedObjectID ADLListID;
 @optional
 - (void)changedListsIDsTo:(NSArray *)newOrder;
 - (void)changedSelectedListIDTo:(ADLListID*)listID;
+
+@end
+
+@protocol ADLListChangedListener <NSObject>
+
+- (void)changedListWithID:(ADLListID *)listID bodyText:(NSString*)bodyText;
 
 @end

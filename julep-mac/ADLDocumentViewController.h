@@ -6,12 +6,14 @@
 //  Copyright 2011 __MyCompanyName__. All rights reserved.
 //
 
-
+#import "ADLListViewController.h"
 #import "ADLPileViewController.h"
 #import "ADLModelAccess.h"
 
-@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener>
+@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener, ADLListViewControllerDelegate>
 
 - (id)initWithModel:(ADLModelAccess*)modelAccess;
+
+- (void)wasAddedToWindow;
 
 @end

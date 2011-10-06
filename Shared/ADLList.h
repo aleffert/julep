@@ -2,7 +2,7 @@
 //  ADLList.h
 //  julep
 //
-//  Created by Akiva Leffert on 9/30/11.
+//  Created by Akiva Leffert on 10/6/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -17,6 +17,7 @@
 @property (nonatomic) BOOL countsForBadge;
 @property (nonatomic) int32_t kind;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * body;
 @property (nonatomic, retain) NSOrderedSet *items;
 @property (nonatomic, retain) ADLListCollection *list;
 @end

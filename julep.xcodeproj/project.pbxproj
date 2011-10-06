@@ -24,7 +24,6 @@
 		7722BF391402A431003498D8 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF371402A431003498D8 /* Credits.rtf */; };
 		7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF3B1402A431003498D8 /* ADLAppDelegate.m */; };
 		7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF3D1402A431003498D8 /* MainMenu.xib */; };
-		7722BF421402A431003498D8 /* julep_mac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */; };
 		7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
 		77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 77262CFB14314AB800392054 /* ADLListsDocument.m */; };
 		772C683D1427D45200CEF932 /* ADLColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C683C1427D45200CEF932 /* ADLColorView.m */; };
@@ -51,6 +50,8 @@
 		778D828D1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */; };
 		778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
 		778D82951433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
+		77B63FBB143E0D7E00739196 /* julep.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */; };
+		77B63FBC143E0D7E00739196 /* julep.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */; };
 		77B986C81402BAB2004A2293 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
 		77B986CD1402C56D004A2293 /* ADLNSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */; };
 		77B986CE1402C56D004A2293 /* ADLNSTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */; };
@@ -97,7 +98,6 @@
 		7722BF3A1402A431003498D8 /* ADLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLAppDelegate.h; sourceTree = "<group>"; };
 		7722BF3B1402A431003498D8 /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
 		7722BF3E1402A431003498D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		7722BF411402A431003498D8 /* julep_mac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = julep_mac.xcdatamodel; sourceTree = "<group>"; };
 		7722BF4B1402A431003498D8 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = Library/Frameworks/CoreServices.framework; sourceTree = DEVELOPER_DIR; };
 		7722BF4D1402A431003498D8 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		7722BF4F1402A431003498D8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
@@ -136,6 +136,7 @@
 		778D82921433F8C90053BC49 /* ADLListCollection+CollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADLListCollection+CollectionAdditions.h"; path = "Shared/ADLListCollection+CollectionAdditions.h"; sourceTree = "<group>"; };
 		778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ADLListCollection+CollectionAdditions.m"; path = "Shared/ADLListCollection+CollectionAdditions.m"; sourceTree = "<group>"; };
 		779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSGestureConstants.h; sourceTree = "<group>"; };
+		77B63FBA143E0D7E00739196 /* julep_mac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = julep_mac.xcdatamodel; sourceTree = "<group>"; };
 		77B986C71402BA9B004A2293 /* ADLScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ADLScrollView.h; path = Shared/ADLScrollView.h; sourceTree = "<group>"; };
 		77B986C91402C14E004A2293 /* ADLTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLTabView.h; path = Shared/ADLTabView.h; sourceTree = "<group>"; };
 		77B986CA1402C56D004A2293 /* ADLNSTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSTabViewController.h; sourceTree = "<group>"; };
@@ -275,6 +276,7 @@
 		7722BF691402A62D003498D8 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */,
 				778D828A1433B77A0053BC49 /* NSArray+ADLAdditions.h */,
 				778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */,
 				778D82891433B4300053BC49 /* Model */,
@@ -298,7 +300,6 @@
 			isa = PBXGroup;
 			children = (
 				7722BF3D1402A431003498D8 /* MainMenu.xib */,
-				7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */,
 				77D8839D14255FD900544311 /* ADLListsWindowController.xib */,
 				77D883931424361B00544311 /* ADLPileViewController.xib */,
 				77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */,
@@ -494,6 +495,7 @@
 				77748AEC14365A680048918F /* ADLItem.m in Sources */,
 				77748AF014365A680048918F /* ADLListCollection.m in Sources */,
 				7709CE26143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
+				77B63FBB143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -503,7 +505,6 @@
 			files = (
 				7722BF351402A431003498D8 /* main.m in Sources */,
 				7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */,
-				7722BF421402A431003498D8 /* julep_mac.xcdatamodeld in Sources */,
 				77B986C81402BAB2004A2293 /* ADLTabController.m in Sources */,
 				77B986CD1402C56D004A2293 /* ADLNSTabViewController.m in Sources */,
 				77B986D21402CCFD004A2293 /* ADLNSTabView.m in Sources */,
@@ -526,6 +527,7 @@
 				77748AF114365A680048918F /* ADLListCollection.m in Sources */,
 				7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
 				7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */,
+				77B63FBC143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,13 +759,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		7722BF401402A431003498D8 /* julep_mac.xcdatamodeld */ = {
+		77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				7722BF411402A431003498D8 /* julep_mac.xcdatamodel */,
+				77B63FBA143E0D7E00739196 /* julep_mac.xcdatamodel */,
 			);
-			currentVersion = 7722BF411402A431003498D8 /* julep_mac.xcdatamodel */;
-			path = julep_mac.xcdatamodeld;
+			currentVersion = 77B63FBA143E0D7E00739196 /* julep_mac.xcdatamodel */;
+			name = julep.xcdatamodeld;
+			path = Shared/julep.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
