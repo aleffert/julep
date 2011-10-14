@@ -8,14 +8,101 @@
 
 #import "ADLAppDelegate.h"
 
+#import "ADLDocumentViewController.h"
+#import "ADLListsDocument.h"
+#import "ADLModelAccess.h"
+
+@interface ADLAppDelegate ()
+
+//@property (retain, nonatomic) UIWindow *window;
+@property (retain, nonatomic) UITabBarController* tabController;
+
+@property (retain, nonatomic) ADLListsDocument* mainDocument;
+@property (retain, nonatomic) ADLDocumentViewController* documentViewController;
+
+- (void)openMainDocument;
+
+@end
+
+static NSString* kADLApplicationName = @"Julep";
+static NSString* kADLMainDocumentName = @"database.julep";
+static NSString* kADLJulepDocumentType = @"julep";
+
 @implementation ADLAppDelegate
 
-@synthesize window = _window;
+@synthesize mainDocument = mMainDocument;
+@synthesize window = mWindow;
+@synthesize tabController = mTabController;
+@synthesize documentViewController = mDocumentViewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    [self.window makeKeyAndVisible];
+    ADLDocumentViewController* dvc = [[ADLDocumentViewController alloc] initWithNibName:nil bundle:nil];
+    dvc.tabBarItem.title = @"Lists";
     // Override point for customization after application launch.
+    self.tabController = [[[UITabBarController alloc] init] autorelease];
+    self.tabController.viewControllers = [NSArray arrayWithObjects:dvc, nil];
+    
+    self.window.rootViewController = self.tabController;
+    self.documentViewController = dvc;
+    
+    [dvc release];
+    
+    [self openMainDocument];
+    
     return YES;
+}
+
+
+- (NSString*)mainDocumentName {
+    return kADLMainDocumentName;
+}
+
+- (NSString*)applicationName {
+    return kADLApplicationName;
+}
+
+- (NSURL*)applicationSupportSubdirectoryURL {
+    NSArray* urls = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask];
+    NSAssert(urls.count > 0, @"Unable to find application support directory");
+    NSURL* appSupportURL = [urls objectAtIndex:0];
+    return [appSupportURL URLByAppendingPathComponent:self.applicationName isDirectory:YES];
+}
+
+- (NSURL*)mainDocumentURL {
+    return [self.applicationSupportSubdirectoryURL URLByAppendingPathComponent:self.mainDocumentName];
+}
+
+- (void)openMainDocument {
+    NSURL* documentURL = self.mainDocumentURL;
+    ADLListsDocument* document = [[ADLListsDocument alloc] initWithFileURL:documentURL];
+    
+    self.mainDocument = document;
+    
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption,
+                             [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
+    document.persistentStoreOptions = options;
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:documentURL.path]) {
+        [document openWithCompletionHandler:^(BOOL success){
+            NSAssert(success, @"Unable to open document");
+            self.documentViewController.modelAccess = document.modelAccess;
+        }];
+    }
+    else {
+        NSError* error = nil;
+        [[NSFileManager defaultManager] createDirectoryAtURL:self.applicationSupportSubdirectoryURL withIntermediateDirectories:YES attributes:nil error:&error];
+        [document saveToURL:documentURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
+            NSAssert(success, @"Unable to do initial save");
+            [document.modelAccess populateDefaults];
+            self.documentViewController.modelAccess = document.modelAccess;
+        }];
+    }
+    
+    [document release];
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

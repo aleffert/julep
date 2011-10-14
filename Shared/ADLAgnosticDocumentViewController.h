@@ -13,9 +13,10 @@
 
 @interface ADLAgnosticDocumentViewController : NSObject <ADLTabControllerDataSource, ADLCollectionChangedListener>
 
+- (id)initWithModel:(ADLModelAccess*)modelAccess;
+
 @property (readonly, retain, nonatomic) ADLModelAccess* modelAccess;
 @property (retain, nonatomic) ADLTabController* tabController;
-
 
 @property (readonly, nonatomic) NSArray* listIDs;
 @property (retain, nonatomic) ADLListID* selectedListID;

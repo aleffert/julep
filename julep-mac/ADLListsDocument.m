@@ -21,6 +21,12 @@
 
 @synthesize modelAccess = mModelAccess;
 
+
+- (void)dealloc {
+    self.modelAccess = nil;
+    [super dealloc];
+}
+
 - (void)makeWindowControllers {
     ADLListsWindowController* windowController = [[ADLListsWindowController alloc] initWithWindowNibName:@"ADLListsWindowController"];
     
@@ -29,14 +35,24 @@
     [windowController release];
 }
 
-- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext {
-   [super setManagedObjectContext:managedObjectContext];
-    NSAssert(self.modelAccess == nil, @"Changing object context on document");
-    self.modelAccess = [[[ADLModelAccess alloc] initWithManagedObjectContext:self.managedObjectContext] autorelease];
+- (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)storeURL ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error{
+    BOOL success = [super configurePersistentStoreCoordinatorForURL:storeURL ofType:fileType modelConfiguration:configuration storeOptions:storeOptions error:error];
+    
+    if(success) {
+        self.modelAccess = [[[ADLModelAccess alloc] initWithManagedObjectContext:self.managedObjectContext] autorelease];
+        self.modelAccess.delegate = self;
+    }
+    
+    return success;
 }
-
 - (BOOL)isDocumentEdited {
     return NO;
+}
+
+- (void)modelDidMutate:(ADLModelAccess *)modelAccess {
+    NSError* error = nil;
+    [self.managedObjectContext save:&error];
+    NSAssert(error == nil, @"Error saving model changes: %@", error);
 }
 
 - (NSApplicationTerminateReply)shouldApplicationTerminate {

@@ -6,6 +6,8 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
+#import <CalendarStore/CalendarStore.h>
+
 #import "ADLAppDelegate.h"
 
 #import "ADLColor.h"
@@ -30,6 +32,22 @@ static NSString* kADLApplicationName = @"Julep";
 static NSString* kADLMainDocumentName = @"database.julep";
 static NSString* kADLJulepDocumentType = @"julep";
 
+@interface CalCalendar(Private)
+
+@property(retain) NSManagedObjectID *managedObjectID;
+
+@end
+
+@interface CalCalendarStore(Private)
+
++ (NSManagedObjectContext*)managedObjectContextForUser;
+
+@end
+
+@interface NSObject(CalPrivateAdditions)
+- (BOOL)shouldDisplayAsReminderCalendar;
+@end
+
 @implementation ADLAppDelegate
 
 @synthesize listsWindowController = mListsWindowController;
@@ -38,6 +56,22 @@ static NSString* kADLJulepDocumentType = @"julep";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self openMainDocument];
+    
+    
+    
+    CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
+    NSArray* calendars = store.calendars;
+    NSManagedObjectContext* context = [CalCalendarStore managedObjectContextForUser];
+    for(CalCalendar* calendar in calendars) {
+        NSManagedObjectID* objectID = [calendar managedObjectID];
+        id managedCalendar = [context objectWithID:objectID];
+        BOOL isReminderCalendar = [managedCalendar shouldDisplayAsReminderCalendar];
+        if(isReminderCalendar) {
+            NSLog(@"cal = %@", calendar);
+        }
+    }
+    NSArray* tasks = [store tasksWithPredicate:[CalCalendarStore taskPredicateWithCalendars:calendars]];
+    NSLog(@"calendars %@, tasks %@", calendars, tasks);
 }
 
 - (NSString*)mainDocumentName {

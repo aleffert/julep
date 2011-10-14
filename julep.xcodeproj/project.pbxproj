@@ -16,9 +16,6 @@
 		77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77225E041401AFA80003ECDE /* InfoPlist.strings */; };
 		77225E081401AFA80003ECDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E071401AFA80003ECDE /* main.m */; };
 		77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */; };
-		77225E0F1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */; };
-		77225E121401AFA80003ECDE /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */; };
-		77225E151401AFA80003ECDE /* ADLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E141401AFA80003ECDE /* ADLViewController.m */; };
 		7722BF331402A431003498D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF311402A431003498D8 /* InfoPlist.strings */; };
 		7722BF351402A431003498D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF341402A431003498D8 /* main.m */; };
 		7722BF391402A431003498D8 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF371402A431003498D8 /* Credits.rtf */; };
@@ -30,16 +27,31 @@
 		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
 		772C68431427E34F00CEF932 /* ADLListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C68411427E34F00CEF932 /* ADLListViewController.m */; };
 		772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772C68421427E34F00CEF932 /* ADLListViewController.xib */; };
-		774520851405809800B993F1 /* NSImage+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 774520841405809800B993F1 /* NSImage+ADLExtensions.m */; };
+		773BBDCC143F8CD5001BCCB6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773BBDCB143F8CD5001BCCB6 /* Foundation.framework */; };
+		773BBDD0143F8CFE001BCCB6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773BBDCE143F8CFE001BCCB6 /* CoreData.framework */; };
+		773BBDD1143F8CFE001BCCB6 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773BBDCF143F8CFE001BCCB6 /* CoreGraphics.framework */; };
+		773BBDD3143F8D1C001BCCB6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 773BBDD2143F8D1C001BCCB6 /* QuartzCore.framework */; };
+		773BBDD7143F91FC001BCCB6 /* ADLDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 773BBDD5143F91FC001BCCB6 /* ADLDocumentViewController.m */; };
+		773BBDD8143F91FC001BCCB6 /* ADLDocumentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773BBDD6143F91FC001BCCB6 /* ADLDocumentViewController.xib */; };
+		773BBDDB143FBB8B001BCCB6 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 773BBDDA143FBB8B001BCCB6 /* ADLListsDocument.m */; };
+		773BBDDC143FBD50001BCCB6 /* ADLModelAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D826614324D540053BC49 /* ADLModelAccess.m */; };
+		773BBDDF143FCCB1001BCCB6 /* ADLUIViewManipulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 773BBDDE143FCCB1001BCCB6 /* ADLUIViewManipulator.m */; };
 		77530FE614229B3200C0645F /* ADLTabSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE414229B3200C0645F /* ADLTabSelected.png */; };
 		77530FE714229B3200C0645F /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
 		77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77530FE814229CF700C0645F /* Cocoa.framework */; };
+		7754A88714489E4200DBE182 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7754A88614489E4200DBE182 /* CalendarStore.framework */; };
+		77613A9B1444D76200382CD3 /* ADLTabSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE414229B3200C0645F /* ADLTabSelected.png */; };
+		77613A9D1444D76400382CD3 /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
 		77748AE814365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
 		77748AE914365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
 		77748AEC14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
 		77748AED14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
 		77748AF014365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
 		77748AF114365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
+		7774F3D21440BE5F0087ADCE /* ADLUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7774F3D11440BE5F0087ADCE /* ADLUIScrollView.m */; };
+		777A225E1440C74100B5307A /* ADLUITabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777A225D1440C74100B5307A /* ADLUITabView.m */; };
+		777A22611440C90A00B5307A /* ADLUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777A22601440C90A00B5307A /* ADLUIView.m */; };
+		777FA10B144264510064DA8A /* ADLPageScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 777FA10A144264510064DA8A /* ADLPageScrollViewController.xib */; };
 		777FC29614082DE900B29B4B /* ADLFloatUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 777FC29514082DE900B29B4B /* ADLFloatUtilities.m */; };
 		777FC29714082DE900B29B4B /* ADLFloatUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 777FC29514082DE900B29B4B /* ADLFloatUtilities.m */; };
 		778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778897661402D33D00493E14 /* QuartzCore.framework */; };
@@ -50,6 +62,11 @@
 		778D828D1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */; };
 		778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
 		778D82951433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */; };
+		77931E761442023D0091BAF7 /* ADLPageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77931E751442023D0091BAF7 /* ADLPageScrollViewController.m */; };
+		779B8C4C1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 779B8C4B1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m */; };
+		779B8C4D1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 779B8C4B1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m */; };
+		779B8C5214440EB00019FD9B /* ADLListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 779B8C5014440EB00019FD9B /* ADLListViewController.m */; };
+		779B8C5314440EB00019FD9B /* ADLListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 779B8C5114440EB00019FD9B /* ADLListViewController.xib */; };
 		77B63FBB143E0D7E00739196 /* julep.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */; };
 		77B63FBC143E0D7E00739196 /* julep.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */; };
 		77B986C81402BAB2004A2293 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
@@ -61,6 +78,8 @@
 		77D883991424383300544311 /* NSShadow+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883981424383300544311 /* NSShadow+ADLExtensions.m */; };
 		77D8839C142545B500544311 /* ADLListsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D8839B142545B500544311 /* ADLListsWindowController.m */; };
 		77D8839E14255FD900544311 /* ADLListsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D8839D14255FD900544311 /* ADLListsWindowController.xib */; };
+		77E49A791440B8A200DEA240 /* ADLUITabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E49A771440B8A200DEA240 /* ADLUITabViewController.m */; };
+		77E49A7A1440B8A200DEA240 /* ADLUITabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77E49A781440B8A200DEA240 /* ADLUITabViewController.xib */; };
 		77E51ADE142FB28B005A445E /* ADLDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -81,10 +100,6 @@
 		77225E091401AFA80003ECDE /* julep-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "julep-Prefix.pch"; sourceTree = "<group>"; };
 		77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLAppDelegate.h; sourceTree = "<group>"; };
 		77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
-		77225E0E1401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPhone.storyboard; sourceTree = "<group>"; };
-		77225E111401AFA80003ECDE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
-		77225E131401AFA80003ECDE /* ADLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLViewController.h; sourceTree = "<group>"; };
-		77225E141401AFA80003ECDE /* ADLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLViewController.m; sourceTree = "<group>"; };
 		7722BF261402A431003498D8 /* Julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7722BF281402A431003498D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		7722BF2B1402A431003498D8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -113,17 +128,34 @@
 		772C68401427E34F00CEF932 /* ADLListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListViewController.h; sourceTree = "<group>"; };
 		772C68411427E34F00CEF932 /* ADLListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListViewController.m; sourceTree = "<group>"; };
 		772C68421427E34F00CEF932 /* ADLListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListViewController.xib; sourceTree = "<group>"; };
-		774520831405809800B993F1 /* NSImage+ADLExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+ADLExtensions.h"; sourceTree = "<group>"; };
-		774520841405809800B993F1 /* NSImage+ADLExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSImage+ADLExtensions.m"; sourceTree = "<group>"; };
+		773BBDCB143F8CD5001BCCB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		773BBDCE143F8CFE001BCCB6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		773BBDCF143F8CFE001BCCB6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		773BBDD2143F8D1C001BCCB6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		773BBDD4143F91FC001BCCB6 /* ADLDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLDocumentViewController.h; sourceTree = "<group>"; };
+		773BBDD5143F91FC001BCCB6 /* ADLDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLDocumentViewController.m; sourceTree = "<group>"; };
+		773BBDD6143F91FC001BCCB6 /* ADLDocumentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLDocumentViewController.xib; sourceTree = "<group>"; };
+		773BBDD9143FBB8B001BCCB6 /* ADLListsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListsDocument.h; path = julep/ADLListsDocument.h; sourceTree = SOURCE_ROOT; };
+		773BBDDA143FBB8B001BCCB6 /* ADLListsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListsDocument.m; path = julep/ADLListsDocument.m; sourceTree = SOURCE_ROOT; };
+		773BBDDD143FCCB1001BCCB6 /* ADLUIViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUIViewManipulator.h; sourceTree = "<group>"; };
+		773BBDDE143FCCB1001BCCB6 /* ADLUIViewManipulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUIViewManipulator.m; sourceTree = "<group>"; };
 		77530FE414229B3200C0645F /* ADLTabSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabSelected.png; path = Resources/ADLTabSelected.png; sourceTree = "<group>"; };
 		77530FE514229B3200C0645F /* ADLTabUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabUnselected.png; path = Resources/ADLTabUnselected.png; sourceTree = "<group>"; };
 		77530FE814229CF700C0645F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		7754A88614489E4200DBE182 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = ../../../../../System/Library/Frameworks/CalendarStore.framework; sourceTree = "<group>"; };
 		77748AE614365A680048918F /* ADLList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLList.h; path = Shared/ADLList.h; sourceTree = SOURCE_ROOT; };
 		77748AE714365A680048918F /* ADLList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLList.m; path = Shared/ADLList.m; sourceTree = SOURCE_ROOT; };
 		77748AEA14365A680048918F /* ADLItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLItem.h; path = Shared/ADLItem.h; sourceTree = SOURCE_ROOT; };
 		77748AEB14365A680048918F /* ADLItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLItem.m; path = Shared/ADLItem.m; sourceTree = SOURCE_ROOT; };
 		77748AEE14365A680048918F /* ADLListCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListCollection.h; path = Shared/ADLListCollection.h; sourceTree = SOURCE_ROOT; };
 		77748AEF14365A680048918F /* ADLListCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListCollection.m; path = Shared/ADLListCollection.m; sourceTree = SOURCE_ROOT; };
+		7774F3D01440BE5F0087ADCE /* ADLUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUIScrollView.h; sourceTree = "<group>"; };
+		7774F3D11440BE5F0087ADCE /* ADLUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUIScrollView.m; sourceTree = "<group>"; };
+		777A225C1440C74100B5307A /* ADLUITabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUITabView.h; sourceTree = "<group>"; };
+		777A225D1440C74100B5307A /* ADLUITabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUITabView.m; sourceTree = "<group>"; };
+		777A225F1440C90A00B5307A /* ADLUIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUIView.h; sourceTree = "<group>"; };
+		777A22601440C90A00B5307A /* ADLUIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUIView.m; sourceTree = "<group>"; };
+		777FA10A144264510064DA8A /* ADLPageScrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLPageScrollViewController.xib; sourceTree = "<group>"; };
 		777FC29514082DE900B29B4B /* ADLFloatUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLFloatUtilities.m; path = Shared/ADLFloatUtilities.m; sourceTree = "<group>"; };
 		777FC29914082F9300B29B4B /* ADLFloatUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLFloatUtilities.h; path = Shared/ADLFloatUtilities.h; sourceTree = "<group>"; };
 		778897661402D33D00493E14 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -135,6 +167,13 @@
 		778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+ADLAdditions.m"; path = "Shared/NSArray+ADLAdditions.m"; sourceTree = "<group>"; };
 		778D82921433F8C90053BC49 /* ADLListCollection+CollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADLListCollection+CollectionAdditions.h"; path = "Shared/ADLListCollection+CollectionAdditions.h"; sourceTree = "<group>"; };
 		778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ADLListCollection+CollectionAdditions.m"; path = "Shared/ADLListCollection+CollectionAdditions.m"; sourceTree = "<group>"; };
+		77931E741442023D0091BAF7 /* ADLPageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLPageScrollViewController.h; sourceTree = "<group>"; };
+		77931E751442023D0091BAF7 /* ADLPageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLPageScrollViewController.m; sourceTree = "<group>"; };
+		779B8C4A1443E9DE0019FD9B /* NSDictionary+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+ADLAdditions.h"; path = "Shared/NSDictionary+ADLAdditions.h"; sourceTree = "<group>"; };
+		779B8C4B1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+ADLAdditions.m"; path = "Shared/NSDictionary+ADLAdditions.m"; sourceTree = "<group>"; };
+		779B8C4F14440EB00019FD9B /* ADLListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListViewController.h; sourceTree = "<group>"; };
+		779B8C5014440EB00019FD9B /* ADLListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListViewController.m; sourceTree = "<group>"; };
+		779B8C5114440EB00019FD9B /* ADLListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListViewController.xib; sourceTree = "<group>"; };
 		779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSGestureConstants.h; sourceTree = "<group>"; };
 		77B63FBA143E0D7E00739196 /* julep_mac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = julep_mac.xcdatamodel; sourceTree = "<group>"; };
 		77B986C71402BA9B004A2293 /* ADLScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ADLScrollView.h; path = Shared/ADLScrollView.h; sourceTree = "<group>"; };
@@ -152,8 +191,12 @@
 		77D8839A142545B500544311 /* ADLListsWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsWindowController.h; sourceTree = "<group>"; };
 		77D8839B142545B500544311 /* ADLListsWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsWindowController.m; sourceTree = "<group>"; };
 		77D8839D14255FD900544311 /* ADLListsWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListsWindowController.xib; sourceTree = "<group>"; };
+		77E49A761440B8A200DEA240 /* ADLUITabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUITabViewController.h; sourceTree = "<group>"; };
+		77E49A771440B8A200DEA240 /* ADLUITabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUITabViewController.m; sourceTree = "<group>"; };
+		77E49A781440B8A200DEA240 /* ADLUITabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLUITabViewController.xib; sourceTree = "<group>"; };
 		77E51ADA142FB27C005A445E /* ADLDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLDocumentViewController.h; sourceTree = "<group>"; };
 		77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLDocumentViewController.m; sourceTree = "<group>"; };
+		77E6F75B1440D46400CC7DDF /* ADLUIGestureConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUIGestureConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +204,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				773BBDD0143F8CFE001BCCB6 /* CoreData.framework in Frameworks */,
+				773BBDD3143F8D1C001BCCB6 /* QuartzCore.framework in Frameworks */,
+				773BBDD1143F8CFE001BCCB6 /* CoreGraphics.framework in Frameworks */,
+				773BBDCC143F8CD5001BCCB6 /* Foundation.framework in Frameworks */,
 				77225DFE1401AFA80003ECDE /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,6 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7754A88714489E4200DBE182 /* CalendarStore.framework in Frameworks */,
 				77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */,
 				778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */,
 			);
@@ -180,6 +228,7 @@
 		77225DEE1401AFA80003ECDE = {
 			isa = PBXGroup;
 			children = (
+				7754A88614489E4200DBE182 /* CalendarStore.framework */,
 				77225E011401AFA80003ECDE /* julep */,
 				7722BF2E1402A431003498D8 /* julep-mac */,
 				7722BF691402A62D003498D8 /* Shared */,
@@ -200,7 +249,7 @@
 		77225DFC1401AFA80003ECDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				77225DFD1401AFA80003ECDE /* UIKit.framework */,
+				773BBDCD143F8CE6001BCCB6 /* iOS */,
 				77530FEA14229D0700C0645F /* Desktop */,
 				7722BF281402A431003498D8 /* Cocoa.framework */,
 				7722BF4B1402A431003498D8 /* CoreServices.framework */,
@@ -216,10 +265,11 @@
 			children = (
 				77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */,
 				77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */,
-				77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */,
-				77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */,
-				77225E131401AFA80003ECDE /* ADLViewController.h */,
-				77225E141401AFA80003ECDE /* ADLViewController.m */,
+				77E6F75B1440D46400CC7DDF /* ADLUIGestureConstants.h */,
+				773BBDD9143FBB8B001BCCB6 /* ADLListsDocument.h */,
+				773BBDDA143FBB8B001BCCB6 /* ADLListsDocument.m */,
+				777A225B1440BF4A00B5307A /* Views */,
+				7774F3CF1440BBBE0087ADCE /* Main View */,
 				77225E021401AFA80003ECDE /* Supporting Files */,
 			);
 			path = julep;
@@ -252,6 +302,8 @@
 				7722BF3A1402A431003498D8 /* ADLAppDelegate.h */,
 				7722BF3B1402A431003498D8 /* ADLAppDelegate.m */,
 				779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */,
+				77262CFA14314AB800392054 /* ADLListsDocument.h */,
+				77262CFB14314AB800392054 /* ADLListsDocument.m */,
 				7770675F140830850088AB85 /* Views */,
 				7745208A140585C300B993F1 /* Utilities */,
 				7722BF2F1402A431003498D8 /* Supporting Files */,
@@ -277,6 +329,8 @@
 			isa = PBXGroup;
 			children = (
 				77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */,
+				779B8C4A1443E9DE0019FD9B /* NSDictionary+ADLAdditions.h */,
+				779B8C4B1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m */,
 				778D828A1433B77A0053BC49 /* NSArray+ADLAdditions.h */,
 				778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */,
 				778D82891433B4300053BC49 /* Model */,
@@ -294,6 +348,18 @@
 				7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		773BBDCD143F8CE6001BCCB6 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				773BBDD2143F8D1C001BCCB6 /* QuartzCore.framework */,
+				773BBDCB143F8CD5001BCCB6 /* Foundation.framework */,
+				773BBDCE143F8CFE001BCCB6 /* CoreData.framework */,
+				773BBDCF143F8CFE001BCCB6 /* CoreGraphics.framework */,
+				77225DFD1401AFA80003ECDE /* UIKit.framework */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		77452089140585AF00B993F1 /* Resources */ = {
@@ -314,8 +380,6 @@
 		7745208A140585C300B993F1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				774520831405809800B993F1 /* NSImage+ADLExtensions.h */,
-				774520841405809800B993F1 /* NSImage+ADLExtensions.m */,
 				77D883971424383300544311 /* NSShadow+ADLExtensions.h */,
 				77D883981424383300544311 /* NSShadow+ADLExtensions.m */,
 			);
@@ -338,6 +402,8 @@
 				7721D8191402DBF90008A02D /* ADLNSScrollView.m */,
 				7721D81C1402DDA20008A02D /* ADLNSViewManipulator.h */,
 				7721D81D1402DDA20008A02D /* ADLNSViewManipulator.m */,
+				77D883911424361A00544311 /* ADLPileViewController.h */,
+				77D883921424361A00544311 /* ADLPileViewController.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -347,8 +413,6 @@
 			children = (
 				7709CE33143BAF4D002DB3B6 /* ADLListsPileViewController.h */,
 				7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */,
-				77D883911424361A00544311 /* ADLPileViewController.h */,
-				77D883921424361A00544311 /* ADLPileViewController.m */,
 				772C683B1427D45200CEF932 /* ADLColorView.h */,
 				772C683C1427D45200CEF932 /* ADLColorView.m */,
 				77E51ADA142FB27C005A445E /* ADLDocumentViewController.h */,
@@ -361,10 +425,42 @@
 				77D8839B142545B500544311 /* ADLListsWindowController.m */,
 				772C68401427E34F00CEF932 /* ADLListViewController.h */,
 				772C68411427E34F00CEF932 /* ADLListViewController.m */,
-				77262CFA14314AB800392054 /* ADLListsDocument.h */,
-				77262CFB14314AB800392054 /* ADLListsDocument.m */,
 			);
 			name = "Main View";
+			sourceTree = "<group>";
+		};
+		7774F3CF1440BBBE0087ADCE /* Main View */ = {
+			isa = PBXGroup;
+			children = (
+				779B8C4F14440EB00019FD9B /* ADLListViewController.h */,
+				779B8C5014440EB00019FD9B /* ADLListViewController.m */,
+				779B8C5114440EB00019FD9B /* ADLListViewController.xib */,
+				777A225C1440C74100B5307A /* ADLUITabView.h */,
+				777A225D1440C74100B5307A /* ADLUITabView.m */,
+				773BBDD4143F91FC001BCCB6 /* ADLDocumentViewController.h */,
+				773BBDD5143F91FC001BCCB6 /* ADLDocumentViewController.m */,
+				773BBDD6143F91FC001BCCB6 /* ADLDocumentViewController.xib */,
+				77E49A761440B8A200DEA240 /* ADLUITabViewController.h */,
+				77E49A771440B8A200DEA240 /* ADLUITabViewController.m */,
+				77E49A781440B8A200DEA240 /* ADLUITabViewController.xib */,
+			);
+			name = "Main View";
+			sourceTree = "<group>";
+		};
+		777A225B1440BF4A00B5307A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				777A225F1440C90A00B5307A /* ADLUIView.h */,
+				777A22601440C90A00B5307A /* ADLUIView.m */,
+				77931E741442023D0091BAF7 /* ADLPageScrollViewController.h */,
+				77931E751442023D0091BAF7 /* ADLPageScrollViewController.m */,
+				777FA10A144264510064DA8A /* ADLPageScrollViewController.xib */,
+				7774F3D01440BE5F0087ADCE /* ADLUIScrollView.h */,
+				7774F3D11440BE5F0087ADCE /* ADLUIScrollView.m */,
+				773BBDDD143FCCB1001BCCB6 /* ADLUIViewManipulator.h */,
+				773BBDDE143FCCB1001BCCB6 /* ADLUIViewManipulator.m */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 		778D82891433B4300053BC49 /* Model */ = {
@@ -453,8 +549,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */,
-				77225E0F1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard in Resources */,
-				77225E121401AFA80003ECDE /* MainStoryboard_iPad.storyboard in Resources */,
+				773BBDD8143F91FC001BCCB6 /* ADLDocumentViewController.xib in Resources */,
+				77E49A7A1440B8A200DEA240 /* ADLUITabViewController.xib in Resources */,
+				777FA10B144264510064DA8A /* ADLPageScrollViewController.xib in Resources */,
+				779B8C5314440EB00019FD9B /* ADLListViewController.xib in Resources */,
+				77613A9B1444D76200382CD3 /* ADLTabSelected.png in Resources */,
+				77613A9D1444D76400382CD3 /* ADLTabUnselected.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,10 +584,8 @@
 			files = (
 				77225E081401AFA80003ECDE /* main.m in Sources */,
 				77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */,
-				77225E151401AFA80003ECDE /* ADLViewController.m in Sources */,
 				7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */,
 				7788976B1402D39600493E14 /* ADLColor.m in Sources */,
-				774520851405809800B993F1 /* NSImage+ADLExtensions.m in Sources */,
 				777FC29614082DE900B29B4B /* ADLFloatUtilities.m in Sources */,
 				778D828C1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */,
 				778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */,
@@ -496,6 +594,17 @@
 				77748AF014365A680048918F /* ADLListCollection.m in Sources */,
 				7709CE26143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
 				77B63FBB143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
+				773BBDD7143F91FC001BCCB6 /* ADLDocumentViewController.m in Sources */,
+				773BBDDB143FBB8B001BCCB6 /* ADLListsDocument.m in Sources */,
+				773BBDDC143FBD50001BCCB6 /* ADLModelAccess.m in Sources */,
+				773BBDDF143FCCB1001BCCB6 /* ADLUIViewManipulator.m in Sources */,
+				77E49A791440B8A200DEA240 /* ADLUITabViewController.m in Sources */,
+				7774F3D21440BE5F0087ADCE /* ADLUIScrollView.m in Sources */,
+				777A225E1440C74100B5307A /* ADLUITabView.m in Sources */,
+				777A22611440C90A00B5307A /* ADLUIView.m in Sources */,
+				77931E761442023D0091BAF7 /* ADLPageScrollViewController.m in Sources */,
+				779B8C4C1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */,
+				779B8C5214440EB00019FD9B /* ADLListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +637,7 @@
 				7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
 				7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */,
 				77B63FBC143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
+				779B8C4D1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,22 +650,6 @@
 				77225E051401AFA80003ECDE /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		77225E0D1401AFA80003ECDE /* MainStoryboard_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				77225E0E1401AFA80003ECDE /* en */,
-			);
-			name = MainStoryboard_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		77225E101401AFA80003ECDE /* MainStoryboard_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				77225E111401AFA80003ECDE /* en */,
-			);
-			name = MainStoryboard_iPad.storyboard;
 			sourceTree = "<group>";
 		};
 		7722BF311402A431003498D8 /* InfoPlist.strings */ = {
@@ -638,10 +732,8 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "julep/julep-Info.plist";
 				PRODUCT_NAME = Julep;
@@ -657,10 +749,8 @@
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep/julep-Prefix.pch";
-				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
-				GCC_WARN_MULTIPLE_DEFINITION_TYPES_FOR_SELECTOR = YES;
 				GCC_WARN_SHADOW = YES;
 				INFOPLIST_FILE = "julep/julep-Info.plist";
 				PRODUCT_NAME = Julep;

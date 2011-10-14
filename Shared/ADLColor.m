@@ -21,9 +21,13 @@
 - (ADLColor*)initWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)a {
     self = [super init];
     if(self) {
+#if TARGET_OS_IPHONE
+        self.CGColor = [UIColor colorWithRed:r green:g blue:b alpha:a].CGColor;
+#else
         CGColorRef color = CGColorCreateGenericRGB(r, g, b, a);
         self.CGColor = color;
         CGColorRelease(color);
+#endif
     }
     return self;
 }
@@ -58,7 +62,7 @@
     return [[[self alloc] initWithCGColor:color] autorelease];
 }
 
-#if TARGET_OS_MAC
+#if !TARGET_OS_IPHONE
 
 static void ADLDrawPatternImage (void *info, CGContextRef ctx)
 {

@@ -8,9 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class ADLModelAccess;
+#import "ADLModelAccess.h"
 
-@interface ADLListsDocument : NSPersistentDocument
+@interface ADLListsDocument : NSPersistentDocument <ADLModelAccessDelegate>
 
 - (NSApplicationTerminateReply)shouldApplicationTerminate;
 

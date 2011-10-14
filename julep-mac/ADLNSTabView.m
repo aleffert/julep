@@ -11,7 +11,6 @@
 #import "ADLColor.h"
 #import "ADLNSGestureConstants.h"
 #import "NSShadow+ADLExtensions.h"
-#import "NSImage+ADLExtensions.h"
 
 @interface ADLNSTabView ()
 
@@ -112,6 +111,8 @@
         [self.delegate shouldChangeTitleOfTab:self to:newTitle];
     }
 }
+
+#pragma mark Touch Interaction
 
 - (void)cancelDragTimer {
     [self.dragTimer invalidate];

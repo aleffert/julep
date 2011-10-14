@@ -195,7 +195,7 @@
         [viewManipulator orderViewFront:self.currentlyDraggingTab];
     }
     
-    [self.delegate updateSizeForContentWidth:accumulatedWidth];
+    [self.delegate updateSizeForContentWidth:accumulatedWidth + 15];
 }
 
 - (void)layoutSubviews {
@@ -274,7 +274,9 @@
 - (void)cancelDraggingTab:(id <ADLTabView>)tab {
     self.reorderedTabs = nil;
     self.currentlyDraggingTab = nil;
-    [self layoutSubviews];
+    [self.delegate.viewManipulator performAnimations:^(void) {
+        [self layoutSubviews];
+    } duration:.2];
 }
 
 @end

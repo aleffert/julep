@@ -24,6 +24,5 @@
 
 - (void)performAnimations:(void (^)(void))animations duration:(NSTimeInterval)duration;
 - (void)performAnimations:(void (^)(void))animations completion:(void (^)(void))completion duration:(NSTimeInterval)duration;
-- (NSTimeInterval)animationDuration;
 
 @end

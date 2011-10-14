@@ -38,6 +38,7 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 @synthesize defaultCollectionID = mDefaultCollectionID;
 @synthesize collectionChangedListeners = mCollectionChangedListeners;
 @synthesize listChangedListeners = mListChangedListeners;
+@synthesize delegate = mDelegate;
 
 - (ADLModelAccess*)initWithManagedObjectContext:(NSManagedObjectContext*)context {
     self = [super init];
@@ -80,10 +81,8 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 }
 
 - (void)performMutation:(void (^)(void))mutator {
-    NSError* error = nil;
     mutator();
-    [self.managedObjectContext save:&error];
-    NSAssert(error == nil, @"Error saving model changes: %@", error);
+    [self.delegate modelDidMutate:self];
 }
 
 - (ADLListCollection*)defaultCollection {
@@ -261,7 +260,7 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
         return nil;
     }
     else {
-        NSURL* url = [NSUnarchiver unarchiveObjectWithData:data];
+        NSURL* url = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         NSPersistentStoreCoordinator* persistentStoreCoordinator = self.managedObjectContext.persistentStoreCoordinator;
         NSManagedObjectID* currentListID = [persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
         return currentListID;
@@ -271,7 +270,7 @@ static NSString* kADLCollectionEntityName = @"ListCollection";
 - (void)setSelectedListID:(ADLListID*)listID {
     ADLListID* currentListID = [self currentlySavedListID];
     if(![currentListID isEqual:listID]) {
-        NSData* data = [NSArchiver archivedDataWithRootObject:listID.URIRepresentation];
+        NSData* data = [NSKeyedArchiver archivedDataWithRootObject:listID.URIRepresentation];
         [[NSUserDefaults standardUserDefaults] setObject:data forKey:kADLSelectedListKey];
         for(id <ADLCollectionChangedListener> listener in self.collectionChangedListeners) {
             if([listener respondsToSelector:@selector(changedSelectedListIDTo:)]) {
