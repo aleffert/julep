@@ -12,7 +12,11 @@
 
 #import "ADLNSScrollView.h"
 
-@interface ADLNSTabViewController : NSViewController <ADLTabControllerDelegate>
+@interface ADLNSTabViewController : NSViewController <ADLTabControllerDelegate> {
+    ADLNSScrollView* mScrollView;
+    ADLTabController* mAgnostic;
+    id <ADLViewManipulator> mViewManipulator;
+}
 
 - (id)initWithDataSource:(id <ADLTabControllerDataSource>)dataSource;
 

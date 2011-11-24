@@ -8,21 +8,21 @@
 
 #import "ADLListViewController.h"
 
+#import "ADLItemView.h"
+
 @interface ADLListViewController ()
 
-@property (retain, nonatomic) NSTextView* textView;
-@property (retain, nonatomic) NSString* savedBodyText;
-@property (assign, nonatomic) BOOL hasChanges;
+@property (retain, nonatomic) NSTableView* tableView;
 
 @end
 
 @implementation ADLListViewController
 
 @synthesize listID = mListID;
-@synthesize textView = mTextView;
 @synthesize delegate = mDelegate;
-@synthesize savedBodyText = mSavedBodyText;
-@synthesize hasChanges = mHasChanges;
+@synthesize modelAccess = mModelAccess;
+@synthesize tableView = mTableView;
+@synthesize items = mItems;
 
 - (id)init {
     if((self = [super initWithNibName:@"ADLListViewController" bundle:nil])) {
@@ -32,11 +32,7 @@
 }
 
 - (void)dealloc {
-    if(self.hasChanges) {
-        [self.delegate listViewController:self textChangedTo:self.textView.textStorage.string];
-    }
     [self.delegate listViewControllerWillDealloc:self];
-    self.textView = nil;
     [super dealloc];
 }
 
@@ -45,7 +41,6 @@
     
     NSScrollView *scrollview = [[NSScrollView alloc] initWithFrame:self.view.bounds];
     scrollview.wantsLayer = YES;
-    NSSize contentSize = [scrollview contentSize];
     
     scrollview.borderType = NSNoBorder;
     scrollview.hasVerticalScroller = YES;
@@ -53,44 +48,25 @@
     scrollview.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     scrollview.verticalScrollElasticity = NSScrollElasticityAllowed;
     
-    self.textView = [[[NSTextView alloc] initWithFrame:self.view.bounds] autorelease];
-    self.textView.wantsLayer = YES;
-    self.textView.verticallyResizable = YES;
-    self.textView.horizontallyResizable = NO;
-    self.textView.minSize = CGSizeMake(0, contentSize.height);
-    self.textView.maxSize = CGSizeMake(FLT_MAX, FLT_MAX);
-    self.textView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-    self.textView.textContainer.containerSize = NSMakeSize(contentSize.width, FLT_MAX);
-    self.textView.textContainer.widthTracksTextView = YES;
-    scrollview.documentView = self.textView;
-    
-    if(self.savedBodyText != nil) {
-        self.bodyText = self.savedBodyText;
-        self.savedBodyText = nil;
-    }
-    
-    self.textView.delegate = self;
-    
     [self.view addSubview:scrollview];
     
+    NSTableView* tableView = [[NSTableView alloc] initWithFrame:self.view.bounds];
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    tableView.headerView = nil;
+    tableView.allowsMultipleSelection = YES;
+    
+    NSTableColumn* column = [[NSTableColumn alloc] initWithIdentifier:@"main column"];
+    column.resizingMask = NSTableColumnAutoresizingMask;
+    column.width = self.view.frame.size.width;
+    [tableView addTableColumn:column];
+    
+    [scrollview setDocumentView:tableView];
+    self.tableView = tableView;
+    
+    [column release];
+    [tableView release];
     [scrollview release];
-}
-
-- (void)didActivate {
-    NSAssert(self.textView != nil, @"Text view not initialized");
-    [self.textView.window makeFirstResponder:self.textView];
-    self.textView.window.initialFirstResponder = self.textView;
-}
-
-- (void)textDidChange:(NSNotification *)notification {
-    self.hasChanges = YES;
-}
-
-- (void)textDidEndEditing:(NSNotification*)notification {
-    if(self.hasChanges) {
-        [self.delegate  listViewController:self textChangedTo:self.textView.textStorage.string];
-        self.hasChanges = NO;
-    }
 }
 
 - (void)loadView {
@@ -98,22 +74,81 @@
     [self viewDidLoad];
 }
 
-- (void)setBodyText:(NSString *)bodyText {
-    if(self.textView == nil) {
-        self.savedBodyText = bodyText;
-    }
-    NSRange textRange = NSMakeRange(0, self.textView.textStorage.length);
-    [self.textView.textStorage replaceCharactersInRange:textRange withString:bodyText];
+- (void)didActivate {
+    [self.tableView becomeFirstResponder];
 }
 
-- (NSString*)bodyText {
-    return self.textView.textStorage.string;
+- (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
+    NSMutableIndexSet* addingItems = [NSMutableIndexSet indexSet];
+    NSMutableIndexSet* deletingItems = [NSMutableIndexSet indexSet];
+    
+    [self.tableView beginUpdates];
+    for(ADLItemID* itemID in newOrder) {
+        NSUInteger index = [self.items indexOfObject:itemID];
+        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+        if(index == NSNotFound) {
+            [addingItems addIndex:newIndex];
+        }
+    }
+    
+    for(ADLItemID* itemID in self.items) {
+        NSUInteger index = [self.items indexOfObject:itemID];
+        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+        if(newIndex == NSNotFound) {
+            [deletingItems addIndex:index];
+        }
+    }
+    
+    self.items = newOrder;
+    
+    [self.tableView removeRowsAtIndexes:deletingItems withAnimation:NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectGap];
+    [self.tableView insertRowsAtIndexes:addingItems withAnimation:NSTableViewAnimationSlideRight | NSTableViewAnimationEffectGap];
+    
+    // Do the move after insert/remove so the post indices are correct
+    for(ADLItemID* itemID in newOrder) {
+        NSUInteger index = [self.items indexOfObject:itemID];
+        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+        if(index != NSNotFound && index != newIndex) {
+            [self.tableView moveRowAtIndex:index toIndex:newIndex];
+        }
+    }
+    
+    [self.tableView endUpdates];
+    
+    [self.tableView enumerateAvailableRowViewsUsingBlock:^(NSTableRowView* rowView, NSInteger rowIndex) {
+        ADLItemView* itemView = [rowView viewAtColumn:0];
+        NSAssert([newOrder containsObject:itemView.item], @"Updating item not in new list");
+        itemView.title = [self.modelAccess titleOfItem:itemView.item];
+        itemView.checked = [self.modelAccess completionStatusOfItem:itemView.item];
+    }];
 }
 
-- (void)changedListWithID:(ADLListID *)listID bodyText:(NSString*)bodyText {
-    if([listID isEqual: self.listID] && ![self.textView.string isEqualToString:bodyText]) {
-        self.bodyText = bodyText;
-    }
+#pragma mark Data Source
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return self.items.count;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    ADLItemID* item = [self.items objectAtIndex:row];
+    ADLItemView* itemView = [[ADLItemView alloc] initWithFrame:NSMakeRect(0, 0, tableView.bounds.size.width, 90)];
+    
+    itemView.item = item;
+    itemView.title = [self.modelAccess titleOfItem:item];
+    itemView.checked = [self.modelAccess completionStatusOfItem:item];
+    itemView.delegate = self;
+    
+    return itemView;
+}
+
+#pragma mark Item View Delegate
+
+- (void)itemView:(ADLItemView *)itemView changedTitle:(NSString *)item {
+    [self.modelAccess setTitle:item ofItem:itemView.item];
+}
+
+- (void)itemView:(ADLItemView *)itemView changedCompletionStatus:(BOOL)status {
+    [self.modelAccess setCompletionStatus:status ofItem:itemView.item];
 }
 
 @end

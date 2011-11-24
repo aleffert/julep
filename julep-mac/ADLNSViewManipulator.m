@@ -16,9 +16,7 @@
 
 static NSString* kADLNSViewManipulatorFinalValuesKey = @"kADLNSViewManipulatorFinalValuesKey";
 
-@interface ADLNSViewManipulator () {
-    volatile int32_t mAnimationCount;
-}
+@interface ADLNSViewManipulator ()
 
 @property (readonly, nonatomic, getter = isAnimating) BOOL animating;
 - (void)incrementAnimationDepth;
@@ -79,14 +77,14 @@ static NSString* kADLNSViewManipulatorFinalValuesKey = @"kADLNSViewManipulatorFi
         return NSRectToCGRect(nsView.frame);
     }
     else {
-        return [savedFrame rectValue];
+        return NSRectToCGRect([savedFrame rectValue]);
     }
 }
 - (void)setFrame:(CGRect)frame ofView:(id <ADLView>)view {
     NSView* nsView = [self coerceViewIncludingAnimation:view];
     nsView.frame = NSRectFromCGRect(frame);
     if(self.animating) {
-        [self setFinalValue:[NSValue valueWithRect:frame] forKey:@"frame" ofView:view];
+        [self setFinalValue:[NSValue valueWithRect:NSRectFromCGRect(frame)] forKey:@"frame" ofView:view];
     }
     else {
         [self clearFinalValueForKey:@"frame" ofView:view];
@@ -106,7 +104,7 @@ static NSString* kADLNSViewManipulatorFinalValuesKey = @"kADLNSViewManipulatorFi
     if(!ADLFloatsAlmostEqual(documentSize.width, size.width) || !ADLFloatsAlmostEqual(documentSize.height, size.height)) {
         documentFrame.size.width = size.width;
         documentFrame.size.height = size.height;
-        [nsScrollView.documentView setFrame:documentFrame];
+        [nsScrollView.documentView setFrame:NSRectFromCGRect(documentFrame)];
     }
 }
 

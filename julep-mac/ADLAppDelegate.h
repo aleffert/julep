@@ -8,6 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLAppDelegate : NSObject <NSApplicationDelegate>
+@class ADLListsDocument;
+@class ADLListsWindowController;
+
+@interface ADLAppDelegate : NSObject <NSApplicationDelegate> {
+    ADLListsDocument* mMainDocument;
+    ADLListsWindowController* mListsWindowController;
+}
 
 @end

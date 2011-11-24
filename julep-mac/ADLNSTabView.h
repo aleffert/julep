@@ -12,7 +12,16 @@
 
 @protocol ADLTabViewDelegate;
 
-@interface ADLNSTabView : NSView <ADLTabView, NSTextFieldDelegate>
+@interface ADLNSTabView : NSView <ADLTabView, NSTextFieldDelegate> {
+    CALayer* mBackgroundLayer;
+    NSTextField* mTitleView;
+    NSPoint mCurrentDragLocation;
+    id <ADLTabViewDelegate> mDelegate;
+    BOOL mDragging;
+    NSTimer* mDragTimer;
+    NSString* mTitle;
+    BOOL mSelected;
+}
 
 @property (assign, nonatomic) id <ADLTabViewDelegate> delegate;
 

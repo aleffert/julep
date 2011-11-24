@@ -19,7 +19,7 @@
 
 @property (retain, nonatomic) NSTimer* dragTimer;
 @property (assign, nonatomic, getter = isDragging) BOOL dragging;
-@property (assign, nonatomic) CGPoint currentDragLocation;
+@property (assign, nonatomic) NSPoint currentDragLocation;
 - (void)updateAppearance;
 - (void)dragBegan:(NSTimer*)timer;
 - (void)dragEnded;
@@ -53,7 +53,7 @@
         [self updateAppearance];
         [self.layer addSublayer:self.backgroundLayer];
         
-        self.titleView = [[[NSTextField alloc] initWithFrame:CGRectInset(self.bounds, 8, 4)] autorelease];
+        self.titleView = [[[NSTextField alloc] initWithFrame:NSInsetRect(self.bounds, 8, 4)] autorelease];
         self.titleView.bezeled = NO;
         self.titleView.backgroundColor = [NSColor clearColor];
         self.titleView.alignment = NSCenterTextAlignment;
@@ -77,9 +77,9 @@
 }
 
 - (void)setTitle:(NSString *)newTitle {
-    [newTitle retain];
+    NSString* temp = [newTitle copy];
     [mTitle release];
-    mTitle = newTitle;
+    mTitle = temp;
     
     self.titleView.stringValue = newTitle;
 }
@@ -154,8 +154,8 @@
 
 - (void)mouseDragged:(NSEvent *)theEvent {
     if(self.dragging) {
-        CGPoint newLocation = theEvent.locationInWindow;
-        CGPoint parentLocation = [self.superview convertPoint:newLocation fromView:nil];
+        NSPoint newLocation = theEvent.locationInWindow;
+        NSPoint parentLocation = [self.superview convertPoint:newLocation fromView:nil];
         CGFloat delta = newLocation.x - self.currentDragLocation.x;
         [self.delegate draggedTab:self toParentLocation:parentLocation.x withDelta:delta];
         

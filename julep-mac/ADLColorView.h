@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface ADLColorView : NSView
+@interface ADLColorView : NSView {
+    CALayer* mColorLayer;
+}
 
 @property (assign, nonatomic) CGColorRef backgroundColor;
 

@@ -56,22 +56,22 @@ const static CGFloat kADLNSTabHeight = 28.;
 - (void)updateSizeForContentWidth:(CGFloat)width {
     width = MAX(width, self.scrollView.frame.size.width);
     
-    CGRect frame = self.view.frame;
+    NSRect frame = self.view.frame;
     CGFloat currentTop = NSMaxY(frame);
     frame.origin.y = currentTop - kADLNSTabHeight;
     frame.size.height = kADLNSTabHeight;
     self.view.frame = frame;
     
     NSView* bodyView = self.scrollView.documentView;
-    CGRect bodyFrame = bodyView.frame;
+    NSRect bodyFrame = bodyView.frame;
     bodyFrame.size.width = width;
     bodyFrame.size.height = kADLNSTabHeight;
     bodyView.frame = bodyFrame;
 }
 
 - (void)animateInTabView:(id <ADLTabView>)tabView {
-    CGRect endFrame = [self.viewManipulator frameOfView:tabView];
-    CGRect startFrame = endFrame;
+    NSRect endFrame = NSRectFromCGRect([self.viewManipulator frameOfView:tabView]);
+    NSRect startFrame = endFrame;
     startFrame.origin.y -= self.view.frame.size.height;
     NSViewAnimation* animation = [[NSViewAnimation alloc] initWithViewAnimations:
                                   [NSArray arrayWithObject:[NSDictionary dictionaryWithObjectsAndKeys:

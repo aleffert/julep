@@ -10,7 +10,15 @@
 #import "ADLPileViewController.h"
 #import "ADLModelAccess.h"
 
-@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener, ADLListViewControllerDelegate>
+@class ADLNSTabViewController;
+@class ADLListsPileViewController;
+@class ADLAgnosticDocumentViewController;
+
+@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener, ADLListViewControllerDelegate> {
+    ADLNSTabViewController* mTabController;
+    ADLListsPileViewController* mPileController;
+    ADLAgnosticDocumentViewController* mAgnostic;
+}
 
 - (id)initWithModel:(ADLModelAccess*)modelAccess;
 

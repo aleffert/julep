@@ -18,7 +18,16 @@
 @protocol ADLTabControllerDelegate;
 @protocol ADLTabControllerDataSource;
 
-@interface ADLTabController : NSObject <ADLTabViewDelegate>
+@interface ADLTabController : NSObject <ADLTabViewDelegate> {
+    id <ADLTabView> mCurrentlyDraggingTab;
+    NSMutableArray* mReorderedTabs;
+    id <ADLTabView> mSelectedTab;
+    id <ADLTabControllerDataSource> mDataSource;
+    id <ADLTabControllerDelegate> mDelegate;
+    NSArray* mTabs;
+    NSArray* mTabInfos;
+    id mSelectedInfo;
+}
 
 - (id)initWithDelegate:(id <ADLTabControllerDelegate>)newDelegate dataSource:(id <ADLTabControllerDataSource>)newDataSource;
 

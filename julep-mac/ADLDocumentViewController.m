@@ -14,8 +14,11 @@
 #import "ADLListsPileViewController.h"
 #import "ADLListViewController.h"
 #import "ADLModelAccess.h"
+#import "ADLNewItemViewController.h"
 #import "ADLNSTabViewController.h"
 #import "ADLNSViewManipulator.h"
+
+#import "NSArray+ADLAdditions.h"
 
 @interface ADLDocumentViewController ()
 
@@ -73,17 +76,17 @@
     self.pileController = [[[ADLListsPileViewController alloc] initWithNibName:@"ADLPileViewController" bundle:nil] autorelease];
     self.pileController.delegate = self;
     [contentView addSubview:self.pileController.view];
-    self.pileController.view.frame = CGRectMake(0, 0, contentView.frame.size.width, contentView.frame.size.height - tabFrame.size.height);
+    self.pileController.view.frame = NSMakeRect(0, 0, contentView.frame.size.width, contentView.frame.size.height - tabFrame.size.height);
     
     self.pileController.nextResponder = self.pileController.view.nextResponder;
     self.pileController.view.nextResponder = self.pileController;
     
-    self.agnostic.tabController.selectedInfo = self.agnostic.selectedListID;
+    self.agnostic.tabController.selectedInfo = self.agnostic.modelAccess.selectedListID;
     [self updateActivePileViewsForSelection:self.agnostic.selectedListID];
 }
 
 - (void)loadView {
-    NSView* view = [[NSView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    NSView* view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
     view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     self.view = view;
     [view release];
@@ -97,19 +100,17 @@
 #pragma mark List View Controllers
 
 - (void)listViewControllerWillDealloc:(ADLListViewController *)controller {
-    [self.agnostic.modelAccess removeListChangedListener:controller];
+    [self.agnostic.modelAccess removeChangeListener:controller forList:controller.listID];
 }
 
-- (void)listViewController:(ADLListViewController *)controller textChangedTo:(NSString *)text {
-    [self.agnostic.modelAccess setText:text ofList:controller.listID];
-}
 
 - (ADLListViewController*)listViewControllerWithID:(ADLListID*)listID {
     ADLListViewController* lvc = [[ADLListViewController alloc] init];
     lvc.delegate = self;
     lvc.listID = listID;
-    lvc.bodyText = [self.agnostic.modelAccess bodyTextForListID:listID];
-    [self.agnostic.modelAccess addListChangedListener:lvc];
+    lvc.modelAccess = self.agnostic.modelAccess;
+    lvc.items = [self.agnostic.modelAccess itemIDsForList:listID];
+    [self.agnostic.modelAccess addChangeListener:lvc forList:listID];
     return [lvc autorelease];
 }
 
@@ -203,17 +204,6 @@
 
 #pragma mark Menus
 
-- (IBAction)newList:(id)sender {
-    NSUInteger currentIndex = self.agnostic.selectedListIndex;
-    NSUInteger newIndex = currentIndex == NSNotFound ? 0 : currentIndex + 1;
-    [self.agnostic.modelAccess addListAtIndex:newIndex];
-    self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:newIndex];
-}
-
-- (IBAction)deleteFrontList:(id)sender {
-    [self.agnostic.modelAccess deleteListWithID:self.agnostic.selectedListID];
-}
-
 - (IBAction)previousList:(id)sender {
     NSUInteger index = self.agnostic.selectedListIndex;
     NSAssert(index > 0, @"Moving previous without extant previous list");
@@ -224,6 +214,33 @@
     NSUInteger index = self.agnostic.selectedListIndex;
     NSAssert(index + 1 < self.agnostic.listIDs.count, @"Moving next without extant next list");
     self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:index + 1];
+}
+
+- (void)createListItemSheetEnded:(NSWindow*)sheet returnCode:(NSInteger)returnCode viewController:(ADLNewItemViewController*)viewController {
+    if(returnCode == ADLNewItemCreateReturnCode) {
+        NSString* title = viewController.itemTitle;
+        ADLListID* listID = viewController.selectedList;
+        [self.agnostic.modelAccess addItemWithTitle:title toListWithID:listID];
+    }
+    
+    [sheet orderOut:self];
+    [viewController release];
+}
+
+- (IBAction)newListItem:(id)sender {
+    ADLNewItemViewController* newItemController = [[ADLNewItemViewController alloc] initWithNibName:@"ADLNewItemViewController" bundle:nil];
+    CGFloat width = newItemController.view.frame.size.width;
+    CGFloat height = newItemController.view.frame.size.height;
+    NSPanel* sheet = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, width, height) styleMask:NSDocModalWindowMask | NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
+    
+    [newItemController willPresentAsSheet];
+    sheet.contentView = newItemController.view;
+    [NSApp beginSheet:sheet modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(createListItemSheetEnded:returnCode:viewController:) contextInfo:newItemController];
+    [self.agnostic.modelAccess.listIDs enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+        [newItemController addListID:object withName:[self.agnostic.modelAccess titleOfList:object]];
+    }];
+    
+    [sheet release];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
@@ -240,5 +257,6 @@
         return YES;
     }
 }
+
 
 @end

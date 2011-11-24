@@ -11,5 +11,8 @@
 #import "ADLViewManipulator.h"
 
 @interface ADLNSViewManipulator : NSObject <ADLViewManipulator>
+{
+    volatile int32_t mAnimationCount;
+}
 
 @end

@@ -40,14 +40,21 @@
 		77530FE714229B3200C0645F /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
 		77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77530FE814229CF700C0645F /* Cocoa.framework */; };
 		7754A88714489E4200DBE182 /* CalendarStore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7754A88614489E4200DBE182 /* CalendarStore.framework */; };
+		7754A8AF1448EBAE00DBE182 /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8AE1448EBAE00DBE182 /* ADLItem.m */; };
+		7754A8B01448EBAE00DBE182 /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8AE1448EBAE00DBE182 /* ADLItem.m */; };
+		7754A8B31448EBAE00DBE182 /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B21448EBAE00DBE182 /* ADLList.m */; };
+		7754A8B41448EBAE00DBE182 /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B21448EBAE00DBE182 /* ADLList.m */; };
+		7754A8B71448EBAF00DBE182 /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B61448EBAF00DBE182 /* ADLListCollection.m */; };
+		7754A8B81448EBAF00DBE182 /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B61448EBAF00DBE182 /* ADLListCollection.m */; };
+		7754A8BB1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */; };
+		7754A8BC1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */; };
 		77613A9B1444D76200382CD3 /* ADLTabSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE414229B3200C0645F /* ADLTabSelected.png */; };
 		77613A9D1444D76400382CD3 /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
-		77748AE814365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
-		77748AE914365A680048918F /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AE714365A680048918F /* ADLList.m */; };
-		77748AEC14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
-		77748AED14365A680048918F /* ADLItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEB14365A680048918F /* ADLItem.m */; };
-		77748AF014365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
-		77748AF114365A680048918F /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 77748AEF14365A680048918F /* ADLListCollection.m */; };
+		77735EBD14687E350024D99A /* ADLList+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */; };
+		77735EBE14687E350024D99A /* ADLList+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */; };
+		77735EC2146A33210024D99A /* NSSet+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EC1146A33200024D99A /* NSSet+ADLAdditions.m */; };
+		77735EC3146A33210024D99A /* NSSet+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EC1146A33200024D99A /* NSSet+ADLAdditions.m */; };
+		77735ECF146B2E9A0024D99A /* ADLItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735ECE146B2E9A0024D99A /* ADLItemView.m */; };
 		7774F3D21440BE5F0087ADCE /* ADLUIScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7774F3D11440BE5F0087ADCE /* ADLUIScrollView.m */; };
 		777A225E1440C74100B5307A /* ADLUITabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777A225D1440C74100B5307A /* ADLUITabView.m */; };
 		777A22611440C90A00B5307A /* ADLUIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 777A22601440C90A00B5307A /* ADLUIView.m */; };
@@ -73,6 +80,8 @@
 		77B986CD1402C56D004A2293 /* ADLNSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */; };
 		77B986CE1402C56D004A2293 /* ADLNSTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */; };
 		77B986D21402CCFD004A2293 /* ADLNSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986D11402CCFD004A2293 /* ADLNSTabView.m */; };
+		77C2F91B1479616800DED2FC /* ADLNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C2F9191479616800DED2FC /* ADLNewItemViewController.m */; };
+		77C2F91C1479616800DED2FC /* ADLNewItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */; };
 		77D883941424361B00544311 /* ADLPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883921424361A00544311 /* ADLPileViewController.m */; };
 		77D883951424361B00544311 /* ADLPileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D883931424361B00544311 /* ADLPileViewController.xib */; };
 		77D883991424383300544311 /* NSShadow+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883981424383300544311 /* NSShadow+ADLExtensions.m */; };
@@ -142,13 +151,21 @@
 		77530FE414229B3200C0645F /* ADLTabSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabSelected.png; path = Resources/ADLTabSelected.png; sourceTree = "<group>"; };
 		77530FE514229B3200C0645F /* ADLTabUnselected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabUnselected.png; path = Resources/ADLTabUnselected.png; sourceTree = "<group>"; };
 		77530FE814229CF700C0645F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.7.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		7754A88614489E4200DBE182 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = ../../../../../System/Library/Frameworks/CalendarStore.framework; sourceTree = "<group>"; };
-		77748AE614365A680048918F /* ADLList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLList.h; path = Shared/ADLList.h; sourceTree = SOURCE_ROOT; };
-		77748AE714365A680048918F /* ADLList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLList.m; path = Shared/ADLList.m; sourceTree = SOURCE_ROOT; };
-		77748AEA14365A680048918F /* ADLItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLItem.h; path = Shared/ADLItem.h; sourceTree = SOURCE_ROOT; };
-		77748AEB14365A680048918F /* ADLItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLItem.m; path = Shared/ADLItem.m; sourceTree = SOURCE_ROOT; };
-		77748AEE14365A680048918F /* ADLListCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListCollection.h; path = Shared/ADLListCollection.h; sourceTree = SOURCE_ROOT; };
-		77748AEF14365A680048918F /* ADLListCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListCollection.m; path = Shared/ADLListCollection.m; sourceTree = SOURCE_ROOT; };
+		7754A88614489E4200DBE182 /* CalendarStore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CalendarStore.framework; path = /System/Library/Frameworks/CalendarStore.framework; sourceTree = "<absolute>"; };
+		7754A8AD1448EBAE00DBE182 /* ADLItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLItem.h; path = Shared/ADLItem.h; sourceTree = "<group>"; };
+		7754A8AE1448EBAE00DBE182 /* ADLItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLItem.m; path = Shared/ADLItem.m; sourceTree = "<group>"; };
+		7754A8B11448EBAE00DBE182 /* ADLList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLList.h; path = Shared/ADLList.h; sourceTree = "<group>"; };
+		7754A8B21448EBAE00DBE182 /* ADLList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLList.m; path = Shared/ADLList.m; sourceTree = "<group>"; };
+		7754A8B51448EBAF00DBE182 /* ADLListCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListCollection.h; path = Shared/ADLListCollection.h; sourceTree = "<group>"; };
+		7754A8B61448EBAF00DBE182 /* ADLListCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListCollection.m; path = Shared/ADLListCollection.m; sourceTree = "<group>"; };
+		7754A8B91448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CalCalendarStore+ADLAdditions.h"; sourceTree = "<group>"; };
+		7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CalCalendarStore+ADLAdditions.m"; sourceTree = "<group>"; };
+		77735EBB14687E340024D99A /* ADLList+CollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADLList+CollectionAdditions.h"; path = "Shared/ADLList+CollectionAdditions.h"; sourceTree = "<group>"; };
+		77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ADLList+CollectionAdditions.m"; path = "Shared/ADLList+CollectionAdditions.m"; sourceTree = "<group>"; };
+		77735EC0146A33200024D99A /* NSSet+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+ADLAdditions.h"; path = "Shared/NSSet+ADLAdditions.h"; sourceTree = "<group>"; };
+		77735EC1146A33200024D99A /* NSSet+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+ADLAdditions.m"; path = "Shared/NSSet+ADLAdditions.m"; sourceTree = "<group>"; };
+		77735ECD146B2E9A0024D99A /* ADLItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLItemView.h; sourceTree = "<group>"; };
+		77735ECE146B2E9A0024D99A /* ADLItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLItemView.m; sourceTree = "<group>"; };
 		7774F3D01440BE5F0087ADCE /* ADLUIScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUIScrollView.h; sourceTree = "<group>"; };
 		7774F3D11440BE5F0087ADCE /* ADLUIScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLUIScrollView.m; sourceTree = "<group>"; };
 		777A225C1440C74100B5307A /* ADLUITabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLUITabView.h; sourceTree = "<group>"; };
@@ -183,6 +200,9 @@
 		77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLNSTabViewController.xib; sourceTree = "<group>"; };
 		77B986D01402CCFD004A2293 /* ADLNSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSTabView.h; sourceTree = "<group>"; };
 		77B986D11402CCFD004A2293 /* ADLNSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSTabView.m; sourceTree = "<group>"; };
+		77C2F9181479616800DED2FC /* ADLNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNewItemViewController.h; sourceTree = "<group>"; };
+		77C2F9191479616800DED2FC /* ADLNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNewItemViewController.m; sourceTree = "<group>"; };
+		77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLNewItemViewController.xib; sourceTree = "<group>"; };
 		77D883911424361A00544311 /* ADLPileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLPileViewController.h; sourceTree = "<group>"; };
 		77D883921424361A00544311 /* ADLPileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLPileViewController.m; sourceTree = "<group>"; };
 		77D883931424361B00544311 /* ADLPileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLPileViewController.xib; sourceTree = "<group>"; };
@@ -228,7 +248,6 @@
 		77225DEE1401AFA80003ECDE = {
 			isa = PBXGroup;
 			children = (
-				7754A88614489E4200DBE182 /* CalendarStore.framework */,
 				77225E011401AFA80003ECDE /* julep */,
 				7722BF2E1402A431003498D8 /* julep-mac */,
 				7722BF691402A62D003498D8 /* Shared */,
@@ -301,6 +320,9 @@
 			children = (
 				7722BF3A1402A431003498D8 /* ADLAppDelegate.h */,
 				7722BF3B1402A431003498D8 /* ADLAppDelegate.m */,
+				77C2F9181479616800DED2FC /* ADLNewItemViewController.h */,
+				77C2F9191479616800DED2FC /* ADLNewItemViewController.m */,
+				77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */,
 				779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */,
 				77262CFA14314AB800392054 /* ADLListsDocument.h */,
 				77262CFB14314AB800392054 /* ADLListsDocument.m */,
@@ -331,6 +353,8 @@
 				77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */,
 				779B8C4A1443E9DE0019FD9B /* NSDictionary+ADLAdditions.h */,
 				779B8C4B1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m */,
+				77735EC0146A33200024D99A /* NSSet+ADLAdditions.h */,
+				77735EC1146A33200024D99A /* NSSet+ADLAdditions.m */,
 				778D828A1433B77A0053BC49 /* NSArray+ADLAdditions.h */,
 				778D828B1433B77A0053BC49 /* NSArray+ADLAdditions.m */,
 				778D82891433B4300053BC49 /* Model */,
@@ -380,6 +404,8 @@
 		7745208A140585C300B993F1 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				7754A8B91448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.h */,
+				7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */,
 				77D883971424383300544311 /* NSShadow+ADLExtensions.h */,
 				77D883981424383300544311 /* NSShadow+ADLExtensions.m */,
 			);
@@ -389,6 +415,7 @@
 		77530FEA14229D0700C0645F /* Desktop */ = {
 			isa = PBXGroup;
 			children = (
+				7754A88614489E4200DBE182 /* CalendarStore.framework */,
 				77530FE814229CF700C0645F /* Cocoa.framework */,
 				778897661402D33D00493E14 /* QuartzCore.framework */,
 			);
@@ -425,6 +452,8 @@
 				77D8839B142545B500544311 /* ADLListsWindowController.m */,
 				772C68401427E34F00CEF932 /* ADLListViewController.h */,
 				772C68411427E34F00CEF932 /* ADLListViewController.m */,
+				77735ECD146B2E9A0024D99A /* ADLItemView.h */,
+				77735ECE146B2E9A0024D99A /* ADLItemView.m */,
 			);
 			name = "Main View";
 			sourceTree = "<group>";
@@ -466,14 +495,16 @@
 		778D82891433B4300053BC49 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				77748AEE14365A680048918F /* ADLListCollection.h */,
-				77748AEF14365A680048918F /* ADLListCollection.m */,
-				77748AEA14365A680048918F /* ADLItem.h */,
-				77748AEB14365A680048918F /* ADLItem.m */,
-				77748AE614365A680048918F /* ADLList.h */,
-				77748AE714365A680048918F /* ADLList.m */,
+				7754A8B51448EBAF00DBE182 /* ADLListCollection.h */,
+				7754A8B61448EBAF00DBE182 /* ADLListCollection.m */,
+				7754A8B11448EBAE00DBE182 /* ADLList.h */,
+				7754A8B21448EBAE00DBE182 /* ADLList.m */,
+				7754A8AD1448EBAE00DBE182 /* ADLItem.h */,
+				7754A8AE1448EBAE00DBE182 /* ADLItem.m */,
 				778D82921433F8C90053BC49 /* ADLListCollection+CollectionAdditions.h */,
 				778D82931433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m */,
+				77735EBB14687E340024D99A /* ADLList+CollectionAdditions.h */,
+				77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */,
 				778D826514324D540053BC49 /* ADLModelAccess.h */,
 				778D826614324D540053BC49 /* ADLModelAccess.m */,
 			);
@@ -572,6 +603,7 @@
 				77D8839E14255FD900544311 /* ADLListsWindowController.xib in Resources */,
 				772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */,
 				772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */,
+				77C2F91C1479616800DED2FC /* ADLNewItemViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -589,9 +621,6 @@
 				777FC29614082DE900B29B4B /* ADLFloatUtilities.m in Sources */,
 				778D828C1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */,
 				778D82941433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */,
-				77748AE814365A680048918F /* ADLList.m in Sources */,
-				77748AEC14365A680048918F /* ADLItem.m in Sources */,
-				77748AF014365A680048918F /* ADLListCollection.m in Sources */,
 				7709CE26143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
 				77B63FBB143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
 				773BBDD7143F91FC001BCCB6 /* ADLDocumentViewController.m in Sources */,
@@ -605,6 +634,12 @@
 				77931E761442023D0091BAF7 /* ADLPageScrollViewController.m in Sources */,
 				779B8C4C1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */,
 				779B8C5214440EB00019FD9B /* ADLListViewController.m in Sources */,
+				7754A8AF1448EBAE00DBE182 /* ADLItem.m in Sources */,
+				7754A8B31448EBAE00DBE182 /* ADLList.m in Sources */,
+				7754A8B71448EBAF00DBE182 /* ADLListCollection.m in Sources */,
+				7754A8BB1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m in Sources */,
+				77735EBD14687E350024D99A /* ADLList+CollectionAdditions.m in Sources */,
+				77735EC2146A33210024D99A /* NSSet+ADLAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -631,13 +666,18 @@
 				778D82691432F76C0053BC49 /* ADLModelAccess.m in Sources */,
 				778D828D1433B77A0053BC49 /* NSArray+ADLAdditions.m in Sources */,
 				778D82951433F8CA0053BC49 /* ADLListCollection+CollectionAdditions.m in Sources */,
-				77748AE914365A680048918F /* ADLList.m in Sources */,
-				77748AED14365A680048918F /* ADLItem.m in Sources */,
-				77748AF114365A680048918F /* ADLListCollection.m in Sources */,
 				7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */,
 				7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */,
 				77B63FBC143E0D7E00739196 /* julep.xcdatamodeld in Sources */,
 				779B8C4D1443E9DE0019FD9B /* NSDictionary+ADLAdditions.m in Sources */,
+				7754A8B01448EBAE00DBE182 /* ADLItem.m in Sources */,
+				7754A8B41448EBAE00DBE182 /* ADLList.m in Sources */,
+				7754A8B81448EBAF00DBE182 /* ADLListCollection.m in Sources */,
+				7754A8BC1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m in Sources */,
+				77735EBE14687E350024D99A /* ADLList+CollectionAdditions.m in Sources */,
+				77735EC3146A33210024D99A /* NSSet+ADLAdditions.m in Sources */,
+				77735ECF146B2E9A0024D99A /* ADLItemView.m in Sources */,
+				77C2F91B1479616800DED2FC /* ADLNewItemViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

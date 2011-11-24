@@ -9,15 +9,23 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ADLModelAccess.h"
+#import "ADLItemView.h"
 
 @protocol ADLListViewControllerDelegate;
 
-@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTextViewDelegate>
+@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTableViewDataSource, NSTableViewDelegate, ADLItemViewDelegate> {
+    ADLModelAccess* mModelAccess;
+    ADLListID* mListID;
+    id <ADLListViewControllerDelegate> mDelegate;
+    NSTableView* mTableView;
+    NSArray* mItems;
+}
 
+@property (retain, nonatomic) ADLModelAccess* modelAccess;
 @property (retain, nonatomic) ADLListID* listID;
 @property (assign, nonatomic) id <ADLListViewControllerDelegate> delegate;
 
-@property (retain, nonatomic) NSString* bodyText;
+@property (copy, nonatomic) NSArray* items;
 
 - (void)didActivate;
 
@@ -27,6 +35,5 @@
 @protocol ADLListViewControllerDelegate <NSObject>
 
 - (void)listViewControllerWillDealloc:(ADLListViewController*)controller;
-- (void)listViewController:(ADLListViewController*)controller textChangedTo:(NSString*)text;
 
 @end

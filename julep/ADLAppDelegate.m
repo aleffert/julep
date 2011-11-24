@@ -90,6 +90,7 @@ static NSString* kADLJulepDocumentType = @"julep";
         [document openWithCompletionHandler:^(BOOL success){
             NSAssert(success, @"Unable to open document");
             self.documentViewController.modelAccess = document.modelAccess;
+            [document.modelAccess syncWithDataStore];
         }];
     }
     else {
@@ -98,6 +99,7 @@ static NSString* kADLJulepDocumentType = @"julep";
         [document saveToURL:documentURL forSaveOperation:UIDocumentSaveForCreating completionHandler:^(BOOL success){
             NSAssert(success, @"Unable to do initial save");
             [document.modelAccess populateDefaults];
+            [document.modelAccess syncWithDataStore];
             self.documentViewController.modelAccess = document.modelAccess;
         }];
     }

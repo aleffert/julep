@@ -13,7 +13,16 @@
 #import "ADLColorView.h"
 #import "ADLFloatUtilities.h"
 
-@interface ADLPileSlide : NSObject
+@interface ADLPileSlide : NSObject {
+    BOOL mAbort;
+    NSViewController* mBehindViewController;
+    NSViewController* mSlidingViewController;
+    CGFloat mFromValue;
+    CGFloat mToValue;
+    CGFloat mGoalAmount;
+    NSView* mParentView;
+    CALayer* mShadowLayer;
+}
 
 @property (assign, nonatomic) BOOL abort;
 @property (retain, nonatomic) NSViewController* behindViewController;
@@ -86,10 +95,10 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
         if(behindView != nil) {
             // if behind view is nil, sliding view must be the currently visible view
             // so we don't need to change it
-            slidingView.frame = CGRectMake(self.fromValue, 0, width, height);
+            slidingView.frame = NSMakeRect(self.fromValue, 0, width, height);
         }
-        behindView.frame = CGRectMake(0, 0, width, height);
-        self.shadowLayer.frame = self.slidingViewController.view.frame;
+        behindView.frame = NSMakeRect(0, 0, width, height);
+        self.shadowLayer.frame = NSRectToCGRect(self.slidingViewController.view.frame);
         self.shadowLayer.backgroundColor = [ADLColor blackColor].CGColor;
         self.shadowLayer.shadowOpacity = .8;
         self.shadowLayer.shadowRadius = 5;
@@ -103,8 +112,8 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
     ADLWithAnimationsDisabled(^(void) {
         CGFloat scaledAmount = (slideAmount + 1) / 2;
         NSView* slidingView = self.slidingViewController.view;
-        slidingView.frameOrigin = CGPointMake(self.toValue * scaledAmount + self.fromValue * (1 - scaledAmount), 0);
-        self.shadowLayer.frame = self.slidingViewController.view.frame;
+        slidingView.frameOrigin = NSMakePoint(self.toValue * scaledAmount + self.fromValue * (1 - scaledAmount), 0);
+        self.shadowLayer.frame = NSRectToCGRect(self.slidingViewController.view.frame);
     });
 }
 
@@ -182,7 +191,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
             else {
                 // else make sure we move back to the beginning
                 NSView* view = self.currentViewController.view;
-                view.frameOrigin = CGPointMake(0, 0);
+                view.frameOrigin = NSZeroPoint;
             }
         }
         else {

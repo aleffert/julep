@@ -18,4 +18,5 @@
 @interface NSMutableArray (ADLAdditions)
 
 + (NSMutableArray*)nonretainingMutableArray;
+
 @end

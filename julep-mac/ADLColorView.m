@@ -24,9 +24,9 @@
     if (self) {
         self.layer = [CALayer layer];
         self.wantsLayer = YES;
-        self.layer.frame = self.bounds;
+        self.layer.frame = NSRectToCGRect(self.bounds);
         self.colorLayer = [CALayer layer];
-        self.colorLayer.frame = self.bounds;
+        self.colorLayer.frame = NSRectToCGRect(self.bounds);
         self.colorLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
         self.colorLayer.needsDisplayOnBoundsChange = YES;
         // Deal with the CALayer vs NSView coordinate systems

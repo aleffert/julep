@@ -16,7 +16,7 @@
 @interface ADLTabController ()
 
 @property (assign, nonatomic) id <ADLTabControllerDelegate> delegate;
-@property (assign, nonatomic) id <ADLTabControllerDelegate> dataSource;
+@property (assign, nonatomic) id <ADLTabControllerDataSource> dataSource;
 @property (retain, nonatomic) NSArray* tabs;
 
 @property (retain, nonatomic) NSMutableArray* reorderedTabs;

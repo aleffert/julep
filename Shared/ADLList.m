@@ -2,7 +2,7 @@
 //  ADLList.m
 //  julep
 //
-//  Created by Akiva Leffert on 10/6/11.
+//  Created by Akiva Leffert on 10/14/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -12,10 +12,8 @@
 
 
 @implementation ADLList
-@dynamic countsForBadge;
-@dynamic kind;
-@dynamic title;
-@dynamic body;
+
+@dynamic uid;
 @dynamic items;
 @dynamic list;
 

@@ -2,7 +2,7 @@
 //  ADLListCollection.h
 //  julep
 //
-//  Created by Akiva Leffert on 9/30/11.
+//  Created by Akiva Leffert on 10/14/11.
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,9 +11,8 @@
 
 @class ADLList;
 
-@interface ADLListCollection : NSManagedObject {
-@private
-}
+@interface ADLListCollection : NSManagedObject
+
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSOrderedSet *lists;
 @end

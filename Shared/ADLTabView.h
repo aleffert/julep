@@ -14,7 +14,7 @@
 
 @protocol ADLTabView <ADLView>
 
-@property (retain, nonatomic) NSString* title;
+@property (copy, nonatomic) NSString* title;
 @property (readonly, assign, nonatomic) id <ADLTabViewDelegate> delegate;
 @property (assign, nonatomic) BOOL selected;
 

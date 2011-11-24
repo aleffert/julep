@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ADLColor : NSObject
+@interface ADLColor : NSObject {
+    CGColorRef mCGColor;
+}
 
 + (ADLColor*)colorWithRed:(CGFloat)r green:(CGFloat)g blue:(CGFloat)b alpha:(CGFloat)a;
 + (ADLColor*)colorWithWhite:(CGFloat)white alpha:(CGFloat)a;

@@ -10,7 +10,9 @@
 
 #import "ADLModelAccess.h"
 
-@interface ADLListsDocument : NSPersistentDocument <ADLModelAccessDelegate>
+@interface ADLListsDocument : NSPersistentDocument <ADLModelAccessDelegate> {
+    ADLModelAccess* mModelAccess;
+}
 
 - (NSApplicationTerminateReply)shouldApplicationTerminate;
 

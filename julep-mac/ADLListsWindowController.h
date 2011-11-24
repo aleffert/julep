@@ -9,8 +9,11 @@
 #import <Cocoa/Cocoa.h>
 
 @class ADLListsDocument;
+@class ADLDocumentViewController;
 
-@interface ADLListsWindowController : NSWindowController <NSWindowDelegate>
+@interface ADLListsWindowController : NSWindowController <NSWindowDelegate> {
+    ADLDocumentViewController* mDocumentViewController;
+}
 
 @end
 

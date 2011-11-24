@@ -9,7 +9,19 @@
 
 @protocol ADLPileViewControllerDelegate;
 
-@interface ADLPileViewController : NSViewController
+@class ADLPileSlide;
+
+@interface ADLPileViewController : NSViewController {
+    NSViewController* mCurrentViewController;
+    id <ADLPileViewControllerDelegate> mDelegate;
+    NSViewController*  mNextViewController;
+    ADLPileSlide* mPileSlide;
+    NSViewController*  mPrevViewController;
+    
+    CALayer* mShadowLayer;
+    NSEventSwipeTrackingOptions mSwipeGestureOptions;
+
+}
 
 @property (assign, nonatomic) id <ADLPileViewControllerDelegate> delegate;
 

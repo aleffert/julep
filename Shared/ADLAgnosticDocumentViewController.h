@@ -11,7 +11,10 @@
 #import "ADLModelAccess.h"
 #import "ADLTabController.h"
 
-@interface ADLAgnosticDocumentViewController : NSObject <ADLTabControllerDataSource, ADLCollectionChangedListener>
+@interface ADLAgnosticDocumentViewController : NSObject <ADLTabControllerDataSource, ADLCollectionChangedListener> {
+    ADLModelAccess* mModelAccess;
+    ADLTabController* mTabController;
+}
 
 - (id)initWithModel:(ADLModelAccess*)modelAccess;
 
