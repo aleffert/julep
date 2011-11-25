@@ -75,7 +75,8 @@
 }
 
 - (void)didActivate {
-    [self.tableView becomeFirstResponder];
+    self.view.nextResponder = self;
+    [self.view.window makeFirstResponder:self.tableView];
 }
 
 - (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
@@ -150,5 +151,21 @@
 - (void)itemView:(ADLItemView *)itemView changedCompletionStatus:(BOOL)status {
     [self.modelAccess setCompletionStatus:status ofItem:itemView.item];
 }
+
+- (void)keyDown:(NSEvent *)theEvent {
+    [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
+}
+
+- (void)deleteBackward:(id)sender {
+    NSIndexSet* selection = self.tableView.selectedRowIndexes;
+    NSMutableArray* items = [NSMutableArray array];
+    [selection enumerateIndexesUsingBlock: ^(NSUInteger index, BOOL* stop) {
+        [items addObject:[self.items objectAtIndex:index]];
+    }];
+    for (ADLItemID* item in items) {
+        [self.modelAccess deleteItemWithID:item];
+    }
+}
+
 
 @end

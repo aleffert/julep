@@ -51,6 +51,8 @@ typedef NSManagedObjectID ADLItemID;
 - (void)removeChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 
 - (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
+// Actually delete it from the calendar store. Careful!
+- (void)deleteItemWithID:(ADLItemID*)itemID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
 

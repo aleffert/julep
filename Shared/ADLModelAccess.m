@@ -399,6 +399,15 @@ static NSString* kADLListItemEntityName= @"Item";
     NSAssert(error == nil, @"Error creating new item");
 }
 
+- (void)deleteItemWithID:(ADLItemID*)itemID {
+    ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
+    CalTask* task = [store taskWithUID:item.uid];
+    NSError* error = nil;
+    [store removeTask:task error:&error];
+    NSAssert(error == nil, @"Error deleting item");
+}
+
 #pragma mark Change Processing
 
 - (void)addCollectionChangedListener:(id <ADLCollectionChangedListener>)listener {

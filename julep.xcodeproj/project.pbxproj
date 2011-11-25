@@ -22,6 +22,7 @@
 		7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF3B1402A431003498D8 /* ADLAppDelegate.m */; };
 		7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF3D1402A431003498D8 /* MainMenu.xib */; };
 		7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
+		77257B92147FFE9C001DBBBC /* ADLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77257B91147FFE9C001DBBBC /* ADLTableView.m */; };
 		77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 77262CFB14314AB800392054 /* ADLListsDocument.m */; };
 		772C683D1427D45200CEF932 /* ADLColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C683C1427D45200CEF932 /* ADLColorView.m */; };
 		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
@@ -129,6 +130,8 @@
 		7722BF6A1402A77B003498D8 /* ADLTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLTabController.h; path = Shared/ADLTabController.h; sourceTree = SOURCE_ROOT; };
 		7722BF6B1402A77B003498D8 /* ADLTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLTabController.m; path = Shared/ADLTabController.m; sourceTree = SOURCE_ROOT; };
 		7722BF6D1402AA97003498D8 /* ADLViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLViewManipulator.h; path = Shared/ADLViewManipulator.h; sourceTree = "<group>"; };
+		77257B90147FFE9C001DBBBC /* ADLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLTableView.h; sourceTree = "<group>"; };
+		77257B91147FFE9C001DBBBC /* ADLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLTableView.m; sourceTree = "<group>"; };
 		77262CFA14314AB800392054 /* ADLListsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsDocument.h; sourceTree = "<group>"; };
 		77262CFB14314AB800392054 /* ADLListsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsDocument.m; sourceTree = "<group>"; };
 		772C683B1427D45200CEF932 /* ADLColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLColorView.h; sourceTree = "<group>"; };
@@ -322,6 +325,8 @@
 				7722BF3B1402A431003498D8 /* ADLAppDelegate.m */,
 				77C2F9181479616800DED2FC /* ADLNewItemViewController.h */,
 				77C2F9191479616800DED2FC /* ADLNewItemViewController.m */,
+				77257B90147FFE9C001DBBBC /* ADLTableView.h */,
+				77257B91147FFE9C001DBBBC /* ADLTableView.m */,
 				77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */,
 				779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */,
 				77262CFA14314AB800392054 /* ADLListsDocument.h */,
@@ -678,6 +683,7 @@
 				77735EC3146A33210024D99A /* NSSet+ADLAdditions.m in Sources */,
 				77735ECF146B2E9A0024D99A /* ADLItemView.m in Sources */,
 				77C2F91B1479616800DED2FC /* ADLNewItemViewController.m in Sources */,
+				77257B92147FFE9C001DBBBC /* ADLTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

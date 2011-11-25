@@ -119,6 +119,7 @@
     if(![currentVisibleID isEqual:currentID]) {
         ADLListViewController* lvc = [self listViewControllerWithID:currentID];
         self.pileController.currentViewController = lvc;
+        lvc.nextResponder = self.pileController.view;
         [lvc didActivate];
     }
     
