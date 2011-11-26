@@ -16,6 +16,7 @@
 #import "ADLListCollection.h"
 #import "ADLListCollection+CollectionAdditions.h"
 #import "NSArray+ADLAdditions.h"
+#import "NSDate+ADLAdditions.h"
 #import "NSDictionary+ADLAdditions.h"
 #import "CalCalendarStore+ADLAdditions.h"
 
@@ -30,6 +31,8 @@ static NSString* kADLSelectedListKey = @"kADLSelectedListKey";
 @property (retain, nonatomic) NSMutableDictionary* listChangedListeners;
 
 - (ADLListID*)setupDefaultSelection;
+
+- (BOOL)isTaskStale:(CalTask*)task;
 
 - (void)deleteTrackedListWithID:(ADLListID*)listID;
 - (ADLList*)listForCalendarUID:(NSString*)uid;
@@ -126,7 +129,13 @@ static NSString* kADLListItemEntityName= @"Item";
     NSArray* tasks = [store tasksWithPredicate:calendarsPredicate];
     NSPredicate* uidPredicate = [NSPredicate predicateWithFormat:@"uid like %@", uid];
     NSArray* filteredTasks = [tasks filteredArrayUsingPredicate:uidPredicate];
-    return filteredTasks.count > 0;
+    if(filteredTasks.count > 0) {
+        CalTask* task = [filteredTasks objectAtIndex:0];
+        return ![self isTaskStale:task];
+    }
+    else {
+        return NO;
+    }
 }
 
 - (void)populateDefaults {
@@ -159,8 +168,13 @@ static NSString* kADLListItemEntityName= @"Item";
     };
     
     // Add any new items
-    NSPredicate* allRemindersPredicate = [CalCalendarStore taskPredicateWithCalendars:reminderCalendars];
-    for (CalTask* task in [store tasksWithPredicate:allRemindersPredicate]) {
+    NSDate* sinceDate = [NSDate yesterdayMorning];
+    NSPredicate* uncompletedPredicate = [CalCalendarStore taskPredicateWithUncompletedTasks:reminderCalendars];
+    NSPredicate* recentlyCompletedPredicate = [CalCalendarStore taskPredicateWithTasksCompletedSince:sinceDate calendars:reminderCalendars];
+    NSArray* uncompletedTasks = [store tasksWithPredicate:uncompletedPredicate];
+    NSArray* recentlyCompletedTasks = [store tasksWithPredicate:recentlyCompletedPredicate];
+    NSArray* tasks = [uncompletedTasks arrayByAddingObjectsFromArray:recentlyCompletedTasks];
+    for (CalTask* task in tasks) {
         // Look for a task with this uid
         ADLItem* existingItem = [self itemForTaskUID:task.uid];
         if(existingItem == nil) {
@@ -184,6 +198,10 @@ static NSString* kADLListItemEntityName= @"Item";
             [self deleteTrackedListWithID:list.objectID];
         }
     }
+}
+
+- (BOOL)isTaskStale:(CalTask*)task {
+    return task.isCompleted && ([task.completedDate compare:[NSDate yesterdayMorning]] == NSOrderedAscending);
 }
 
 - (ADLList*)listForCalendarUID:(NSString*)uid {
@@ -542,10 +560,12 @@ static NSString* kADLListItemEntityName= @"Item";
     for(NSString* uid in insertedObjects) {
         CalTask* task = [store taskWithUID:uid];
         ADLList* list = [self listForCalendarUID:task.calendar.uid];
-        [self addItem:^(ADLItem* item) {
-            item.uid = task.uid;
-        } toList:list atIndex:0];
-        [updatedCalendars addObject:task.calendar.uid];
+        if(![self isTaskStale:task]) {
+            [self addItem:^(ADLItem* item) {
+                item.uid = task.uid;
+            } toList:list atIndex:0];
+            [updatedCalendars addObject:task.calendar.uid];
+        }
     }
     
     for(NSString* uid in deletedObjects) {

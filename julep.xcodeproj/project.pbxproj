@@ -16,13 +16,13 @@
 		77225E061401AFA80003ECDE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77225E041401AFA80003ECDE /* InfoPlist.strings */; };
 		77225E081401AFA80003ECDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E071401AFA80003ECDE /* main.m */; };
 		77225E0C1401AFA80003ECDE /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */; };
+		77229E9E1481480900651BA5 /* NSDate+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77229E9D1481480900651BA5 /* NSDate+ADLAdditions.m */; };
 		7722BF331402A431003498D8 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF311402A431003498D8 /* InfoPlist.strings */; };
 		7722BF351402A431003498D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF341402A431003498D8 /* main.m */; };
 		7722BF391402A431003498D8 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF371402A431003498D8 /* Credits.rtf */; };
 		7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF3B1402A431003498D8 /* ADLAppDelegate.m */; };
 		7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF3D1402A431003498D8 /* MainMenu.xib */; };
 		7722BF6C1402A77B003498D8 /* ADLTabController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF6B1402A77B003498D8 /* ADLTabController.m */; };
-		77257B92147FFE9C001DBBBC /* ADLTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77257B91147FFE9C001DBBBC /* ADLTableView.m */; };
 		77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 77262CFB14314AB800392054 /* ADLListsDocument.m */; };
 		772C683D1427D45200CEF932 /* ADLColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C683C1427D45200CEF932 /* ADLColorView.m */; };
 		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
@@ -110,6 +110,8 @@
 		77225E091401AFA80003ECDE /* julep-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "julep-Prefix.pch"; sourceTree = "<group>"; };
 		77225E0A1401AFA80003ECDE /* ADLAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ADLAppDelegate.h; sourceTree = "<group>"; };
 		77225E0B1401AFA80003ECDE /* ADLAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ADLAppDelegate.m; sourceTree = "<group>"; };
+		77229E9C1481480900651BA5 /* NSDate+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+ADLAdditions.h"; path = "Shared/NSDate+ADLAdditions.h"; sourceTree = "<group>"; };
+		77229E9D1481480900651BA5 /* NSDate+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+ADLAdditions.m"; path = "Shared/NSDate+ADLAdditions.m"; sourceTree = "<group>"; };
 		7722BF261402A431003498D8 /* Julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7722BF281402A431003498D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		7722BF2B1402A431003498D8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -130,8 +132,6 @@
 		7722BF6A1402A77B003498D8 /* ADLTabController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLTabController.h; path = Shared/ADLTabController.h; sourceTree = SOURCE_ROOT; };
 		7722BF6B1402A77B003498D8 /* ADLTabController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLTabController.m; path = Shared/ADLTabController.m; sourceTree = SOURCE_ROOT; };
 		7722BF6D1402AA97003498D8 /* ADLViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLViewManipulator.h; path = Shared/ADLViewManipulator.h; sourceTree = "<group>"; };
-		77257B90147FFE9C001DBBBC /* ADLTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLTableView.h; sourceTree = "<group>"; };
-		77257B91147FFE9C001DBBBC /* ADLTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLTableView.m; sourceTree = "<group>"; };
 		77262CFA14314AB800392054 /* ADLListsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsDocument.h; sourceTree = "<group>"; };
 		77262CFB14314AB800392054 /* ADLListsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListsDocument.m; sourceTree = "<group>"; };
 		772C683B1427D45200CEF932 /* ADLColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLColorView.h; sourceTree = "<group>"; };
@@ -251,6 +251,8 @@
 		77225DEE1401AFA80003ECDE = {
 			isa = PBXGroup;
 			children = (
+				77229E9C1481480900651BA5 /* NSDate+ADLAdditions.h */,
+				77229E9D1481480900651BA5 /* NSDate+ADLAdditions.m */,
 				77225E011401AFA80003ECDE /* julep */,
 				7722BF2E1402A431003498D8 /* julep-mac */,
 				7722BF691402A62D003498D8 /* Shared */,
@@ -325,8 +327,6 @@
 				7722BF3B1402A431003498D8 /* ADLAppDelegate.m */,
 				77C2F9181479616800DED2FC /* ADLNewItemViewController.h */,
 				77C2F9191479616800DED2FC /* ADLNewItemViewController.m */,
-				77257B90147FFE9C001DBBBC /* ADLTableView.h */,
-				77257B91147FFE9C001DBBBC /* ADLTableView.m */,
 				77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */,
 				779F2423141D1B87004BB02D /* ADLNSGestureConstants.h */,
 				77262CFA14314AB800392054 /* ADLListsDocument.h */,
@@ -683,7 +683,7 @@
 				77735EC3146A33210024D99A /* NSSet+ADLAdditions.m in Sources */,
 				77735ECF146B2E9A0024D99A /* ADLItemView.m in Sources */,
 				77C2F91B1479616800DED2FC /* ADLNewItemViewController.m in Sources */,
-				77257B92147FFE9C001DBBBC /* ADLTableView.m in Sources */,
+				77229E9E1481480900651BA5 /* NSDate+ADLAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
