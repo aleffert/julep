@@ -30,6 +30,10 @@ static NSString* kADLSelectedListKey = @"kADLSelectedListKey";
 @property (retain, nonatomic) NSMutableArray* collectionChangedListeners;
 @property (retain, nonatomic) NSMutableDictionary* listChangedListeners;
 
+@property (retain, nonatomic) NSTimer* clearRecentlyModifiedTimer;
+@property (copy, nonatomic) NSArray* recentlyModifiedObjects;
+- (void)stopClearRecentlyModifiedTimer;
+
 - (ADLListID*)setupDefaultSelection;
 
 - (BOOL)isTaskStale:(CalTask*)task;
@@ -56,6 +60,9 @@ static NSString* kADLListItemEntityName= @"Item";
 @synthesize collectionChangedListeners = mCollectionChangedListeners;
 @synthesize listChangedListeners = mListChangedListeners;
 @synthesize delegate = mDelegate;
+@synthesize undoManager = mUndoManager;
+@synthesize clearRecentlyModifiedTimer = mClearRecentlyModifiedTimer;
+@synthesize recentlyModifiedObjects = mRecentlyModifiedObjects;
 
 - (ADLModelAccess*)initWithManagedObjectContext:(NSManagedObjectContext*)context {
     self = [super init];
@@ -67,16 +74,19 @@ static NSString* kADLListItemEntityName= @"Item";
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarsChanged:) name:CalCalendarsChangedNotification object:[CalCalendarStore defaultCalendarStore]];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarsChanged:) name:CalCalendarsChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(calendarsChangedExternally:) name:CalCalendarsChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tasksChanged:) name:CalTasksChangedNotification object:[CalCalendarStore defaultCalendarStore]];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tasksChanged:) name:CalTasksChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tasksChangedExternally:) name:CalTasksChangedExternallyNotification object:[CalCalendarStore defaultCalendarStore]];
+        
+        self.undoManager = [[[NSUndoManager alloc] init] autorelease];
     }
     return self;
 }
 
 - (void)dealloc {
+    [self stopClearRecentlyModifiedTimer];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.collectionChangedListeners = nil;
     self.listChangedListeners = nil;
@@ -95,6 +105,10 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (NSEntityDescription*)collectionEntityDescription {
     return [NSEntityDescription entityForName:kADLCollectionEntityName inManagedObjectContext:self.managedObjectContext];
+}
+
+- (void)performUndoBlock:(void (^)(void))operation {
+    operation();
 }
 
 - (void)performMutation:(void (^)(void))mutator {
@@ -319,6 +333,12 @@ static NSString* kADLListItemEntityName= @"Item";
 }
 
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID {
+    self.undoManager.actionName = @"Title Change";
+    __block ADLModelAccess* owner = self;
+    NSString* currentTitle = [self titleOfList:listID];
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner setTitle:currentTitle ofList:listID];
+    } copy] autorelease]];
     ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
     CalCalendar* calendar = [[CalCalendarStore defaultCalendarStore] calendarWithUID:list.uid];
     calendar.title = title;
@@ -334,6 +354,12 @@ static NSString* kADLListItemEntityName= @"Item";
 }
 
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID {
+    self.undoManager.actionName = @"Completion Change";
+    __block ADLModelAccess* owner = self;
+    BOOL currentStatus = [self completionStatusOfItem:itemID];
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner setCompletionStatus:currentStatus ofItem:itemID];
+    } copy] autorelease]];
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
     CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
     task.isCompleted = status;
@@ -349,6 +375,12 @@ static NSString* kADLListItemEntityName= @"Item";
 }
 
 - (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID {
+    self.undoManager.actionName = @"Title Change";
+    __block ADLModelAccess* owner = self;
+    NSString* currentTitle = [self titleOfItem:itemID];
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner setTitle:currentTitle ofItem:itemID];
+    } copy] autorelease]];
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
     CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
     task.title = title;
@@ -406,15 +438,32 @@ static NSString* kADLListItemEntityName= @"Item";
     // TODO update selection if necessary
 }
 
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID {
+- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
     ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     CalTask* task = [CalTask task];
     NSError* error = nil;
     task.title = title;
     task.calendar = [store calendarWithUID:list.uid];
+    
+    __block ADLModelAccess* owner = self;
+    __block ADLItem* newItem = nil;
+    [self addItem:^(ADLItem* item) {
+        newItem = item;
+        item.uid = task.uid;
+    } toList:list atIndex:index];
+    
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner deleteItemWithID:newItem.objectID];
+    } copy] autorelease]];
+    self.undoManager.actionName = @"Create Todo";
+    
     [store saveTask:task error:&error];
     NSAssert(error == nil, @"Error creating new item");
+}
+
+- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID {
+    [self addItemWithTitle:title toListWithID:listID atIndex:0];
 }
 
 - (void)deleteItemWithID:(ADLItemID*)itemID {
@@ -422,6 +471,17 @@ static NSString* kADLListItemEntityName= @"Item";
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     CalTask* task = [store taskWithUID:item.uid];
     NSError* error = nil;
+    
+    NSString* title = [self titleOfItem:itemID];
+    ADLListID* listID = item.owner.objectID;
+    NSUInteger index = [item.owner.items indexOfObject:item];
+    __block ADLModelAccess* owner = self;
+    
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner addItemWithTitle:title toListWithID:listID atIndex:index];
+    } copy] autorelease]];
+    self.undoManager.actionName = @"Delete Todo";
+    
     [store removeTask:task error:&error];
     NSAssert(error == nil, @"Error deleting item");
 }
@@ -509,6 +569,20 @@ static NSString* kADLListItemEntityName= @"Item";
     
 }
 
+- (void)stopClearRecentlyModifiedTimer {
+    [self.clearRecentlyModifiedTimer invalidate];
+    self.clearRecentlyModifiedTimer = nil;
+}
+
+- (void)clearRecentlyModified {
+    self.recentlyModifiedObjects = nil;
+}
+
+- (void)spawnClearRecentlyModifiedTimer {
+    [self stopClearRecentlyModifiedTimer];
+    self.clearRecentlyModifiedTimer = [NSTimer timerWithTimeInterval:.1 target:self selector:@selector(clearRecentlyModified) userInfo:nil repeats:NO];
+}
+
 - (void)calendarsChanged:(NSNotification*)notification {
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     ADLListCollection* collection = self.defaultCollection;
@@ -550,6 +624,10 @@ static NSString* kADLListItemEntityName= @"Item";
     }
 }
 
+- (void)calendarsChangedExternally:(NSNotification*)notification {
+    [self calendarsChanged:notification];
+}
+
 - (void)tasksChanged:(NSNotification*)notification {
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     NSMutableSet* updatedCalendars = [NSMutableArray array];
@@ -560,12 +638,12 @@ static NSString* kADLListItemEntityName= @"Item";
     for(NSString* uid in insertedObjects) {
         CalTask* task = [store taskWithUID:uid];
         ADLList* list = [self listForCalendarUID:task.calendar.uid];
-        if(![self isTaskStale:task]) {
+        if(![self isTaskStale:task] && ([self itemForTaskUID:uid] == nil)) {
             [self addItem:^(ADLItem* item) {
                 item.uid = task.uid;
             } toList:list atIndex:0];
-            [updatedCalendars addObject:task.calendar.uid];
         }
+        [updatedCalendars addObject:task.calendar.uid];
     }
     
     for(NSString* uid in deletedObjects) {
@@ -582,6 +660,39 @@ static NSString* kADLListItemEntityName= @"Item";
     }
     
     [self notifyChangeListenersForCalendarUIDs:updatedCalendars.allObjects];
+    
+    if(self.recentlyModifiedObjects == nil) {
+        self.recentlyModifiedObjects = insertedObjects;
+    }
+    else {
+        self.recentlyModifiedObjects = [self.recentlyModifiedObjects arrayByAddingObjectsFromArray: insertedObjects];
+    }
+    
+    if(self.recentlyModifiedObjects == nil) {
+        self.recentlyModifiedObjects = updatedObjects;
+    }
+    else {
+        self.recentlyModifiedObjects = [self.recentlyModifiedObjects arrayByAddingObjectsFromArray: updatedObjects];
+    }
+    [self spawnClearRecentlyModifiedTimer];
+}
+
+- (void)tasksChangedExternally:(NSNotification*)notification {
+    // We might get this without any real changes because iCal modifies records for some reason.
+    // Ignore it if we think it's a change from us
+    NSArray* updatedRecords = [[notification userInfo] objectForKey:CalUpdatedRecordsKey];
+    BOOL foundDifferentChanges = NO;
+    for(id uid in updatedRecords) {
+        foundDifferentChanges = foundDifferentChanges || ![self.recentlyModifiedObjects containsObject:uid];
+    }
+    if(foundDifferentChanges) {
+        [self.undoManager removeAllActions];
+    }
+    else {
+        [self stopClearRecentlyModifiedTimer];
+        self.recentlyModifiedObjects = nil;
+    }
+    [self tasksChanged:notification];
 }
 
 - (ADLListID*)currentlySavedListID {

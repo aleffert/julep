@@ -22,10 +22,12 @@ typedef NSManagedObjectID ADLItemID;
     id <ADLModelAccessDelegate> mDelegate;
     NSMutableArray* mCollectionChangedListeners;
     NSMutableDictionary* mListChangedListeners;
+    NSUndoManager* mUndoManager;
 }
 
 - (ADLModelAccess*)initWithManagedObjectContext:(NSManagedObjectContext*)context;
 @property (assign, nonatomic) id <ADLModelAccessDelegate> delegate;
+@property (retain, nonatomic) NSUndoManager* undoManager;
 
 - (void)populateDefaults;
 - (void)syncWithDataStore;
@@ -34,13 +36,10 @@ typedef NSManagedObjectID ADLItemID;
 @property (copy, nonatomic) NSArray* listIDs;
 
 - (NSString*)titleOfList:(ADLListID*)listID;
-- (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
 
 - (BOOL)completionStatusOfItem:(ADLItemID*)itemID;
-- (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 
 - (NSString*)titleOfItem:(ADLItemID*)itemID;
-- (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID;
 
 - (NSArray*)itemIDsForList:(ADLListID*)listID;
 
@@ -50,11 +49,15 @@ typedef NSManagedObjectID ADLItemID;
 - (void)addChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 - (void)removeChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
-// Actually delete it from the calendar store. Careful!
-- (void)deleteItemWithID:(ADLItemID*)itemID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
+
+// Actually modifies the calendar store. Be careful. Only call these from outside
+- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
+- (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
+- (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
+- (void)deleteItemWithID:(ADLItemID*)itemID;
+- (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID;
 
 @end
 

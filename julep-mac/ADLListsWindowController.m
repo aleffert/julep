@@ -48,7 +48,7 @@ static NSString* kADLJulepTitle = @"Julep";
 }
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
-    return self.document.managedObjectContext.undoManager;
+    return self.document.modelAccess.undoManager;
 }
 
 - (void)synchronizeWindowTitleWithDocumentName {
