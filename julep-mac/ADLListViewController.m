@@ -8,7 +8,9 @@
 
 #import "ADLListViewController.h"
 
+#import "ADLConcreteItem.h"
 #import "ADLItemView.h"
+#import "NSArray+ADLAdditions.h"
 
 @interface ADLListViewController ()
 
@@ -167,5 +169,61 @@
     }
 }
 
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+    if(menuItem.action == @selector(cut:) || menuItem.action == @selector(copy:)) {
+        return self.tableView.selectedRowIndexes.count > 0;
+    }
+    else if(menuItem.action == @selector(paste:)) {
+        NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+        return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemPasteboardType]];
+    }
+    else {
+        return [super validateMenuItem:menuItem];
+    }
+}
+
+#pragma mark Pasteboard
+
+- (void)copyIndices:(NSIndexSet*)indices {
+    NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
+    [pasteboard clearContents];
+    NSArray* copiedItems = [self.items objectsAtIndexes:indices];
+    NSArray* copiedObjects = [copiedItems arrayByMappingObjects:^(id object) {
+        ADLItemID* itemID = object;
+        return [self.modelAccess pasteboardRepresentationOfItemID:itemID];
+    }];
+    [pasteboard writeObjects:copiedObjects];
+}
+
+- (void)deleteIndices:(NSIndexSet*)indices {
+    NSArray* deletingItemIDs = [self.items objectsAtIndexes:indices];
+    for(ADLItemID* itemID in deletingItemIDs) {
+        [self.modelAccess deleteItemWithID:itemID];
+    }
+}
+
+- (void)pasteStartingAt:(NSUInteger)index {
+    NSArray* objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[ADLConcreteItem class]] options:nil];
+    for(ADLConcreteItem* item in objects) {
+        [self.modelAccess addItemWithTitle:item.title toListWithID:self.listID atIndex:index];
+        index++;
+    }
+}
+
+- (void)cut:(id)sender {
+    NSIndexSet* selection = self.tableView.selectedRowIndexes;
+    [self copyIndices:selection];
+    [self deleteIndices:selection];
+}
+
+- (void)copy:(id)sender {
+    [self copyIndices:self.tableView.selectedRowIndexes];
+}
+
+- (void)paste:(id)sender {
+    NSUInteger startIndex = [self.tableView.selectedRowIndexes lastIndex];
+    startIndex = startIndex == NSNotFound ? 0 : (startIndex + 1);
+    [self pasteStartingAt:startIndex];
+}
 
 @end

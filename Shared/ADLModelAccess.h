@@ -49,11 +49,13 @@ typedef NSManagedObjectID ADLItemID;
 - (void)addChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 - (void)removeChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 
+- (id)pasteboardRepresentationOfItemID:(ADLItemID*)itemID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
 
 // Actually modifies the calendar store. Be careful. Only call these from outside
 - (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
+- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 - (void)deleteItemWithID:(ADLItemID*)itemID;
@@ -81,3 +83,6 @@ typedef NSManagedObjectID ADLItemID;
 - (void)modelDidMutate:(ADLModelAccess*)modelAccess;
 
 @end
+
+
+extern NSString* kADLItemPasteboardType;

@@ -10,17 +10,20 @@
 
 #import <CalendarStore/CalendarStore.h>
 
+#import "ADLConcreteItem.h"
 #import "ADLItem.h"
 #import "ADLList.h"
 #import "ADLList+CollectionAdditions.h"
 #import "ADLListCollection.h"
 #import "ADLListCollection+CollectionAdditions.h"
+#import "CalCalendarStore+ADLAdditions.h"
 #import "NSArray+ADLAdditions.h"
 #import "NSDate+ADLAdditions.h"
 #import "NSDictionary+ADLAdditions.h"
-#import "CalCalendarStore+ADLAdditions.h"
 
 static NSString* kADLSelectedListKey = @"kADLSelectedListKey";
+
+NSString* kADLItemPasteboardType = @"com.akivaleffert.julep.ItemPasteboardType";
 
 @interface ADLModelAccess ()
 
@@ -389,6 +392,13 @@ static NSString* kADLListItemEntityName= @"Item";
     NSAssert(error == nil, @"Error saving item title change");
 }
 
+- (id)pasteboardRepresentationOfItemID:(ADLItemID*)itemID {
+    ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
+    ADLConcreteItem* concreteItem = [ADLConcreteItem itemWithTask:task];
+    return concreteItem;
+}
+
 - (void)addListAtIndex:(NSUInteger)index {
     NSLog(@"dead. cry");
 }
@@ -458,6 +468,7 @@ static NSString* kADLListItemEntityName= @"Item";
     } copy] autorelease]];
     self.undoManager.actionName = @"Create Todo";
     
+    NSLog(@"adding task with uid %@", task.uid);
     [store saveTask:task error:&error];
     NSAssert(error == nil, @"Error creating new item");
 }
@@ -482,6 +493,7 @@ static NSString* kADLListItemEntityName= @"Item";
     } copy] autorelease]];
     self.undoManager.actionName = @"Delete Todo";
     
+    NSLog(@"removing task with id: %@", task.uid);
     [store removeTask:task error:&error];
     NSAssert(error == nil, @"Error deleting item");
 }
@@ -655,8 +667,10 @@ static NSString* kADLListItemEntityName= @"Item";
     }
     
     for(NSString* uid in updatedObjects) {
-        CalTask* task = [store taskWithUID:uid];
-        [updatedCalendars addObject:task.calendar.uid];
+        if([self hasTaskWithUID:uid]) {
+            CalTask* task = [store taskWithUID:uid];
+            [updatedCalendars addObject:task.calendar.uid];
+        }
     }
     
     [self notifyChangeListenersForCalendarUIDs:updatedCalendars.allObjects];
