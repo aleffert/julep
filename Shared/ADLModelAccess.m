@@ -248,6 +248,51 @@ static NSString* kADLListItemEntityName= @"Item";
     return result;
 }
 
+- (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID {
+    return [[self itemIDsForList:listID] indexOfObject:itemID];
+}
+
+- (void)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID {
+    ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    ADLList* currentList = item.owner;
+    NSUInteger currentIndex = [self indexOfItem:itemID inList:listID];
+    ADLList* newList = (ADLList*)[self.managedObjectContext objectWithID:listID];
+    
+    __block ADLModelAccess* owner = self;
+    if([newList.items containsObject:item]) {
+        [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
+            NSUInteger resultIndex = fmin(index - 1, newList.items.count - 1);
+            [set moveObjectsAtIndexes:[NSIndexSet indexSetWithIndex:currentIndex] toIndex:resultIndex];
+        }];
+    }
+    else {
+        [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
+            [set insertObject:item atIndex:index];
+        }];
+        NSAssert(NO, @"don't support dropping across lists");
+    }
+    
+    if(newList == currentList) {
+        currentIndex = currentIndex + 1;
+    }
+    
+    self.undoManager.actionName = @"Move Item";
+    
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        [owner moveItem:itemID toIndex:currentIndex ofList:currentList.objectID];
+    } copy] autorelease]];
+    
+    NSError* error = nil;
+    [self.managedObjectContext save:&error];
+    NSAssert(error == nil, @"Error saving after move");
+}
+
+- (ADLItemID*)itemIDForURL:(NSURL*)url {
+    NSPersistentStoreCoordinator* persistentStoreCoordinator = self.managedObjectContext.persistentStoreCoordinator;
+    NSManagedObjectID* itemID = [persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
+    return itemID;
+}
+
 - (void)addList:(void (^)(ADLList* newList))defaults toCollection:(ADLListCollection*)collection atIndex:(NSUInteger)index {
     [self performMutation:^(void) {
         ADLList* list = [[ADLList alloc] initWithEntity:self.listEntityDescription insertIntoManagedObjectContext:self.managedObjectContext];
@@ -468,7 +513,6 @@ static NSString* kADLListItemEntityName= @"Item";
     } copy] autorelease]];
     self.undoManager.actionName = @"Create Todo";
     
-    NSLog(@"adding task with uid %@", task.uid);
     [store saveTask:task error:&error];
     NSAssert(error == nil, @"Error creating new item");
 }
@@ -493,7 +537,6 @@ static NSString* kADLListItemEntityName= @"Item";
     } copy] autorelease]];
     self.undoManager.actionName = @"Delete Todo";
     
-    NSLog(@"removing task with id: %@", task.uid);
     [store removeTask:task error:&error];
     NSAssert(error == nil, @"Error deleting item");
 }
@@ -555,15 +598,16 @@ static NSString* kADLListItemEntityName= @"Item";
     NSSet* deletedObjects = [[notification userInfo] objectForKey:NSDeletedObjectsKey];
     
     BOOL changedCollection = NO;
+    NSMutableArray* changedLists = [NSMutableArray array];
     
     for(NSManagedObject* object in insertedObjects) {
         if([object isKindOfClass:[ADLList class]]) {
-            changedCollection = YES;
+            [changedLists addObject:[object valueForKey:@"uid"]];
         }
     }
     for(NSManagedObject* object in updatedObjects) {
         if([object isKindOfClass:[ADLList class]]) {
-            changedCollection = YES;
+            [changedLists addObject:[object valueForKey:@"uid"]];
         }
         else if([object isKindOfClass:[ADLListCollection class]]) {
             changedCollection = YES;
@@ -571,13 +615,14 @@ static NSString* kADLListItemEntityName= @"Item";
     }
     for(NSManagedObject* object in deletedObjects) {
         if([object isKindOfClass:[ADLList class]]) {
-            changedCollection = YES;
+            [changedLists addObject:[object valueForKey:@"uid"]];
         }
     }
     
     if(changedCollection) {
         [self notifyCollectionChangedListeners];
     }
+    [self notifyChangeListenersForCalendarUIDs:changedLists];
     
 }
 

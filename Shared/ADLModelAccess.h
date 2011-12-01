@@ -35,10 +35,15 @@ typedef NSManagedObjectID ADLItemID;
 @property (readonly, nonatomic) NSUInteger listCount;
 @property (copy, nonatomic) NSArray* listIDs;
 
+- (ADLItemID*)itemIDForURL:(NSURL*)url;
+- (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
+
 - (NSString*)titleOfList:(ADLListID*)listID;
 
 - (BOOL)completionStatusOfItem:(ADLItemID*)itemID;
 
+
+- (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
 - (NSString*)titleOfItem:(ADLItemID*)itemID;
 
 - (NSArray*)itemIDsForList:(ADLListID*)listID;
@@ -60,6 +65,7 @@ typedef NSManagedObjectID ADLItemID;
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 - (void)deleteItemWithID:(ADLItemID*)itemID;
 - (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID;
+- (void)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID;
 
 @end
 

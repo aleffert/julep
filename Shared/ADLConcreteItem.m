@@ -22,11 +22,15 @@
 @synthesize title = mTitle;
 @synthesize completionStatus = mCompletionStatus;
 
-+ (ADLConcreteItem*)itemWithTask:(CalTask*)task {
++ (ADLConcreteItem*)itemWithTitle:(NSString*)title completionStatus:(BOOL)completionStatus {
     ADLConcreteItem* item = [[[ADLConcreteItem alloc] init] autorelease];
-    item.title = task.title;
-    item.completionStatus = task.isCompleted;
+    item.title = title;
+    item.completionStatus = completionStatus;
     return item;
+}
+
++ (ADLConcreteItem*)itemWithTask:(CalTask*)task {
+    return [self itemWithTitle:task.title completionStatus:task.isCompleted];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {

@@ -9,12 +9,15 @@
 #import "ADLListViewController.h"
 
 #import "ADLConcreteItem.h"
+#import "ADLItemDragRecord.h"
 #import "ADLItemView.h"
 #import "NSArray+ADLAdditions.h"
 
 @interface ADLListViewController ()
 
 @property (retain, nonatomic) NSTableView* tableView;
+@property (assign, nonatomic) BOOL dragItemsConsecutive;
+@property (assign, nonatomic) NSUInteger dragStartingRow;
 
 @end
 
@@ -25,6 +28,8 @@
 @synthesize modelAccess = mModelAccess;
 @synthesize tableView = mTableView;
 @synthesize items = mItems;
+@synthesize dragStartingRow = mDragStartingRow;
+@synthesize dragItemsConsecutive = mDragItemsConsecutive;
 
 - (id)init {
     if((self = [super initWithNibName:@"ADLListViewController" bundle:nil])) {
@@ -57,6 +62,8 @@
     tableView.dataSource = self;
     tableView.headerView = nil;
     tableView.allowsMultipleSelection = YES;
+    [tableView setDraggingSourceOperationMask:NSDragOperationMove | NSDragOperationDelete forLocal:YES];
+    [tableView registerForDraggedTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
     
     NSTableColumn* column = [[NSTableColumn alloc] initWithIdentifier:@"main column"];
     column.resizingMask = NSTableColumnAutoresizingMask;
@@ -82,48 +89,53 @@
 }
 
 - (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
-    NSMutableIndexSet* addingItems = [NSMutableIndexSet indexSet];
-    NSMutableIndexSet* deletingItems = [NSMutableIndexSet indexSet];
-    
-    [self.tableView beginUpdates];
-    for(ADLItemID* itemID in newOrder) {
-        NSUInteger index = [self.items indexOfObject:itemID];
-        NSUInteger newIndex = [newOrder indexOfObject:itemID];
-        if(index == NSNotFound) {
-            [addingItems addIndex:newIndex];
-        }
-    }
-    
-    for(ADLItemID* itemID in self.items) {
-        NSUInteger index = [self.items indexOfObject:itemID];
-        NSUInteger newIndex = [newOrder indexOfObject:itemID];
-        if(newIndex == NSNotFound) {
-            [deletingItems addIndex:index];
-        }
-    }
-    
     self.items = newOrder;
-    
-    [self.tableView removeRowsAtIndexes:deletingItems withAnimation:NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectGap];
-    [self.tableView insertRowsAtIndexes:addingItems withAnimation:NSTableViewAnimationSlideRight | NSTableViewAnimationEffectGap];
-    
-    // Do the move after insert/remove so the post indices are correct
-    for(ADLItemID* itemID in newOrder) {
-        NSUInteger index = [self.items indexOfObject:itemID];
-        NSUInteger newIndex = [newOrder indexOfObject:itemID];
-        if(index != NSNotFound && index != newIndex) {
-            [self.tableView moveRowAtIndex:index toIndex:newIndex];
-        }
-    }
-    
-    [self.tableView endUpdates];
-    
-    [self.tableView enumerateAvailableRowViewsUsingBlock:^(NSTableRowView* rowView, NSInteger rowIndex) {
-        ADLItemView* itemView = [rowView viewAtColumn:0];
-        NSAssert([newOrder containsObject:itemView.item], @"Updating item not in new list");
-        itemView.title = [self.modelAccess titleOfItem:itemView.item];
-        itemView.checked = [self.modelAccess completionStatusOfItem:itemView.item];
-    }];
+    [self.tableView reloadData];
+//    NSMutableIndexSet* addingItems = [NSMutableIndexSet indexSet];
+//    NSMutableIndexSet* deletingItems = [NSMutableIndexSet indexSet];
+//    
+//    [self.tableView beginUpdates];
+//    for(ADLItemID* itemID in newOrder) {
+//        NSUInteger index = [self.items indexOfObject:itemID];
+//        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+//        if(index == NSNotFound) {
+//            [addingItems addIndex:newIndex];
+//        }
+//    }
+//    
+//    for(ADLItemID* itemID in self.items) {
+//        NSUInteger index = [self.items indexOfObject:itemID];
+//        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+//        if(newIndex == NSNotFound) {
+//            [deletingItems addIndex:index];
+//        }
+//    }
+//    
+//    [self.tableView removeRowsAtIndexes:deletingItems withAnimation:NSTableViewAnimationSlideLeft | NSTableViewAnimationEffectGap];
+//    [self.tableView insertRowsAtIndexes:addingItems withAnimation:NSTableViewAnimationSlideRight | NSTableViewAnimationEffectGap];
+//    
+//    // Do the move after insert/remove so the post indices are correct
+//    for(ADLItemID* itemID in newOrder) {
+//        NSUInteger index = [self.items indexOfObject:itemID];
+//        NSUInteger newIndex = [newOrder indexOfObject:itemID];
+//        if(index != NSNotFound && index != newIndex) {
+//            [self.tableView moveRowAtIndex:index toIndex:newIndex];
+//            NSLog(@"moved %lu to %lu", index, newIndex);
+//        }
+//        NSLog(@"see now item as %@", [self.modelAccess titleOfItem:itemID]);
+//    }
+//    
+//    
+//    self.items = newOrder;
+//    
+//    [self.tableView endUpdates];
+//    
+////    [self.tableView enumerateAvailableRowViewsUsingBlock:^(NSTableRowView* rowView, NSInteger rowIndex) {
+////        ADLItemView* itemView = [rowView viewAtColumn:0];
+////        NSAssert([newOrder containsObject:itemView.item], @"Updating item not in new list");
+////        itemView.title = [self.modelAccess titleOfItem:itemView.item];
+////        itemView.checked = [self.modelAccess completionStatusOfItem:itemView.item];
+////    }];
 }
 
 #pragma mark Data Source
@@ -142,6 +154,43 @@
     itemView.delegate = self;
     
     return itemView;
+}
+
+- (NSDragOperation)tableView:(NSTableView *)tableView validateDrop:(id<NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)dropOperation {
+    if((self.dragStartingRow == row || self.dragStartingRow + 1 == row) && self.dragItemsConsecutive) {
+        // If we're not doing anything, skip so we don't end up with extra junk on the undo stack
+        return NSDragOperationNone;
+    }
+    return dropOperation == NSTableViewDropAbove ? (NSDragOperationMove | NSDragOperationDelete) : NSDragOperationNone;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
+    NSArray* objects = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[ADLItemDragRecord class]] options:nil];
+    ADLItemDragRecord* previous = nil;
+    for(ADLItemDragRecord* record in objects) {
+        NSUInteger index = row;
+        if(previous != nil) {
+            ADLItemID* prevItem = [self.modelAccess itemIDForURL:previous.itemURL];
+            index = [self.modelAccess indexOfItem:prevItem inList:self.listID] + 1;
+        }
+        ADLItemID* itemID = [self.modelAccess itemIDForURL:record.itemURL];
+        
+        [self.modelAccess moveItem:itemID toIndex:index ofList:self.listID];
+        
+        previous = record;
+    }
+        
+    return YES;
+}
+
+- (void)tableView:(NSTableView *)tableView draggingSession:(NSDraggingSession *)session willBeginAtPoint:(NSPoint)screenPoint forRowIndexes:(NSIndexSet *)rowIndexes {
+    self.dragStartingRow = rowIndexes.firstIndex;
+    self.dragItemsConsecutive = (rowIndexes.lastIndex - rowIndexes.firstIndex) == rowIndexes.count - 1;
+}
+
+- (id <NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
+    ADLItemID* itemID = [self.items objectAtIndex:row];
+    return [ADLItemDragRecord dragRecordWithItemID:itemID];
 }
 
 #pragma mark Item View Delegate
@@ -175,7 +224,7 @@
     }
     else if(menuItem.action == @selector(paste:)) {
         NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
-        return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemPasteboardType]];
+        return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
     }
     else {
         return [super validateMenuItem:menuItem];

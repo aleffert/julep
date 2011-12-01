@@ -11,6 +11,7 @@
 
 @interface ADLConcreteItem : NSObject  <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
++ (ADLConcreteItem*)itemWithTitle:(NSString*)title completionStatus:(BOOL)completionStatus;
 + (ADLConcreteItem*)itemWithTask:(CalTask*)task;
 
 @property (retain, readonly, nonatomic) NSString* title;
