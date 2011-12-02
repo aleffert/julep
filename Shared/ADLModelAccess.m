@@ -252,39 +252,52 @@ static NSString* kADLListItemEntityName= @"Item";
     return [[self itemIDsForList:listID] indexOfObject:itemID];
 }
 
-- (void)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID {
+- (ADLItemID*)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID asReorder:(BOOL)asReorder {
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
     ADLList* currentList = item.owner;
     NSUInteger currentIndex = [self indexOfItem:itemID inList:listID];
     ADLList* newList = (ADLList*)[self.managedObjectContext objectWithID:listID];
+    BOOL movingBackward = index < currentIndex;
+    ADLItemID* finalItemID = itemID;
     
-    __block ADLModelAccess* owner = self;
-    if([newList.items containsObject:item]) {
-        [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
-            NSUInteger resultIndex = fmin(index - 1, newList.items.count - 1);
-            [set moveObjectsAtIndexes:[NSIndexSet indexSetWithIndex:currentIndex] toIndex:resultIndex];
-        }];
+    NSUInteger adjustedIndex = movingBackward ? index : index - 1;
+    NSUInteger adjustedCurrentIndex = movingBackward ? currentIndex + 1 : currentIndex;
+
+    if(asReorder) {
+        if([newList.items containsObject:item]) {
+            [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
+                [set moveObjectsAtIndexes:[NSIndexSet indexSetWithIndex:currentIndex] toIndex:adjustedIndex];
+            }];
+        }
+        else {
+            [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
+                [set insertObject:item atIndex:index];
+            }];
+            NSAssert(NO, @"don't support dropping across lists");
+        }
+        
+        NSError* error = nil;
+        [self.managedObjectContext save:&error];
+        NSAssert(error == nil, @"Error saving after move");
+            
     }
     else {
-        [newList mutateItemsSet:^(NSMutableOrderedSet* set) {
-            [set insertObject:item atIndex:index];
-        }];
-        NSAssert(NO, @"don't support dropping across lists");
-    }
-    
-    if(newList == currentList) {
-        currentIndex = currentIndex + 1;
+        NSString* uid = item.uid;
+        [self deleteTrackedItemWithID:itemID];
+        [self addItem:^(ADLItem* newItem) {
+            newItem.uid = uid;
+        } toList:newList atIndex:adjustedIndex];
+        finalItemID = [self itemForTaskUID:uid].objectID;
     }
     
     self.undoManager.actionName = @"Move Item";
-    
+
+    __block ADLModelAccess* owner = self;
     [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
-        [owner moveItem:itemID toIndex:currentIndex ofList:currentList.objectID];
+        [owner moveItem:finalItemID toIndex:adjustedCurrentIndex ofList:currentList.objectID asReorder:YES];
     } copy] autorelease]];
     
-    NSError* error = nil;
-    [self.managedObjectContext save:&error];
-    NSAssert(error == nil, @"Error saving after move");
+    return finalItemID;
 }
 
 - (ADLItemID*)itemIDForURL:(NSURL*)url {
@@ -405,10 +418,13 @@ static NSString* kADLListItemEntityName= @"Item";
     self.undoManager.actionName = @"Completion Change";
     __block ADLModelAccess* owner = self;
     BOOL currentStatus = [self completionStatusOfItem:itemID];
-    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
-        [owner setCompletionStatus:currentStatus ofItem:itemID];
-    } copy] autorelease]];
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    NSUInteger currentIndex = [self indexOfItem:itemID inList:item.owner.objectID];
+    ADLListID* listID = item.owner.objectID;
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        ADLItemID* newItemID = [[self itemIDsForList:listID] objectAtIndex:currentIndex];
+        [owner setCompletionStatus:currentStatus ofItem:newItemID];
+    } copy] autorelease]];
     CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
     task.isCompleted = status;
     NSError* error = nil;
@@ -426,10 +442,14 @@ static NSString* kADLListItemEntityName= @"Item";
     self.undoManager.actionName = @"Title Change";
     __block ADLModelAccess* owner = self;
     NSString* currentTitle = [self titleOfItem:itemID];
-    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
-        [owner setTitle:currentTitle ofItem:itemID];
-    } copy] autorelease]];
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    NSUInteger currentIndex = [self indexOfItem:itemID inList:item.owner.objectID];
+    ADLListID* listID = item.owner.objectID;
+    
+    [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
+        ADLItemID* newItemID = [[self itemIDsForList:listID] objectAtIndex:currentIndex];
+        [owner setTitle:currentTitle ofItem:newItemID];
+    } copy] autorelease]];
     CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
     task.title = title;
     NSError* error = nil;
@@ -493,7 +513,7 @@ static NSString* kADLListItemEntityName= @"Item";
     // TODO update selection if necessary
 }
 
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
     ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     CalTask* task = [CalTask task];
@@ -515,10 +535,12 @@ static NSString* kADLListItemEntityName= @"Item";
     
     [store saveTask:task error:&error];
     NSAssert(error == nil, @"Error creating new item");
+    
+    return newItem.objectID;
 }
 
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID {
-    [self addItemWithTitle:title toListWithID:listID atIndex:0];
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID {
+    return [self addItemWithTitle:title toListWithID:listID atIndex:0];
 }
 
 - (void)deleteItemWithID:(ADLItemID*)itemID {
@@ -531,9 +553,18 @@ static NSString* kADLListItemEntityName= @"Item";
     ADLListID* listID = item.owner.objectID;
     NSUInteger index = [item.owner.items indexOfObject:item];
     __block ADLModelAccess* owner = self;
+    BOOL currentCompletionStatus = [self completionStatusOfItem:itemID];
     
     [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
-        [owner addItemWithTitle:title toListWithID:listID atIndex:index];
+        ADLItemID* newItemID = [owner addItemWithTitle:title toListWithID:listID atIndex:index];
+        ADLItem* newItem = (ADLItem*)[owner.managedObjectContext objectWithID:newItemID];
+        CalTask* newTask = [store taskWithUID:newItem.uid];
+        newTask.isCompleted = currentCompletionStatus;
+
+        NSError* undoError = nil;
+        [store saveTask:newTask error:&undoError];
+        NSAssert(undoError == nil, @"error undoing delete");
+        
     } copy] autorelease]];
     self.undoManager.actionName = @"Delete Todo";
     
@@ -637,7 +668,7 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (void)spawnClearRecentlyModifiedTimer {
     [self stopClearRecentlyModifiedTimer];
-    self.clearRecentlyModifiedTimer = [NSTimer timerWithTimeInterval:.1 target:self selector:@selector(clearRecentlyModified) userInfo:nil repeats:NO];
+    self.clearRecentlyModifiedTimer = [NSTimer timerWithTimeInterval:.8 target:self selector:@selector(clearRecentlyModified) userInfo:nil repeats:NO];
 }
 
 - (void)calendarsChanged:(NSNotification*)notification {
@@ -733,6 +764,9 @@ static NSString* kADLListItemEntityName= @"Item";
     else {
         self.recentlyModifiedObjects = [self.recentlyModifiedObjects arrayByAddingObjectsFromArray: updatedObjects];
     }
+    
+    NSLog(@"recently modified is %@", self.recentlyModifiedObjects);
+    
     [self spawnClearRecentlyModifiedTimer];
 }
 
@@ -745,6 +779,7 @@ static NSString* kADLListItemEntityName= @"Item";
         foundDifferentChanges = foundDifferentChanges || ![self.recentlyModifiedObjects containsObject:uid];
     }
     if(foundDifferentChanges) {
+        NSLog(@"removing all actions for changes to %@", self.recentlyModifiedObjects);
         [self.undoManager removeAllActions];
     }
     else {

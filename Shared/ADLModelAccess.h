@@ -59,13 +59,16 @@ typedef NSManagedObjectID ADLItemID;
 @property (retain, nonatomic) ADLListID* selectedListID;
 
 // Actually modifies the calendar store. Be careful. Only call these from outside
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
-- (void)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 - (void)deleteItemWithID:(ADLItemID*)itemID;
 - (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID;
-- (void)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID;
+// asReorder is YES if we should do this as a rearrange items instead of as an insert/delete
+// Drag/Drop wants this to be no so the animations work properly
+// Returns the new itemID as it may have changed if asReorder is NO
+- (ADLItemID*)moveItem:(ADLItemID*)itemID toIndex:(NSUInteger)index ofList:(ADLListID*)listID asReorder:(BOOL)asReorder;
 
 @end
 

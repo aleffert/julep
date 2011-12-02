@@ -89,8 +89,19 @@
 }
 
 - (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
+    NSIndexSet* currentSelection = self.tableView.selectedRowIndexes;
+    NSIndexSet* newSelection = [newOrder indexesOfObjectsPassingTest:^(id object, NSUInteger index, BOOL* stop) {
+        BOOL result = [currentSelection containsIndex:[self.items indexOfObject:object]] && [newOrder containsObject:object];
+        return result;
+    }];
+    
     self.items = newOrder;
+    
     [self.tableView reloadData];
+    [self.view.window makeFirstResponder:self.tableView];
+    
+    [self.tableView selectRowIndexes:newSelection byExtendingSelection:NO];
+    
 //    NSMutableIndexSet* addingItems = [NSMutableIndexSet indexSet];
 //    NSMutableIndexSet* deletingItems = [NSMutableIndexSet indexSet];
 //    
@@ -166,18 +177,14 @@
 
 - (BOOL)tableView:(NSTableView *)tableView acceptDrop:(id<NSDraggingInfo>)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)dropOperation {
     NSArray* objects = [[info draggingPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[ADLItemDragRecord class]] options:nil];
-    ADLItemDragRecord* previous = nil;
+    ADLItemID* previousItem = nil;
     for(ADLItemDragRecord* record in objects) {
         NSUInteger index = row;
-        if(previous != nil) {
-            ADLItemID* prevItem = [self.modelAccess itemIDForURL:previous.itemURL];
-            index = [self.modelAccess indexOfItem:prevItem inList:self.listID] + 1;
+        if(previousItem != nil) {
+            index = [self.modelAccess indexOfItem:previousItem inList:self.listID] + 1;
         }
         ADLItemID* itemID = [self.modelAccess itemIDForURL:record.itemURL];
-        
-        [self.modelAccess moveItem:itemID toIndex:index ofList:self.listID];
-        
-        previous = record;
+        previousItem = [self.modelAccess moveItem:itemID toIndex:index ofList:self.listID asReorder:NO];
     }
         
     return YES;
@@ -224,7 +231,7 @@
     }
     else if(menuItem.action == @selector(paste:)) {
         NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
-        return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
+        return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemPasteboardType]];
     }
     else {
         return [super validateMenuItem:menuItem];
@@ -254,7 +261,8 @@
 - (void)pasteStartingAt:(NSUInteger)index {
     NSArray* objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[ADLConcreteItem class]] options:nil];
     for(ADLConcreteItem* item in objects) {
-        [self.modelAccess addItemWithTitle:item.title toListWithID:self.listID atIndex:index];
+        ADLItemID* itemID = [self.modelAccess addItemWithTitle:item.title toListWithID:self.listID atIndex:index];
+        [self.modelAccess setCompletionStatus:item.completionStatus ofItem:itemID];
         index++;
     }
 }
