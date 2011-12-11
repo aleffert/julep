@@ -11,10 +11,14 @@
 
 @interface ADLConcreteItem : NSObject  <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 
-+ (ADLConcreteItem*)itemWithTitle:(NSString*)title completionStatus:(BOOL)completionStatus;
 + (ADLConcreteItem*)itemWithTask:(CalTask*)task;
 
 @property (retain, readonly, nonatomic) NSString* title;
 @property (assign, readonly, nonatomic) BOOL completionStatus;
+@property (retain, readonly, nonatomic) NSDate* dueDate;
+@property (retain, readonly, nonatomic) NSDate* completedDate;
+@property (assign, readonly, nonatomic) CalPriority priority;
+@property (retain, readonly, nonatomic) NSString* notes;
+@property (retain, readonly, nonatomic) NSURL* url;
 
 @end

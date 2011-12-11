@@ -50,6 +50,7 @@ NSString* kADLItemPasteboardType = @"com.akivaleffert.julep.ItemPasteboardType";
 
 - (void)addList:(void (^)(ADLList* newList))defaults toCollection:(ADLListCollection*)collection atIndex:(NSUInteger)index;
 
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
 @end
 
 static NSString* kADLListEntityName = @"List";
@@ -509,16 +510,13 @@ static NSString* kADLListItemEntityName= @"Item";
         }];
         [self.managedObjectContext deleteObject:item];
     }];
-    
-    // TODO update selection if necessary
 }
 
-- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
+- (ADLItemID*)addItemWithInitializer:(void(^)(CalTask* task))initializer toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
     ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
     CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
     CalTask* task = [CalTask task];
-    NSError* error = nil;
-    task.title = title;
+    initializer(task);
     task.calendar = [store calendarWithUID:list.uid];
     
     __block ADLModelAccess* owner = self;
@@ -533,6 +531,7 @@ static NSString* kADLListItemEntityName= @"Item";
     } copy] autorelease]];
     self.undoManager.actionName = @"Create Todo";
     
+    NSError* error = nil;
     [store saveTask:task error:&error];
     NSAssert(error == nil, @"Error creating new item");
     
@@ -541,6 +540,24 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID {
     return [self addItemWithTitle:title toListWithID:listID atIndex:0];
+}
+
+- (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
+    return [self addItemWithInitializer:^(CalTask* task) {
+        task.title = title;
+    } toListWithID:listID atIndex:index];
+}
+
+- (ADLItemID*)addConcreteItem:(ADLConcreteItem*)concreteItem toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index {
+    return [self addItemWithInitializer:^(CalTask* task) {
+        task.title = concreteItem.title;
+        task.isCompleted = concreteItem.completionStatus;
+        task.dueDate = concreteItem.dueDate;
+        task.completedDate = concreteItem.completedDate;
+        task.priority = concreteItem.priority;
+        task.notes = concreteItem.notes;
+        task.url = concreteItem.url;
+    } toListWithID:listID atIndex:index];
 }
 
 - (void)deleteItemWithID:(ADLItemID*)itemID {
@@ -664,11 +681,12 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (void)clearRecentlyModified {
     self.recentlyModifiedObjects = nil;
+    self.clearRecentlyModifiedTimer = nil;
 }
 
 - (void)spawnClearRecentlyModifiedTimer {
     [self stopClearRecentlyModifiedTimer];
-    self.clearRecentlyModifiedTimer = [NSTimer timerWithTimeInterval:.8 target:self selector:@selector(clearRecentlyModified) userInfo:nil repeats:NO];
+    self.clearRecentlyModifiedTimer = [NSTimer scheduledTimerWithTimeInterval:.8 target:self selector:@selector(clearRecentlyModified) userInfo:nil repeats:NO];
 }
 
 - (void)calendarsChanged:(NSNotification*)notification {

@@ -27,6 +27,8 @@
 
 @property (assign, nonatomic) id <ADLItemViewDelegate> delegate;
 
+- (void)beginEditing;
+
 @end
 
 

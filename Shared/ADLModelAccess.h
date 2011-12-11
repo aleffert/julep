@@ -16,6 +16,8 @@ typedef NSManagedObjectID ADLItemID;
 @protocol ADLListChangedListener;
 @protocol ADLModelAccessDelegate;
 
+@class ADLConcreteItem;
+
 @interface ADLModelAccess : NSObject {
     NSManagedObjectContext* mManagedObjectContext;
     NSManagedObjectID* mDefaultCollectionID;
@@ -61,6 +63,7 @@ typedef NSManagedObjectID ADLItemID;
 // Actually modifies the calendar store. Be careful. Only call these from outside
 - (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
 - (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
+- (ADLItemID*)addConcreteItem:(ADLConcreteItem*)concreteItem toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 - (void)deleteItemWithID:(ADLItemID*)itemID;

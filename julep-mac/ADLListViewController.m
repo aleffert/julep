@@ -156,13 +156,15 @@
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
-    ADLItemID* item = [self.items objectAtIndex:row];
     ADLItemView* itemView = [[ADLItemView alloc] initWithFrame:NSMakeRect(0, 0, tableView.bounds.size.width, 90)];
-    
+    ADLItemID* item = [self.items objectAtIndex:row];
     itemView.item = item;
-    itemView.title = [self.modelAccess titleOfItem:item];
-    itemView.checked = [self.modelAccess completionStatusOfItem:item];
     itemView.delegate = self;
+    if ([item isNotEqualTo:[NSNull null]]) {
+        itemView.title = [self.modelAccess titleOfItem:item];
+        itemView.checked = [self.modelAccess completionStatusOfItem:item];
+    }
+    
     
     return itemView;
 }
@@ -196,18 +198,51 @@
 }
 
 - (id <NSPasteboardWriting>)tableView:(NSTableView *)tableView pasteboardWriterForRow:(NSInteger)row {
-    ADLItemID* itemID = [self.items objectAtIndex:row];
-    return [ADLItemDragRecord dragRecordWithItemID:itemID];
+    if(self.view.window.firstResponder == self.tableView) {
+        ADLItemID* itemID = [self.items objectAtIndex:row];
+        return [ADLItemDragRecord dragRecordWithItemID:itemID];
+    }
+    else {
+        return nil;
+    }
 }
 
 #pragma mark Item View Delegate
 
-- (void)itemView:(ADLItemView *)itemView changedTitle:(NSString *)item {
-    [self.modelAccess setTitle:item ofItem:itemView.item];
+- (void)itemView:(ADLItemView *)itemView changedTitle:(NSString *)newItem {
+    if([itemView.item isEqual:[NSNull null]]) {
+        NSUInteger index = [self.items indexOfObject:[NSNull null]];
+        NSMutableArray* items = [self.items mutableCopy];
+        [items removeObjectAtIndex:index];
+        self.items = items;
+        [items release];
+        [self.tableView beginUpdates];
+        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectGap];
+        [self.tableView endUpdates];
+        
+        if([newItem isNotEqualTo:@""]) {
+            [self.modelAccess addItemWithTitle:newItem toListWithID:self.listID atIndex:index];
+        }
+    }
+    else {
+        [self.modelAccess setTitle:newItem ofItem:itemView.item];
+    }
 }
 
 - (void)itemView:(ADLItemView *)itemView changedCompletionStatus:(BOOL)status {
-    [self.modelAccess setCompletionStatus:status ofItem:itemView.item];
+    if([itemView.item isEqual:[NSNull null]]) {
+        NSUInteger index = [self.items indexOfObject:[NSNull null]];
+        NSMutableArray* items = [self.items mutableCopy];
+        self.items = items;
+        [items release];
+        [items removeObjectAtIndex:index];
+        [self.tableView beginUpdates];
+        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectGap];
+        [self.tableView endUpdates];
+    }
+    else {
+        [self.modelAccess setCompletionStatus:status ofItem:itemView.item];
+    }
 }
 
 - (void)keyDown:(NSEvent *)theEvent {
@@ -233,9 +268,31 @@
         NSPasteboard* pasteboard = [NSPasteboard generalPasteboard];
         return [pasteboard canReadItemWithDataConformingToTypes:[NSArray arrayWithObject:kADLItemPasteboardType]];
     }
-    else {
-        return [super validateMenuItem:menuItem];
+    else if(menuItem.action == @selector(newListItem:)) {
+        return YES;
     }
+    else {
+        return NO;
+    }
+}
+
+#pragma mark New Item
+- (IBAction)newListItem:(id)sender {
+    NSIndexSet* selectedIndices = self.tableView.selectedRowIndexes;
+    NSUInteger insertionIndex = selectedIndices.count == 0 ? 0 : selectedIndices.lastIndex + 1;
+    
+    NSMutableArray* items = [self.items mutableCopy];
+    [items insertObject:[NSNull null] atIndex:insertionIndex];
+    self.items = items;
+    [items release];
+    
+    [self.tableView beginUpdates];
+    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:insertionIndex] withAnimation:NSTableViewAnimationEffectGap];
+    [self.tableView endUpdates];
+    
+    [self.tableView scrollRowToVisible:insertionIndex];
+    ADLItemView* itemView = [self.tableView viewAtColumn:0 row:insertionIndex makeIfNecessary:YES];
+    [itemView beginEditing];
 }
 
 #pragma mark Pasteboard
@@ -261,8 +318,7 @@
 - (void)pasteStartingAt:(NSUInteger)index {
     NSArray* objects = [[NSPasteboard generalPasteboard] readObjectsForClasses:[NSArray arrayWithObject:[ADLConcreteItem class]] options:nil];
     for(ADLConcreteItem* item in objects) {
-        ADLItemID* itemID = [self.modelAccess addItemWithTitle:item.title toListWithID:self.listID atIndex:index];
-        [self.modelAccess setCompletionStatus:item.completionStatus ofItem:itemID];
+        [self.modelAccess addConcreteItem:item toListWithID:self.listID atIndex:index];
         index++;
     }
 }

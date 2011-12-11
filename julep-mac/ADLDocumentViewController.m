@@ -229,19 +229,20 @@
 }
 
 - (IBAction)newListItem:(id)sender {
-    ADLNewItemViewController* newItemController = [[ADLNewItemViewController alloc] initWithNibName:@"ADLNewItemViewController" bundle:nil];
-    CGFloat width = newItemController.view.frame.size.width;
-    CGFloat height = newItemController.view.frame.size.height;
-    NSPanel* sheet = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, width, height) styleMask:NSDocModalWindowMask | NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
-    
-    [newItemController willPresentAsSheet];
-    sheet.contentView = newItemController.view;
-    [NSApp beginSheet:sheet modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(createListItemSheetEnded:returnCode:viewController:) contextInfo:newItemController];
-    [self.agnostic.modelAccess.listIDs enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-        [newItemController addListID:object withName:[self.agnostic.modelAccess titleOfList:object]];
-    }];
-    
-    [sheet release];
+    // TODO DELETE
+//    ADLNewItemViewController* newItemController = [[ADLNewItemViewController alloc] initWithNibName:@"ADLNewItemViewController" bundle:nil];
+//    CGFloat width = newItemController.view.frame.size.width;
+//    CGFloat height = newItemController.view.frame.size.height;
+//    NSPanel* sheet = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, width, height) styleMask:NSDocModalWindowMask | NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
+//    
+//    [newItemController willPresentAsSheet];
+//    sheet.contentView = newItemController.view;
+//    [NSApp beginSheet:sheet modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(createListItemSheetEnded:returnCode:viewController:) contextInfo:newItemController];
+//    [self.agnostic.modelAccess.listIDs enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+//        [newItemController addListID:object withName:[self.agnostic.modelAccess titleOfList:object]];
+//    }];
+//    
+//    [sheet release];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {

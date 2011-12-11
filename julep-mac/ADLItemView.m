@@ -59,6 +59,10 @@
     return NSMakeRect(30, 0, mainFrame.size.width - 30, mainFrame.size.height);
 }
 
+- (void)beginEditing {
+    [self.window makeFirstResponder:self.titleView];
+}
+
 - (void)setTitle:(NSString *)newTitle {
     NSString* temp = [newTitle copy];
     [mTitle release];
