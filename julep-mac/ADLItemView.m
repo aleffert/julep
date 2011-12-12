@@ -80,8 +80,6 @@
 
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
     [self.titleView resignFirstResponder];
-    self.titleView.selectable = NO;
-    self.titleView.editable = NO;
     NSString* newTitle = self.titleView.stringValue;
     if (newTitle.length > 0 && ![newTitle isEqualToString:self.title]) {
         [self.delegate itemView:self changedTitle:newTitle];

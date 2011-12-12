@@ -57,7 +57,7 @@
     
     [self.view addSubview:scrollview];
     
-    NSTableView* tableView = [[NSTableView alloc] initWithFrame:self.view.bounds];
+    ADLTableView* tableView = [[ADLTableView alloc] initWithFrame:self.view.bounds];
     tableView.delegate = self;
     tableView.dataSource = self;
     tableView.headerView = nil;
@@ -147,6 +147,33 @@
 ////        itemView.title = [self.modelAccess titleOfItem:itemView.item];
 ////        itemView.checked = [self.modelAccess completionStatusOfItem:itemView.item];
 ////    }];
+}
+
+#pragma mark Table View Delegate
+- (void)tableViewShouldClearSelection:(ADLTableView *)tableView {
+    [self.tableView selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+}
+
+- (void)tableViewShouldEditSelection:(ADLTableView *)tableView {
+    NSIndexSet* selection = self.tableView.selectedRowIndexes;
+    if(selection.count > 0) {
+        NSUInteger editingRow = selection.lastIndex;
+        ADLItemView* itemView = [self.tableView viewAtColumn:0 row:editingRow makeIfNecessary:YES];
+        [self.tableView scrollRowToVisible:editingRow];
+        [itemView beginEditing];
+    }
+}
+
+- (void)tableViewShouldToggleSelection:(ADLTableView *)tableView {
+    __block BOOL currentlyChecked = YES;
+    [self.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL* stop) {
+        currentlyChecked = currentlyChecked && [self.modelAccess completionStatusOfItem:[self.items objectAtIndex:index]];
+        *stop = !currentlyChecked;
+    }];
+    [self.tableView.selectedRowIndexes enumerateIndexesUsingBlock:^(NSUInteger index, BOOL* stop) {
+        [self.modelAccess setCompletionStatus:!currentlyChecked ofItem:[self.items objectAtIndex:index]];
+    }];
+    
 }
 
 #pragma mark Data Source

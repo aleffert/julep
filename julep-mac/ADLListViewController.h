@@ -10,10 +10,11 @@
 
 #import "ADLModelAccess.h"
 #import "ADLItemView.h"
+#import "ADLTableView.h"
 
 @protocol ADLListViewControllerDelegate;
 
-@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTableViewDataSource, NSTableViewDelegate, ADLItemViewDelegate> {
+@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTableViewDataSource, ADLTableViewDelegate, ADLItemViewDelegate> {
     ADLModelAccess* mModelAccess;
     ADLListID* mListID;
     id <ADLListViewControllerDelegate> mDelegate;
