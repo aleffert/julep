@@ -14,6 +14,7 @@
 
 @interface ADLNSTabViewController ()
 
+@property (retain, nonatomic) IBOutlet NSView* bodyView;
 @property (retain, nonatomic) IBOutlet ADLNSScrollView* scrollView;
 @property (retain, nonatomic) ADLTabController* agnostic;
 
@@ -25,6 +26,7 @@ const static CGFloat kADLNSTabHeight = 28.;
 @implementation ADLNSTabViewController
 
 @synthesize scrollView = mScrollView;
+@synthesize bodyView = mBodyView;
 @synthesize agnostic = mAgnostic;
 @synthesize viewManipulator = mViewManipulator;
 
@@ -43,14 +45,31 @@ const static CGFloat kADLNSTabHeight = 28.;
     [super dealloc];
 }
 
-- (id <ADLView>)bodyView {
-    return self.scrollView.documentView;
-}
-
-- (id <ADLTabView>)makeTabViewForTabController:(ADLTabController*)tabController {
+- (NSView*)makeTabViewForTabController:(ADLTabController*)tabController {
     ADLNSTabView* tabView = [[ADLNSTabView alloc] initWithFrame:NSMakeRect(0, 0, kADLNSTabWidth, kADLNSTabHeight)];
     
     return [tabView autorelease];
+}
+
+- (void)makeTabVisible:(id <ADLTabView>)tabView {
+    ADLNSTabView* nsTabView = (ADLNSTabView*)tabView;
+    NSRect tabRect = [nsTabView convertRect:nsTabView.bounds toView:self.scrollView.contentView];
+    NSRect visibleBounds = self.scrollView.contentView.documentVisibleRect;
+    NSRect intersection = NSIntersectionRect(tabRect, visibleBounds);
+    [NSAnimationContext beginGrouping];
+    [NSAnimationContext runAnimationGroup:^(NSAnimationContext* context) {
+        context.duration = .3;
+        context.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+        if(intersection.size.width < tabRect.size.width) {
+            if(NSPointInRect(visibleBounds.origin, NSInsetRect(tabRect, -2, -2))) {
+                [self.scrollView.contentView.animator setBoundsOrigin:tabRect.origin];
+            }
+            else {
+                NSPoint newPoint = NSMakePoint(NSMaxX(tabRect) - visibleBounds.size.width, tabRect.origin.y);
+                [self.scrollView.contentView.animator setBoundsOrigin:newPoint];
+            }
+        }
+    } completionHandler:NULL];
 }
 
 - (void)updateSizeForContentWidth:(CGFloat)width {
@@ -62,7 +81,7 @@ const static CGFloat kADLNSTabHeight = 28.;
     frame.size.height = kADLNSTabHeight;
     self.view.frame = frame;
     
-    NSView* bodyView = self.scrollView.documentView;
+    NSView* bodyView = self.bodyView;
     NSRect bodyFrame = bodyView.frame;
     bodyFrame.size.width = width;
     bodyFrame.size.height = kADLNSTabHeight;

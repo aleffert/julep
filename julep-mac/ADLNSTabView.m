@@ -14,7 +14,7 @@
 
 @interface ADLNSTabView ()
 
-@property (retain, nonatomic) CALayer* backgroundLayer;
+@property (retain, nonatomic) NSImageView* backgroundView;
 @property (retain, nonatomic) NSTextField* titleView;
 
 @property (retain, nonatomic) NSTimer* dragTimer;
@@ -33,7 +33,7 @@
 @dynamic layer;
 @dynamic hidden;
 
-@synthesize backgroundLayer = mBackgroundLayer;
+@synthesize backgroundView = mBackgroundView;
 @synthesize currentDragLocation = mCurrentDragLocation;
 @synthesize delegate = mDelegate;
 @synthesize dragging = mDragging;
@@ -46,12 +46,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.wantsLayer = YES;
         
-        self.backgroundLayer = [CALayer layer];
-        self.backgroundLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
+        self.backgroundView = [[[NSImageView alloc] initWithFrame:self.bounds] autorelease];
         [self updateAppearance];
-        [self.layer addSublayer:self.backgroundLayer];
+        [self addSubview:self.backgroundView];
         
         self.titleView = [[[NSTextField alloc] initWithFrame:NSInsetRect(self.bounds, 8, 4)] autorelease];
         self.titleView.bezeled = NO;
@@ -67,7 +65,7 @@
 }
 
 - (void)dealloc {
-    self.backgroundLayer = nil;
+    self.backgroundView = nil;
     self.titleView = nil;
     self.delegate = nil;
     self.title = nil;
@@ -93,10 +91,10 @@
 
 - (void)updateAppearance {
     if(self.selected) {
-        self.backgroundLayer.contents = [NSImage imageNamed:@"ADLTabSelected"];
+        self.backgroundView.image = [NSImage imageNamed:@"ADLTabSelected"];
     }
     else {
-        self.backgroundLayer.contents = [NSImage imageNamed:@"ADLTabUnselected"];
+        self.backgroundView.image = [NSImage imageNamed:@"ADLTabUnselected"];
     }
 }
 
@@ -141,13 +139,13 @@
 }
 
 - (void)dragBegan:(NSTimer*)timer {
-    self.layer.opacity = .75;
+    self.alphaValue = .75;
     [self.delegate beginDraggingTab:self];
     self.dragging = YES;
 }
 
 - (void)dragEnded {
-    self.layer.opacity = 1;
+    self.alphaValue = 1;
     self.dragging = NO;
     [self.delegate endDraggingTab:self];
 }

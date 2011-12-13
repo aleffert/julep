@@ -11,7 +11,12 @@
 
 #import "ADLColor.h"
 #import "ADLColorView.h"
+#import "ADLShadowView.h"
 #import "ADLFloatUtilities.h"
+
+#import "NSShadow+ADLExtensions.h"
+
+#define kADLShadowInsets 8
 
 @interface ADLPileSlide : NSObject {
     BOOL mAbort;
@@ -21,7 +26,7 @@
     CGFloat mToValue;
     CGFloat mGoalAmount;
     NSView* mParentView;
-    CALayer* mShadowLayer;
+    ADLShadowView* mShadowView;
 }
 
 @property (assign, nonatomic) BOOL abort;
@@ -29,7 +34,7 @@
 @property (retain, nonatomic) NSViewController* slidingViewController;
 @property (retain, nonatomic) NSView* parentView;
 
-@property (retain, nonatomic) CALayer* shadowLayer;
+@property (retain, nonatomic) ADLShadowView* shadowView;
 
 @property (assign, nonatomic) CGFloat goalAmount;
 
@@ -60,7 +65,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
 @synthesize fromValue = mFromValue;
 @synthesize goalAmount = mGoalAmount;
 @synthesize parentView = mParentView;
-@synthesize shadowLayer = mShadowLayer;
+@synthesize shadowView = mshadowView;
 @synthesize slidingViewController = mSlidingViewController;
 @synthesize toValue = mToValue;
 
@@ -98,13 +103,8 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
             slidingView.frame = NSMakeRect(self.fromValue, 0, width, height);
         }
         behindView.frame = NSMakeRect(0, 0, width, height);
-        self.shadowLayer.frame = NSRectToCGRect(self.slidingViewController.view.frame);
-        self.shadowLayer.backgroundColor = [ADLColor blackColor].CGColor;
-        self.shadowLayer.shadowOpacity = .8;
-        self.shadowLayer.shadowRadius = 5;
-        self.shadowLayer.shadowOffset = CGSizeMake(0, 0);
-        self.shadowLayer.masksToBounds = NO;
-        [self.parentView.layer insertSublayer:self.shadowLayer below:self.slidingViewController.view.layer];
+        self.shadowView.frame = NSInsetRect(self.slidingViewController.view.frame, -kADLShadowInsets, 0);
+        [self.parentView addSubview:self.shadowView  positioned:NSWindowBelow relativeTo:self.slidingViewController.view];
     });
 }
 
@@ -112,15 +112,15 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
     ADLWithAnimationsDisabled(^(void) {
         CGFloat scaledAmount = (slideAmount + 1) / 2;
         NSView* slidingView = self.slidingViewController.view;
-        slidingView.frameOrigin = NSMakePoint(self.toValue * scaledAmount + self.fromValue * (1 - scaledAmount), 0);
-        self.shadowLayer.frame = NSRectToCGRect(self.slidingViewController.view.frame);
+        slidingView.frameOrigin = NSMakePoint(floor(self.toValue * scaledAmount + self.fromValue * (1 - scaledAmount)), 0);
+        self.shadowView.frame = NSInsetRect(self.slidingViewController.view.frame, -kADLShadowInsets, 0);
     });
 }
 
 - (void)cleanup {
     ADLWithAnimationsDisabled(^(void) {
-        [self.shadowLayer removeFromSuperlayer];
-        self.shadowLayer = nil;
+        [self.shadowView removeFromSuperview];
+        self.shadowView = nil;
     });
 }
 
@@ -129,7 +129,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
 @interface ADLPileViewController ()
 
 @property (retain, nonatomic) ADLPileSlide* pileSlide;
-@property (retain, nonatomic) CALayer* shadowLayer;
+@property (retain, nonatomic) ADLShadowView* shadowView;
 
 @end
 
@@ -141,7 +141,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
 @synthesize pileSlide = mPileSlide;
 @synthesize prevViewController = mPrevViewController;
 
-@synthesize shadowLayer = mShadowLayer;
+@synthesize shadowView = mShadowView;
 @synthesize swipeGestureOptions = mSwipeGestureOptions;
 
 - (void)dealloc {
@@ -167,7 +167,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
 }
 
 - (BOOL)wantsScrollEventsForSwipeTrackingOnAxis:(NSEventGestureAxis)axis {
-    return NSEventGestureAxisHorizontal;
+    return axis == NSEventGestureAxisHorizontal;
 }
 
 - (void)finishUpSlide:(BOOL)succeeded {
@@ -243,7 +243,7 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
                     self.pileSlide.goalAmount = 1;
                 }
             }
-            self.pileSlide.shadowLayer = self.shadowLayer;
+            self.pileSlide.shadowView = self.shadowView;
             [self.pileSlide startSlide];
         }
         
@@ -299,7 +299,9 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
     if(backgroundView != nil) {
         [self.view addSubview:backgroundView positioned:NSWindowBelow relativeTo:nil];
     }
-    self.shadowLayer = [CALayer layer];
+    self.shadowView = [[[ADLShadowView alloc] init] autorelease];
+    self.shadowView.shadow = [NSShadow standardShadow];
+    self.shadowView.insets = NSEdgeInsetsMake(0, kADLShadowInsets, 0, kADLShadowInsets);
 }
 
 - (void)loadView {

@@ -11,6 +11,7 @@
 #import "ADLConcreteItem.h"
 #import "ADLItemDragRecord.h"
 #import "ADLItemView.h"
+#import "ADLNSScrollView.h"
 #import "NSArray+ADLAdditions.h"
 
 @interface ADLListViewController ()
@@ -44,24 +45,26 @@
 }
 
 - (void)viewDidLoad {
-    self.view.wantsLayer = YES;
+    NSScrollView *scrollView = [[NSScrollView alloc] initWithFrame:self.view.bounds];
     
-    NSScrollView *scrollview = [[NSScrollView alloc] initWithFrame:self.view.bounds];
-    scrollview.wantsLayer = YES;
+    scrollView.borderType = NSNoBorder;
+    scrollView.hasVerticalScroller = YES;
+    scrollView.hasHorizontalScroller = NO;
+    scrollView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
+    scrollView.verticalScrollElasticity = NSScrollElasticityAllowed;
+    scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
+    scrollView.contentView.copiesOnScroll = NO;
+    scrollView.usesPredominantAxisScrolling = YES;
     
-    scrollview.borderType = NSNoBorder;
-    scrollview.hasVerticalScroller = YES;
-    scrollview.hasHorizontalScroller = NO;
-    scrollview.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
-    scrollview.verticalScrollElasticity = NSScrollElasticityAllowed;
-    
-    [self.view addSubview:scrollview];
+    [self.view addSubview:scrollView];
     
     ADLTableView* tableView = [[ADLTableView alloc] initWithFrame:self.view.bounds];
     tableView.delegate = self;
     tableView.dataSource = self;
+    tableView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     tableView.headerView = nil;
     tableView.allowsMultipleSelection = YES;
+    tableView.focusRingType = NSFocusRingTypeNone;
     [tableView setDraggingSourceOperationMask:NSDragOperationMove | NSDragOperationDelete forLocal:YES];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
     
@@ -69,13 +72,14 @@
     column.resizingMask = NSTableColumnAutoresizingMask;
     column.width = self.view.frame.size.width;
     [tableView addTableColumn:column];
+
     
-    [scrollview setDocumentView:tableView];
+    [scrollView setDocumentView:tableView];
     self.tableView = tableView;
     
     [column release];
     [tableView release];
-    [scrollview release];
+    [scrollView release];
 }
 
 - (void)loadView {
@@ -84,6 +88,15 @@
 }
 
 - (void)didActivate {
+    
+    // The table view and scroll view widths get out of sync to do various autosizing "magic"
+    // While the views initialize
+    // Adjust it here for sure, once we've picked a size
+    NSRect rect = self.tableView.frame;
+    rect.size.width = self.tableView.enclosingScrollView.frame.size.width;
+    self.tableView.frame = rect;
+    
+    
     self.view.nextResponder = self;
     [self.view.window makeFirstResponder:self.tableView];
 }
@@ -235,6 +248,10 @@
 }
 
 #pragma mark Item View Delegate
+
+- (void)itemViewCancelledEditing:(ADLItemView *)itemView {
+    [self.view.window makeFirstResponder:self.tableView];
+}
 
 - (void)itemView:(ADLItemView *)itemView changedTitle:(NSString *)newItem {
     if([itemView.item isEqual:[NSNull null]]) {

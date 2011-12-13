@@ -783,8 +783,6 @@ static NSString* kADLListItemEntityName= @"Item";
         self.recentlyModifiedObjects = [self.recentlyModifiedObjects arrayByAddingObjectsFromArray: updatedObjects];
     }
     
-    NSLog(@"recently modified is %@", self.recentlyModifiedObjects);
-    
     [self spawnClearRecentlyModifiedTimer];
 }
 
@@ -849,7 +847,7 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (ADLListID*)selectedListID {
     NSManagedObjectID* listID = [self currentlySavedListID];
-    if([self.lists containsObject:listID]) {
+    if([self.listIDs containsObject:listID]) {
         return listID;
     }
     else {

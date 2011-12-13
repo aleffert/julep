@@ -53,6 +53,7 @@
 - (void)updateSizeForContentWidth:(CGFloat)width;
 - (void)animateInTabView:(id <ADLTabView>)tabView;
 - (void)animateOutTabView:(id <ADLTabView>)tabView;
+- (void)makeTabVisible:(id <ADLTabView>)tabView;
 
 @end
 

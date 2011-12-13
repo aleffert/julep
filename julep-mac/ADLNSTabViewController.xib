@@ -2,13 +2,13 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11B26</string>
-		<string key="IBDocument.InterfaceBuilderVersion">1934</string>
-		<string key="IBDocument.AppKitVersion">1138</string>
-		<string key="IBDocument.HIToolboxVersion">566.00</string>
+		<string key="IBDocument.SystemVersion">11C74</string>
+		<string key="IBDocument.InterfaceBuilderVersion">1938</string>
+		<string key="IBDocument.AppKitVersion">1138.23</string>
+		<string key="IBDocument.HIToolboxVersion">567.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">1934</string>
+			<string key="NS.object.0">1938</string>
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>NSCustomView</string>
@@ -48,11 +48,11 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<object class="NSView" id="1044521604">
 										<reference key="NSNextResponder" ref="506121899"/>
-										<int key="NSvFlags">278</int>
+										<int key="NSvFlags">301</int>
 										<string key="NSFrameSize">{480, 25}</string>
 										<reference key="NSSuperview" ref="506121899"/>
 										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView"/>
+										<reference key="NSNextKeyView" ref="876248647"/>
 										<int key="NSViewLayerContentsRedrawPolicy">2</int>
 										<string key="NSReuseIdentifierKey">_NS:373</string>
 									</object>
@@ -81,7 +81,7 @@
 								<string key="NSFrame">{{-100, -100}, {15, 32}}</string>
 								<reference key="NSSuperview" ref="84697272"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="876248647"/>
+								<reference key="NSNextKeyView" ref="506121899"/>
 								<string key="NSReuseIdentifierKey">_NS:380</string>
 								<reference key="NSTarget" ref="84697272"/>
 								<string key="NSAction">_doScroller:</string>
@@ -91,10 +91,10 @@
 							<object class="NSScroller" id="876248647">
 								<reference key="NSNextResponder" ref="84697272"/>
 								<int key="NSvFlags">-2147483392</int>
-								<string key="NSFrame">{{-100, -100}, {465, 15}}</string>
+								<string key="NSFrame">{{-100, -100}, {480, 15}}</string>
 								<reference key="NSSuperview" ref="84697272"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="506121899"/>
+								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:384</string>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="84697272"/>
@@ -118,6 +118,7 @@
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="84697272"/>
+				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -138,6 +139,14 @@
 						<reference key="destination" ref="84697272"/>
 					</object>
 					<int key="connectionID">9</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">bodyView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1044521604"/>
+					</object>
+					<int key="connectionID">11</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -216,7 +225,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">9</int>
+			<int key="maxID">11</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -231,17 +240,20 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">ADLNSTabViewController</string>
 					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">scrollView</string>
-						<string key="NS.object.0">ADLNSScrollView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">scrollView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="bodyView">NSView</string>
+						<string key="scrollView">ADLNSScrollView</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="bodyView">
+							<string key="name">bodyView</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="scrollView">
 							<string key="name">scrollView</string>
 							<string key="candidateClassName">ADLNSScrollView</string>
 						</object>
-					</object>
+					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/ADLNSTabViewController.h</string>

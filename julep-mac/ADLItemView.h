@@ -36,5 +36,6 @@
 
 - (void)itemView:(ADLItemView*)itemView changedTitle:(NSString*)item;
 - (void)itemView:(ADLItemView*)itemView changedCompletionStatus:(BOOL)status;
+- (void)itemViewCancelledEditing:(ADLItemView*)itemView;
 
 @end

@@ -108,12 +108,12 @@ static NSString* kADLNSViewManipulatorFinalValuesKey = @"kADLNSViewManipulatorFi
     }
 }
 
-- (CGFloat)alphaOfView:(id <ADLView>)view {
-    return view.layer.opacity;
+- (CGFloat)alphaOfView:(NSView*)view {
+    return view.alphaValue;
 }
 
-- (void)setAlpha:(CGFloat)alpha ofView:(id <ADLView>)view {
-    view.layer.opacity = alpha;
+- (void)setAlpha:(CGFloat)alpha ofView:(NSView*)view {
+    view.alphaValue = alpha;
 }
 
 

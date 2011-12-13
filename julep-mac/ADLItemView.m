@@ -81,9 +81,19 @@
 - (void)controlTextDidEndEditing:(NSNotification *)obj {
     [self.titleView resignFirstResponder];
     NSString* newTitle = self.titleView.stringValue;
-    if (newTitle.length > 0 && ![newTitle isEqualToString:self.title]) {
+    if (![newTitle isEqualToString:self.title]) {
         [self.delegate itemView:self changedTitle:newTitle];
     }
+}
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {
+    if(commandSelector == @selector(cancelOperation:) && [self.item isEqual:[NSNull null]]) {
+        // Clear it so that when we end editing we haven't done anything
+        self.titleView.stringValue = @"";
+        [self.delegate itemViewCancelledEditing:self];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)toggledCheckbox:(id)sender {

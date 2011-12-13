@@ -35,6 +35,13 @@
     [windowController release];
 }
 
+- (void)showWindows {
+    if (self.windowControllers.count == 0) {
+        [self makeWindowControllers];
+    }
+    [super showWindows];
+}
+
 - (BOOL)configurePersistentStoreCoordinatorForURL:(NSURL *)storeURL ofType:(NSString *)fileType modelConfiguration:(NSString *)configuration storeOptions:(NSDictionary *)storeOptions error:(NSError **)error{
     BOOL success = [super configurePersistentStoreCoordinatorForURL:storeURL ofType:fileType modelConfiguration:configuration storeOptions:storeOptions error:error];
     
@@ -47,6 +54,10 @@
 }
 - (BOOL)isDocumentEdited {
     return NO;
+}
+
+- (void)restoreDocumentWindowWithIdentifier:(NSString *)identifier state:(NSCoder *)state completionHandler:(void (^)(NSWindow *, NSError *))completionHandler {
+    // Do nothing! We deal with state restoring ourselves to prevent the window moving on launch
 }
 
 - (void)modelDidMutate:(ADLModelAccess *)modelAccess {

@@ -8,46 +8,19 @@
 
 #import "ADLColorView.h"
 
-@interface ADLColorView ()
-
-@property (retain, nonatomic) CALayer* colorLayer;
-
-@end
-
 @implementation ADLColorView
 
-@synthesize colorLayer = mColorLayer;
-
-- (id)initWithFrame:(NSRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        self.layer = [CALayer layer];
-        self.wantsLayer = YES;
-        self.layer.frame = NSRectToCGRect(self.bounds);
-        self.colorLayer = [CALayer layer];
-        self.colorLayer.frame = NSRectToCGRect(self.bounds);
-        self.colorLayer.autoresizingMask = kCALayerWidthSizable | kCALayerHeightSizable;
-        self.colorLayer.needsDisplayOnBoundsChange = YES;
-        // Deal with the CALayer vs NSView coordinate systems
-        self.colorLayer.affineTransform = CGAffineTransformMakeScale(1., -1);
-        [self.layer addSublayer:self.colorLayer];
-    }
-    
-    return self;
-}
+@synthesize backgroundColor = mBackgroundColor;
 
 - (void)dealloc {
-    self.colorLayer = nil;
+    self.backgroundColor = nil;
     [super dealloc];
 }
 
-- (CGColorRef)backgroundColor {
-    return self.colorLayer.backgroundColor;
-}
-
-- (void)setBackgroundColor:(CGColorRef)backgroundColor {
-    self.colorLayer.backgroundColor = backgroundColor;
+- (void)drawRect:(NSRect)dirtyRect {
+    [self.backgroundColor setFill];
+    NSRectFill(dirtyRect);
+    
 }
 
 @end

@@ -74,10 +74,11 @@
         selectedTab.selected = NO;
         tab.selected = YES;
         [self.delegate.viewManipulator orderViewFront:tab];
+        [selectedInfo retain];
+        [mSelectedInfo release];
+        mSelectedInfo = selectedInfo;
+        [self.delegate makeTabVisible:tab];
     }
-    [selectedInfo retain];
-    [mSelectedInfo release];
-    mSelectedInfo = selectedInfo;
 }
 
 //- (void)reload {
@@ -165,6 +166,7 @@
             selectedTab = currentTab;
         }
     }
+    
     return selectedTab;
 }
 

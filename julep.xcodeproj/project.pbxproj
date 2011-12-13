@@ -50,6 +50,7 @@
 		77C1EB6E1486EA2D008AC04C /* ADLConcreteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C1EB6D1486EA2D008AC04C /* ADLConcreteItem.m */; };
 		77C2F91B1479616800DED2FC /* ADLNewItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C2F9191479616800DED2FC /* ADLNewItemViewController.m */; };
 		77C2F91C1479616800DED2FC /* ADLNewItemViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */; };
+		77CEF9471496B4BF00504287 /* ADLShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CEF9461496B4BF00504287 /* ADLShadowView.m */; };
 		77D883941424361B00544311 /* ADLPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883921424361A00544311 /* ADLPileViewController.m */; };
 		77D883951424361B00544311 /* ADLPileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D883931424361B00544311 /* ADLPileViewController.xib */; };
 		77D883991424383300544311 /* NSShadow+ADLExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883981424383300544311 /* NSShadow+ADLExtensions.m */; };
@@ -145,12 +146,14 @@
 		77B986CB1402C56D004A2293 /* ADLNSTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSTabViewController.m; sourceTree = "<group>"; };
 		77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ADLNSTabViewController.xib; path = "julep-mac/ADLNSTabViewController.xib"; sourceTree = "<group>"; };
 		77B986D01402CCFD004A2293 /* ADLNSTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSTabView.h; sourceTree = "<group>"; };
-		77B986D11402CCFD004A2293 /* ADLNSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSTabView.m; sourceTree = "<group>"; };
+		77B986D11402CCFD004A2293 /* ADLNSTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = ADLNSTabView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		77C1EB6C1486EA2D008AC04C /* ADLConcreteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLConcreteItem.h; path = Shared/ADLConcreteItem.h; sourceTree = "<group>"; };
 		77C1EB6D1486EA2D008AC04C /* ADLConcreteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLConcreteItem.m; path = Shared/ADLConcreteItem.m; sourceTree = "<group>"; };
 		77C2F9181479616800DED2FC /* ADLNewItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNewItemViewController.h; sourceTree = "<group>"; };
 		77C2F9191479616800DED2FC /* ADLNewItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNewItemViewController.m; sourceTree = "<group>"; };
 		77C2F91A1479616800DED2FC /* ADLNewItemViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLNewItemViewController.xib; sourceTree = "<group>"; };
+		77CEF9451496B4BF00504287 /* ADLShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLShadowView.h; sourceTree = "<group>"; };
+		77CEF9461496B4BF00504287 /* ADLShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLShadowView.m; sourceTree = "<group>"; };
 		77D883911424361A00544311 /* ADLPileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLPileViewController.h; sourceTree = "<group>"; };
 		77D883921424361A00544311 /* ADLPileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLPileViewController.m; sourceTree = "<group>"; };
 		77D883931424361B00544311 /* ADLPileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ADLPileViewController.xib; path = "julep-mac/ADLPileViewController.xib"; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 		7770675F140830850088AB85 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				77CEF9451496B4BF00504287 /* ADLShadowView.h */,
+				77CEF9461496B4BF00504287 /* ADLShadowView.m */,
 				7798CE9D1487236B00FFD39E /* ADLItemDragRecord.h */,
 				7798CE9E1487236B00FFD39E /* ADLItemDragRecord.m */,
 				777067601408308F0088AB85 /* Main View */,
@@ -499,6 +504,7 @@
 				77C1EB6E1486EA2D008AC04C /* ADLConcreteItem.m in Sources */,
 				7798CE9F1487236B00FFD39E /* ADLItemDragRecord.m in Sources */,
 				7791575F149693DF009E7749 /* ADLTableView.m in Sources */,
+				77CEF9471496B4BF00504287 /* ADLShadowView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,8 +17,10 @@
 #import "ADLNewItemViewController.h"
 #import "ADLNSTabViewController.h"
 #import "ADLNSViewManipulator.h"
+#import "ADLShadowView.h"
 
 #import "NSArray+ADLAdditions.h"
+#import "NSShadow+ADLExtensions.h"
 
 @interface ADLDocumentViewController ()
 
@@ -75,18 +77,27 @@
     
     self.pileController = [[[ADLListsPileViewController alloc] initWithNibName:@"ADLPileViewController" bundle:nil] autorelease];
     self.pileController.delegate = self;
-    [contentView addSubview:self.pileController.view];
+    [contentView addSubview:self.pileController.view positioned:NSWindowBelow relativeTo:self.tabController.view];
     self.pileController.view.frame = NSMakeRect(0, 0, contentView.frame.size.width, contentView.frame.size.height - tabFrame.size.height);
     
     self.pileController.nextResponder = self.pileController.view.nextResponder;
     self.pileController.view.nextResponder = self.pileController;
     
     self.agnostic.tabController.selectedInfo = self.agnostic.modelAccess.selectedListID;
+    
+    NSRect shadowFrame = NSInsetRect(self.tabController.view.frame, 0, -5);
+    ADLShadowView* tabShadow = [[ADLShadowView alloc] initWithFrame:shadowFrame];
+    tabShadow.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+    tabShadow.shadow = [NSShadow standardShadow];
+    tabShadow.insets = NSEdgeInsetsMake(5, 0, 5, 0);
+    [self.view addSubview:tabShadow positioned:NSWindowBelow relativeTo:self.tabController.view];
+    [tabShadow release];
+    
     [self updateActivePileViewsForSelection:self.agnostic.selectedListID];
 }
 
 - (void)loadView {
-    NSView* view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 100, 100)];
+    NSView* view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, 400, 400)];
     view.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     self.view = view;
     [view release];
@@ -159,6 +170,8 @@
     NSInteger index = [self.agnostic indexOfListID:newCurrentList.listID];
     self.agnostic.modelAccess.selectedListID = newCurrentList.listID;
     
+    [newCurrentList didActivate];
+    
     if(index + 1 < self.agnostic.listIDs.count) {
         ADLListID* listID = [self.agnostic listIDAtIndex:index + 1];
         ADLListViewController* lvc = [self listViewControllerWithID:listID];
@@ -174,6 +187,8 @@
     NSInteger index = [self.agnostic indexOfListID:newCurrentList.listID];
     self.agnostic.modelAccess.selectedListID = newCurrentList.listID;
     
+    [newCurrentList didActivate];
+    
     if(index > 0) {
         ADLListID* listID = [self.agnostic listIDAtIndex:index - 1];
         ADLListViewController* lvc = [self listViewControllerWithID:listID];
@@ -187,7 +202,7 @@
 - (NSView*)backgroundViewForPile:(ADLPileViewController *)pileController {
     
     ADLColorView* backgroundView = [[ADLColorView alloc] initWithFrame:pileController.view.bounds];
-    backgroundView.backgroundColor = [ADLColor scrollViewBackgroundColor].CGColor;
+    backgroundView.backgroundColor = [NSColor colorWithPatternImage:[NSImage imageNamed:@"ADLLinen"]];
     backgroundView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     
     return [backgroundView autorelease];
@@ -207,14 +222,22 @@
 
 - (IBAction)previousList:(id)sender {
     NSUInteger index = self.agnostic.selectedListIndex;
-    NSAssert(index > 0, @"Moving previous without extant previous list");
-    self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:index - 1];
+    if(index > 0) {
+        self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:index - 1];
+    }
+    else {
+        self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:self.agnostic.listIDs.count - 1];
+    }
 }
 
 - (IBAction)nextList:(id)sender {
     NSUInteger index = self.agnostic.selectedListIndex;
-    NSAssert(index + 1 < self.agnostic.listIDs.count, @"Moving next without extant next list");
-    self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:index + 1];
+    if(index + 1 < self.agnostic.listIDs.count) {
+        self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:index + 1];
+    }
+    else {
+        self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:0];
+    }
 }
 
 - (void)createListItemSheetEnded:(NSWindow*)sheet returnCode:(NSInteger)returnCode viewController:(ADLNewItemViewController*)viewController {
@@ -247,10 +270,10 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
     if(menuItem.action == @selector(previousList:)) {
-        return self.pileController.prevViewController != nil;
+        return YES;
     }
     else if(menuItem.action == @selector(nextList:)) {
-        return self.pileController.nextViewController != nil;
+        return YES;
     }
     else if(menuItem.action == @selector(deleteFrontList:)) {
         return self.agnostic.listIDs.count > 1;
