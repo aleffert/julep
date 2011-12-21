@@ -301,6 +301,12 @@ static NSString* kADLListItemEntityName= @"Item";
     return finalItemID;
 }
 
+- (ADLListID*)listIDForURL:(NSURL*)url {
+    NSPersistentStoreCoordinator* persistentStoreCoordinator = self.managedObjectContext.persistentStoreCoordinator;
+    NSManagedObjectID* listID = [persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
+    return listID;
+}
+
 - (ADLItemID*)itemIDForURL:(NSURL*)url {
     NSPersistentStoreCoordinator* persistentStoreCoordinator = self.managedObjectContext.persistentStoreCoordinator;
     NSManagedObjectID* itemID = [persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
@@ -394,6 +400,11 @@ static NSString* kADLListItemEntityName= @"Item";
     return calendar.title;
 }
 
+- (BOOL)showsCountInBadgeForList:(ADLListID*)listID {
+    ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
+    return list.showsCountInBadge;
+}
+
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID {
     self.undoManager.actionName = @"Title Change";
     __block ADLModelAccess* owner = self;
@@ -407,6 +418,13 @@ static NSString* kADLListItemEntityName= @"Item";
     NSError* error = nil;
     [[CalCalendarStore defaultCalendarStore] saveCalendar:calendar error:&error];
     NSAssert(error == nil, @"Error saving calendar title change");
+}
+
+- (void)setShowsCountInBadge:(BOOL)showsCountInBadge forList:(ADLListID*)listID {
+    ADLList* list = (ADLList*)[self.managedObjectContext objectWithID:listID];
+    [self performMutation:^(void) {
+        list.showsCountInBadge = showsCountInBadge;
+    }];
 }
 
 - (BOOL)completionStatusOfItem:(ADLItemID*)itemID {

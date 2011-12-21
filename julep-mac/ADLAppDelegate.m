@@ -8,23 +8,41 @@
 
 #import <CalendarStore/CalendarStore.h>
 
+#import <ShortcutRecorder/ShortcutRecorder.h>
+#import <ShortcutRecorder/PTHotKeyCenter.h>
+#import <ShortcutRecorder/PTHotKey.h>
+#import <ShortcutRecorder/PTKeyCombo.h>
+
 #import "ADLAppDelegate.h"
 
-#import "ADLColor.h"
-#import "ADLListsWindowController.h"
 #import "ADLListsDocument.h"
 #import "ADLModelAccess.h"
+#import "ADLPreferencesController.h"
+#import "ADLUIElementServer.h"
+
+#import "NSArray+ADLAdditions.h"
+
+static NSString* kADLQuickCreateCode = @"kADLQuickCreateCode";
+static NSString* kADLQuickCreateFlags = @"kADLQuickCreateFlags";
+static NSString* kADLQuickCreateHotKeyIdentifier = @"kADLQuickCreateHotKeyIdentifier";
 
 @interface ADLAppDelegate ()
-
-@property (retain, nonatomic) ADLListsWindowController* listsWindowController;
 
 - (void)openMainDocument;
 - (NSString*)mainDocumentName;
 - (NSString*)applicationName;
 - (NSURL*)applicationSupportSubdirectoryURL;
 
+- (void)registerQuickCreateHotKey;
+- (void)startServer;
+
+- (IBAction)showPreferences:(id)sender;
+
 @property (retain, nonatomic) ADLListsDocument* mainDocument;
+@property (retain, nonatomic) ADLAppServer* server;
+@property (retain, nonatomic) ADLPreferencesController* preferencesController;
+
+- (NSRunningApplication*)UIElementChildProcess;
 
 @end
 
@@ -34,12 +52,37 @@ static NSString* kADLJulepDocumentType = @"julep";
 
 @implementation ADLAppDelegate
 
-@synthesize listsWindowController = mListsWindowController;
 @synthesize mainDocument = mMainDocument;
+@synthesize preferencesController = mPreferencesController;
+@synthesize server = mServer;
+
+- (void)dealloc {
+    self.mainDocument = nil;
+    self.preferencesController = nil;
+    self.server = nil;
+    [super dealloc];
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self openMainDocument];
+    [self registerQuickCreateHotKey];
+    [self UIElementChildProcess]; // spawn ui element daemon
+    [self startServer];
+}
+
+- (void)startServer {
+    self.server = [[[ADLAppServer alloc] init] autorelease];
+    self.server.delegate = self;
+    [self.server start];
+}
+
+- (NSRunningApplication*)UIElementChildProcess {
+    NSURL* url = [[NSBundle mainBundle] URLForResource:@"Julep-UIElement" withExtension:@"app"];
+    NSError* error = nil;
+    NSRunningApplication* app = [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url options:NSWorkspaceLaunchWithoutActivation configuration:NULL error:&error];
+    NSAssert(error == nil, @"error spawning child process");
+    return app;
 }
 
 - (NSString*)mainDocumentName {
@@ -85,6 +128,7 @@ static NSString* kADLJulepDocumentType = @"julep";
     
     [[NSDocumentController sharedDocumentController] addDocument:self.mainDocument];
     [self.mainDocument makeWindowControllers];
+    [self.mainDocument showWindows];
     
     [document release];
 }
@@ -94,11 +138,84 @@ static NSString* kADLJulepDocumentType = @"julep";
 }
 
 - (void)applicationWillBecomeActive:(NSNotification *)notification {
-    [self.mainDocument showWindows];
+    if([NSApplication sharedApplication].windows.count == 0) {
+        [self.mainDocument showWindows];
+    }
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender {
     return NO;
+}
+
+#pragma mark Preferences
+
+- (void)showPreferences:(id)sender {
+    if(self.preferencesController == nil) {
+        self.preferencesController = [[[ADLPreferencesController alloc] initWithWindow:nil] autorelease];
+        self.preferencesController.modelAccess = self.mainDocument.modelAccess;
+        self.preferencesController.listIDs = self.mainDocument.modelAccess.listIDs;
+        self.preferencesController.delegate = self;
+    }
+    [self.preferencesController showWindow:sender];
+}
+
+- (void)saveQuickCreateKeyCombo:(KeyCombo)combo {
+    [[NSUserDefaults standardUserDefaults] setInteger:combo.flags forKey:kADLQuickCreateFlags];
+    [[NSUserDefaults standardUserDefaults] setInteger:combo.code forKey:kADLQuickCreateCode];
+}
+
+- (void)showQuickCreateFromHotKey:(PTHotKey*)hotKey {
+    id <ADLUIElementServer> uiServer = (ADLUIElementServer*)[NSConnection rootProxyForConnectionWithRegisteredName:kADLUIServerName host:nil];
+    
+    ADLModelAccess* modelAccess = self.mainDocument.modelAccess;
+    NSArray* listIDs = modelAccess.listIDs;
+    NSArray* listNames = [listIDs arrayByMappingObjects:^(id object) {
+        ADLListID* listID = object;
+        return [modelAccess titleOfList:listID];
+    }];
+    NSArray* listURLs = [listIDs arrayByMappingObjects:^(id object) {
+        ADLListID* listID = object;
+        return listID.URIRepresentation;
+    }];
+    
+    [uiServer showQuickCreateWithListIDs:listURLs named:listNames];
+}
+
+- (BOOL)hasQuickCreateKeyCombo {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:kADLQuickCreateFlags] != nil;
+}
+
+- (KeyCombo)quickCreateKeyCombo {
+    KeyCombo combo = SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags);
+    combo.code = [[NSUserDefaults standardUserDefaults] integerForKey:kADLQuickCreateCode];
+    combo.flags = [[NSUserDefaults standardUserDefaults] integerForKey:kADLQuickCreateFlags];
+    return combo;
+}
+
+- (void)registerQuickCreateHotKey {
+    if ([self hasQuickCreateKeyCombo]) {
+        KeyCombo combo = [self quickCreateKeyCombo];
+        PTKeyCombo* keyCombo = [PTKeyCombo keyComboWithKeyCode:combo.code modifiers:SRCocoaToCarbonFlags(combo.flags)];
+        
+        PTHotKey* hotKey = [[PTHotKey alloc] initWithIdentifier:kADLQuickCreateHotKeyIdentifier keyCombo:keyCombo];
+        hotKey.target = self;
+        hotKey.action = @selector(showQuickCreateFromHotKey:);
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+        [hotKey release];
+    }
+}
+
+- (void)changedQuickCreateKeyComboTo:(KeyCombo)combo {
+    PTHotKeyCenter* hotKeyCenter = [PTHotKeyCenter sharedCenter];
+    PTHotKey* hotKey = [hotKeyCenter hotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
+    [hotKeyCenter unregisterHotKey:hotKey];
+    [self saveQuickCreateKeyCombo:combo];
+    [self registerQuickCreateHotKey];
+}
+
+- (void)addItemWithTitle:(NSString *)title toList:(NSURL *)list {
+    ADLListID* listID = [self.mainDocument.modelAccess listIDForURL:list];
+    [self.mainDocument.modelAccess addItemWithTitle:title toListWithID:listID];
 }
 
 @end

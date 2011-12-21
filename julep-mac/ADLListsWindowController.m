@@ -31,6 +31,10 @@ static NSString* kADLJulepTitle = @"Julep";
     [super dealloc];
 }
 
+- (NSString*)windowNibName {
+    return @"ADLListsWindowController";
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];

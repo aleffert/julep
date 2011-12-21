@@ -40,13 +40,14 @@ typedef NSManagedObjectID ADLItemID;
 - (ADLItemID*)itemIDForURL:(NSURL*)url;
 - (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
 
+- (ADLListID*)listIDForURL:(NSURL*)url;
 - (NSString*)titleOfList:(ADLListID*)listID;
-
-- (BOOL)completionStatusOfItem:(ADLItemID*)itemID;
+- (BOOL)showsCountInBadgeForList:(ADLListID*)listID;
 
 
 - (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
 - (NSString*)titleOfItem:(ADLItemID*)itemID;
+- (BOOL)completionStatusOfItem:(ADLItemID*)itemID;
 
 - (NSArray*)itemIDsForList:(ADLListID*)listID;
 
@@ -60,11 +61,15 @@ typedef NSManagedObjectID ADLItemID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
 
-// Actually modifies the calendar store. Be careful. Only call these from outside
+// These all actually modify the calendar store. Be careful. Only call these from outside the abstraction barrier
+
+- (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
+- (void)setShowsCountInBadge:(BOOL)showsCountInBadge forList:(ADLListID*)listID;
+
 - (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID;
 - (ADLItemID*)addItemWithTitle:(NSString*)title toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
 - (ADLItemID*)addConcreteItem:(ADLConcreteItem*)concreteItem toListWithID:(ADLListID*)listID atIndex:(NSUInteger)index;
-- (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
+
 - (void)setCompletionStatus:(BOOL)status ofItem:(NSManagedObjectID *)itemID;
 - (void)deleteItemWithID:(ADLItemID*)itemID;
 - (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID;

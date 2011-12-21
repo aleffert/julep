@@ -8,12 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class ADLListsDocument;
-@class ADLListsWindowController;
+#import "ADLAppServer.h"
+#import "ADLPreferencesController.h"
 
-@interface ADLAppDelegate : NSObject <NSApplicationDelegate> {
-    ADLListsDocument* mMainDocument;
-    ADLListsWindowController* mListsWindowController;
-}
+@interface ADLAppDelegate : NSObject <NSApplicationDelegate, ADLPreferencesControllerDelegate, ADLAppServerDelegate>
 
 @end

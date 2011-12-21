@@ -16,5 +16,6 @@
 @dynamic uid;
 @dynamic items;
 @dynamic list;
+@dynamic showsCountInBadge;
 
 @end

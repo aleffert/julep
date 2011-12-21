@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSString * uid;
 @property (nonatomic, retain) NSOrderedSet *items;
 @property (nonatomic, retain) ADLListCollection *list;
+@property (nonatomic, assign) BOOL showsCountInBadge;
 @end
 
 @interface ADLList (CoreDataGeneratedAccessors)

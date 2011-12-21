@@ -28,7 +28,7 @@
 }
 
 - (void)makeWindowControllers {
-    ADLListsWindowController* windowController = [[ADLListsWindowController alloc] initWithWindowNibName:@"ADLListsWindowController"];
+    ADLListsWindowController* windowController = [[ADLListsWindowController alloc] init];
     
     [self addWindowController:windowController];
     
