@@ -46,6 +46,7 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
+    self.window.collectionBehavior = NSWindowCollectionBehaviorCanJoinAllSpaces | NSWindowCollectionBehaviorTransient;
 }
 
 - (void)showWindow:(id)sender {

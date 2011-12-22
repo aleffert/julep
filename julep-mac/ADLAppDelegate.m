@@ -16,7 +16,6 @@
 #import "ADLAppDelegate.h"
 
 #import "ADLListsDocument.h"
-#import "ADLModelAccess.h"
 #import "ADLPreferencesController.h"
 #import "ADLUIElementServer.h"
 
@@ -43,6 +42,7 @@ static NSString* kADLQuickCreateHotKeyIdentifier = @"kADLQuickCreateHotKeyIdenti
 @property (retain, nonatomic) ADLPreferencesController* preferencesController;
 
 - (NSRunningApplication*)UIElementChildProcess;
+- (void)updateDockBadgeCount;
 
 @end
 
@@ -69,6 +69,7 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self registerQuickCreateHotKey];
     [self UIElementChildProcess]; // spawn ui element daemon
     [self startServer];
+    [self updateDockBadgeCount];
 }
 
 - (void)startServer {
@@ -130,6 +131,8 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self.mainDocument makeWindowControllers];
     [self.mainDocument showWindows];
     
+    [self.mainDocument.modelAccess addModelChangedListener:self];
+    
     [document release];
 }
 
@@ -147,6 +150,21 @@ static NSString* kADLJulepDocumentType = @"julep";
     return NO;
 }
 
+- (void)updateDockBadgeCount {
+    NSDockTile* tile = [NSApp dockTile];
+    NSUInteger unfinishedCount = self.mainDocument.modelAccess.unfinishedCountForBadge;
+    if(unfinishedCount > 0) {
+        tile.badgeLabel = [NSString stringWithFormat:@"%d", unfinishedCount];
+    }
+    else {
+        tile.badgeLabel = nil;
+    }
+}
+
+- (void)modelChanged:(ADLModelAccess *)model {
+    [self updateDockBadgeCount];
+}
+
 #pragma mark Preferences
 
 - (void)showPreferences:(id)sender {
@@ -159,10 +177,13 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self.preferencesController showWindow:sender];
 }
 
+
 - (void)saveQuickCreateKeyCombo:(KeyCombo)combo {
     [[NSUserDefaults standardUserDefaults] setInteger:combo.flags forKey:kADLQuickCreateFlags];
     [[NSUserDefaults standardUserDefaults] setInteger:combo.code forKey:kADLQuickCreateCode];
 }
+
+#pragma mark Quick Create Hot Key
 
 - (void)showQuickCreateFromHotKey:(PTHotKey*)hotKey {
     id <ADLUIElementServer> uiServer = (ADLUIElementServer*)[NSConnection rootProxyForConnectionWithRegisteredName:kADLUIServerName host:nil];
@@ -212,6 +233,8 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self saveQuickCreateKeyCombo:combo];
     [self registerQuickCreateHotKey];
 }
+
+#pragma mark UIServer Messages
 
 - (void)addItemWithTitle:(NSString *)title toList:(NSURL *)list {
     ADLListID* listID = [self.mainDocument.modelAccess listIDForURL:list];

@@ -15,6 +15,7 @@ typedef NSManagedObjectID ADLItemID;
 @protocol ADLCollectionChangedListener;
 @protocol ADLListChangedListener;
 @protocol ADLModelAccessDelegate;
+@protocol ADLModelChangedListener;
 
 @class ADLConcreteItem;
 
@@ -37,6 +38,8 @@ typedef NSManagedObjectID ADLItemID;
 @property (readonly, nonatomic) NSUInteger listCount;
 @property (copy, nonatomic) NSArray* listIDs;
 
+- (NSUInteger)unfinishedCountForBadge;
+
 - (ADLItemID*)itemIDForURL:(NSURL*)url;
 - (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
 
@@ -51,16 +54,22 @@ typedef NSManagedObjectID ADLItemID;
 
 - (NSArray*)itemIDsForList:(ADLListID*)listID;
 
+- (id)pasteboardRepresentationOfItemID:(ADLItemID*)itemID;
+
+@property (retain, nonatomic) ADLListID* selectedListID;
+
+// Change processing
+
+- (void)addModelChangedListener:(id <ADLModelChangedListener>)listener;
+- (void)removeModelChangedListener:(id <ADLModelChangedListener>)listener;
+
 - (void)addCollectionChangedListener:(id <ADLCollectionChangedListener>)listener;
 - (void)removeCollectionChangedListener:(id <ADLCollectionChangedListener>)listener;
 
 - (void)addChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 - (void)removeChangeListener:(id <ADLListChangedListener>)listener forList:(ADLListID*)list;
 
-- (id)pasteboardRepresentationOfItemID:(ADLItemID*)itemID;
-
-@property (retain, nonatomic) ADLListID* selectedListID;
-
+// Mutation
 // These all actually modify the calendar store. Be careful. Only call these from outside the abstraction barrier
 
 - (void)setTitle:(NSString*)title ofList:(ADLListID*)listID;
@@ -80,6 +89,11 @@ typedef NSManagedObjectID ADLItemID;
 
 @end
 
+@protocol ADLModelChangedListener <NSObject>
+
+- (void)modelChanged:(ADLModelAccess*)model;
+
+@end
 
 @protocol ADLCollectionChangedListener <NSObject>
 

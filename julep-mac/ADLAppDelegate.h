@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ADLAppServer.h"
+#import "ADLModelAccess.h"
 #import "ADLPreferencesController.h"
 
-@interface ADLAppDelegate : NSObject <NSApplicationDelegate, ADLPreferencesControllerDelegate, ADLAppServerDelegate>
+@interface ADLAppDelegate : NSObject <NSApplicationDelegate, ADLPreferencesControllerDelegate, ADLModelChangedListener, ADLAppServerDelegate>
 
 @end

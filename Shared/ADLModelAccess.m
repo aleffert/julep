@@ -32,6 +32,7 @@ NSString* kADLItemPasteboardType = @"com.akivaleffert.julep.ItemPasteboardType";
 @property (retain, nonatomic) NSManagedObjectID* defaultCollectionID;
 @property (retain, nonatomic) NSMutableArray* collectionChangedListeners;
 @property (retain, nonatomic) NSMutableDictionary* listChangedListeners;
+@property (retain, nonatomic) NSMutableArray* modelChangedListeners;
 
 @property (retain, nonatomic) NSTimer* clearRecentlyModifiedTimer;
 @property (copy, nonatomic) NSArray* recentlyModifiedObjects;
@@ -62,6 +63,7 @@ static NSString* kADLListItemEntityName= @"Item";
 @synthesize managedObjectContext = mManagedObjectContext;
 @synthesize defaultCollectionID = mDefaultCollectionID;
 @synthesize collectionChangedListeners = mCollectionChangedListeners;
+@synthesize modelChangedListeners = mModelChangedListeners;
 @synthesize listChangedListeners = mListChangedListeners;
 @synthesize delegate = mDelegate;
 @synthesize undoManager = mUndoManager;
@@ -73,6 +75,7 @@ static NSString* kADLListItemEntityName= @"Item";
     if(self) {
         self.managedObjectContext = context;
         self.collectionChangedListeners = [NSMutableArray nonretainingMutableArray];
+        self.modelChangedListeners = [NSMutableArray nonretainingMutableArray];
         self.listChangedListeners = [NSMutableDictionary dictionary];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(modelChangesSaved:) name:NSManagedObjectContextDidSaveNotification object:self.managedObjectContext];
         
@@ -311,6 +314,27 @@ static NSString* kADLListItemEntityName= @"Item";
     NSPersistentStoreCoordinator* persistentStoreCoordinator = self.managedObjectContext.persistentStoreCoordinator;
     NSManagedObjectID* itemID = [persistentStoreCoordinator managedObjectIDForURIRepresentation:url];
     return itemID;
+}
+
+- (NSUInteger)unfinishedCountForLists:(NSArray*)lists {
+    CalCalendarStore* store = [CalCalendarStore defaultCalendarStore];
+    NSArray* calendars = [lists arrayByMappingObjects:^(id object) {
+        ADLList* list = object;
+        return [store calendarWithUID:list.uid];
+    }];
+    NSPredicate* predicate = [CalCalendarStore taskPredicateWithUncompletedTasks:calendars];
+    NSArray* tasks = [store tasksWithPredicate:predicate];
+    return tasks.count;
+}
+
+- (NSUInteger)unfinishedCountForBadge {
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    request.entity = self.listEntityDescription;
+    request.predicate = [NSPredicate predicateWithFormat:@"showsCountInBadge == YES"];
+    NSError* error = nil;
+    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    [request release];
+    return [self unfinishedCountForLists:results];
 }
 
 - (void)addList:(void (^)(ADLList* newList))defaults toCollection:(ADLListCollection*)collection atIndex:(NSUInteger)index {
@@ -609,6 +633,14 @@ static NSString* kADLListItemEntityName= @"Item";
 
 #pragma mark Change Processing
 
+- (void)addModelChangedListener:(id<ADLModelChangedListener>)listener {
+    [self.modelChangedListeners addObject:listener];
+}
+
+- (void)removeModelChangedListener:(id<ADLModelChangedListener>)listener {
+    [self.modelChangedListeners removeObject:listener];
+}
+
 - (void)addCollectionChangedListener:(id <ADLCollectionChangedListener>)listener {
     [self.collectionChangedListeners addObject:listener];
 }
@@ -658,6 +690,12 @@ static NSString* kADLListItemEntityName= @"Item";
     }
 }
 
+- (void)notifyModelChangedListeners {
+    for(id <ADLModelChangedListener> listener in self.modelChangedListeners) {
+        [listener modelChanged:self];
+    }
+}
+
 - (void)modelChangesSaved:(NSNotification*)notification {
     NSSet* insertedObjects = [[notification userInfo] objectForKey:NSInsertedObjectsKey];
     NSSet* updatedObjects = [[notification userInfo] objectForKey:NSUpdatedObjectsKey];
@@ -689,7 +727,7 @@ static NSString* kADLListItemEntityName= @"Item";
         [self notifyCollectionChangedListeners];
     }
     [self notifyChangeListenersForCalendarUIDs:changedLists];
-    
+    [self notifyModelChangedListeners];
 }
 
 - (void)stopClearRecentlyModifiedTimer {
@@ -746,6 +784,8 @@ static NSString* kADLListItemEntityName= @"Item";
     for(NSString* uid in deletedObjects) {
         [self stopTrackingCalendarIfNecessary:uid];
     }
+    
+    [self notifyModelChangedListeners];
 }
 
 - (void)calendarsChangedExternally:(NSNotification*)notification {
