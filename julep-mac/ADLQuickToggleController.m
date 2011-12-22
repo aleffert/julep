@@ -63,11 +63,11 @@
     NSURL* itemURL = [[self.items objectAtIndex:self.itemTable.selectedRow] objectForKey:@"url"];
     [self.delegate toggleItemWithURL:itemURL];
     
-    [self.window performClose:sender];
+    [self.delegate restorePreviousApplication];
 }
 
 - (IBAction)done:(id)sender {
-    [self.window performClose:sender];
+    [self.delegate restorePreviousApplication];
 }
 
 - (void)windowDidResignKey:(NSNotification *)notification {

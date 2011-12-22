@@ -65,6 +65,8 @@
     tableView.headerView = nil;
     tableView.allowsMultipleSelection = YES;
     tableView.focusRingType = NSFocusRingTypeNone;
+    tableView.doubleAction = @selector(cellDoubleClicked:);
+    tableView.target = self;
     [tableView setDraggingSourceOperationMask:NSDragOperationMove | NSDragOperationDelete forLocal:YES];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
     
@@ -99,6 +101,21 @@
     
     self.view.nextResponder = self;
     [self.view.window makeFirstResponder:self.tableView];
+}
+
+- (void)startEditingSelection {
+    NSIndexSet* selection = self.tableView.selectedRowIndexes;
+    if(selection.count > 0) {
+        NSUInteger editingRow = selection.lastIndex;
+        ADLItemView* itemView = [self.tableView viewAtColumn:0 row:editingRow makeIfNecessary:YES];
+        [self.tableView scrollRowToVisible:editingRow];
+        [itemView beginEditing];
+    }
+
+}
+
+- (void)cellDoubleClicked:(NSTableView*)sender {
+    [self startEditingSelection];
 }
 
 - (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
@@ -168,13 +185,7 @@
 }
 
 - (void)tableViewShouldEditSelection:(ADLTableView *)tableView {
-    NSIndexSet* selection = self.tableView.selectedRowIndexes;
-    if(selection.count > 0) {
-        NSUInteger editingRow = selection.lastIndex;
-        ADLItemView* itemView = [self.tableView viewAtColumn:0 row:editingRow makeIfNecessary:YES];
-        [self.tableView scrollRowToVisible:editingRow];
-        [itemView beginEditing];
-    }
+    [self startEditingSelection];
 }
 
 - (void)tableViewShouldToggleSelection:(ADLTableView *)tableView {

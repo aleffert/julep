@@ -40,7 +40,7 @@ static NSString* kADLKeyboardShortcutFlags = @"kADLQuickCreateFlags";
 @property (retain, nonatomic) ADLAppServer* server;
 @property (retain, nonatomic) ADLPreferencesController* preferencesController;
 
-- (NSRunningApplication*)UIElementChildProcess;
+- (void)spawnUIElementChildProcessAsync:(BOOL)async;
 - (void)updateDockBadgeCount;
 
 @end
@@ -67,7 +67,7 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self openMainDocument];
     [self registerHotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
     [self registerHotKeyWithIdentifier:kADLQuickToggleHotKeyIdentifier];
-    [self UIElementChildProcess]; // spawn ui element daemon
+    [self spawnUIElementChildProcessAsync:YES];
     [self startServer];
     [self updateDockBadgeCount];
 }
@@ -78,16 +78,17 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self.server start];
 }
 
-- (NSRunningApplication*)UIElementChildProcess {
+- (void)spawnUIElementChildProcessAsync:(BOOL)async {
     NSURL* url = [[NSBundle mainBundle] URLForResource:@"Julep-UIElement" withExtension:@"app"];
     NSError* error = nil;
-    NSRunningApplication* app = [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url options:NSWorkspaceLaunchWithoutActivation configuration:NULL error:&error];
+    NSWorkspaceLaunchOptions options = async ? (NSWorkspaceLaunchWithoutActivation | NSWorkspaceLaunchAsync) : NSWorkspaceLaunchWithoutActivation;
+    [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url options:options configuration:NULL error:&error];
     NSAssert(error == nil, @"error spawning child process");
-    return app;
 }
 
 - (id <ADLUIElementServer>)UIElementServer {
-    [self UIElementChildProcess];
+    // we need synchronous because we're actually asking for it
+    [self spawnUIElementChildProcessAsync:NO];
     return (ADLUIElementServer*)[NSConnection rootProxyForConnectionWithRegisteredName:kADLUIServerName host:nil];
 }
 
@@ -224,7 +225,7 @@ static NSString* kADLJulepDocumentType = @"julep";
 
 - (void)changedKeyComboTo:(KeyCombo)combo forIdentifier:(NSString *)identifier {
     PTHotKeyCenter* hotKeyCenter = [PTHotKeyCenter sharedCenter];
-    PTHotKey* hotKey = [hotKeyCenter hotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
+    PTHotKey* hotKey = [hotKeyCenter hotKeyWithIdentifier:identifier];
     [hotKeyCenter unregisterHotKey:hotKey];
     if(combo.code == ShortcutRecorderEmptyCode) {
         [self clearSavedHotKeyWithIdentifier:identifier];

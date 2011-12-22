@@ -21,5 +21,6 @@
 @protocol ADLNewItemControllerDelegate <NSObject>
 
 - (void)addItemWithTitle:(NSString*)name toList:(NSURL*)url;
+- (void)restorePreviousApplication;
 
 @end

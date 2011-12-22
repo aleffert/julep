@@ -15,6 +15,7 @@
 @property (retain, nonatomic) ADLUIElementServer* server;
 @property (retain, nonatomic) ADLNewItemController* quickCreateController;
 @property (retain, nonatomic) ADLQuickToggleController* quickToggleController;
+@property (retain, nonatomic) NSRunningApplication* previousApplication;
 
 @end
 
@@ -22,6 +23,7 @@
 
 @synthesize quickCreateController = mQuickCreateController;
 @synthesize quickToggleController = mQuickToggleController;
+@synthesize previousApplication = mPreviousApplication;
 @synthesize server = mServer;
 
 - (void)dealloc
@@ -48,7 +50,22 @@
     }
 }
 
+- (void)saveCurrentApplication {
+    NSRunningApplication* thisApplication = [NSRunningApplication currentApplication];
+    NSRunningApplication* frontApplication = nil;
+    for (NSRunningApplication* application in [[NSWorkspace sharedWorkspace] runningApplications]) {
+        if (application.active) {
+            frontApplication = application;
+            break;
+        }
+    }
+    if(![frontApplication isEqual: thisApplication]) {
+        self.previousApplication = frontApplication;
+    }
+}
+
 - (void)showQuickCreateWithListIDs:(NSArray*)listIDs named:(NSArray*)names {
+    [self saveCurrentApplication];
     if(self.quickCreateController == nil) {
         self.quickCreateController = [[[ADLNewItemController alloc] init] autorelease];
         self.quickCreateController.delegate = self;
@@ -68,16 +85,22 @@
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification {
-    [self.quickCreateController.window orderOut:self];
+    self.previousApplication = nil;
 }
 
 - (void)showQuickToggle {
+    [self saveCurrentApplication];
     if(self.quickToggleController == nil) {
         self.quickToggleController = [[[ADLQuickToggleController alloc] init] autorelease];
         self.quickToggleController.delegate = self;
     }
     self.quickToggleController.items = [NSArray array];
     [self.quickToggleController showWindow:self];
+}
+
+- (void)restorePreviousApplication {
+    [[NSApplication sharedApplication] deactivate];
+    [self.previousApplication activateWithOptions:0];
 }
 
 - (void)updateQuickToggleItemsTo:(NSArray *)items {

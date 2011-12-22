@@ -83,11 +83,11 @@
         [self.delegate addItemWithTitle: title toList:listID];
     }
     
-    [self.window performClose:sender];
+    [self.delegate restorePreviousApplication];
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.window performClose:sender];
+    [self.delegate restorePreviousApplication];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {

@@ -49,11 +49,11 @@ NSString* kADLQuickToggleHotKeyIdentifier = @"kADLQuickToggleHotKeyIdentifier";
 - (void)windowDidLoad {
     [super windowDidLoad];
     [self.modelAccess addCollectionChangedListener:self];
-    if([self.delegate hasKeyComboForIdentifier:kADLQuickToggleHotKeyIdentifier]) {
-        self.quickCreateKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickToggleHotKeyIdentifier];
-    }
     if([self.delegate hasKeyComboForIdentifier:kADLQuickCreateHotKeyIdentifier]) {
-        self.quickToggleKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickCreateHotKeyIdentifier];
+        self.quickCreateKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickCreateHotKeyIdentifier];
+    }
+    if([self.delegate hasKeyComboForIdentifier:kADLQuickToggleHotKeyIdentifier]) {
+        self.quickToggleKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickToggleHotKeyIdentifier];
     }
 }
 

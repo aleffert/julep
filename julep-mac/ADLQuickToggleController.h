@@ -23,5 +23,6 @@
 
 - (NSArray*)itemsWithSearchString:(NSString*)query;
 - (void)toggleItemWithURL:(NSURL*)url;
+- (void)restorePreviousApplication;
 
 @end
