@@ -15,6 +15,8 @@
 @protocol ADLAppServer <NSObject>
 
 - (void)addItemWithTitle:(NSString*)title toList:(NSURL*)list;
+- (NSArray*)itemsWithSearchString:(NSString*)query;
+- (void)toggleItemAtURL:(NSURL*)url;
 
 @end
 
@@ -31,6 +33,8 @@
 @protocol ADLAppServerDelegate <NSObject>
 
 - (void)addItemWithTitle:(NSString*)title toList:(NSURL *)list;
+- (NSArray*)itemsWithSearchString:(NSString*)query;
+- (void)toggleItemAtURL:(NSURL*)url;
 
 @end
 

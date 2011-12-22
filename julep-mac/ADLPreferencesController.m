@@ -12,16 +12,21 @@
 
 #import <ShortcutRecorder/ShortcutRecorder.h>
 
+NSString* kADLQuickCreateHotKeyIdentifier = @"kADLQuickCreateHotKeyIdentifier";
+NSString* kADLQuickToggleHotKeyIdentifier = @"kADLQuickToggleHotKeyIdentifier";
+
 @interface ADLPreferencesController ()
 
 @property (retain, nonatomic) IBOutlet NSTableView* badgeCalendarsTable;
 @property (retain, nonatomic) IBOutlet SRRecorderControl* quickCreateKeyComboRecorder;
+@property (retain, nonatomic) IBOutlet SRRecorderControl* quickToggleKeyComboRecorder;
 
 @end
 
 @implementation ADLPreferencesController
 
 @synthesize quickCreateKeyComboRecorder = mQuickCreateKeyComboRecorder;
+@synthesize quickToggleKeyComboRecorder = mQuickToggleKeyComboRecorder;
 @synthesize badgeCalendarsTable = mBadgeCalendarsTable;
 @synthesize listIDs = mListIDs;
 @synthesize modelAccess = mModelAccess;
@@ -33,6 +38,7 @@
     self.modelAccess = nil;
     self.badgeCalendarsTable = nil;
     self.quickCreateKeyComboRecorder = nil;
+    self.quickToggleKeyComboRecorder = nil;
     [super dealloc];
 }
 
@@ -43,8 +49,11 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     [self.modelAccess addCollectionChangedListener:self];
-    if([self.delegate hasQuickCreateKeyCombo]) {
-        self.quickCreateKeyComboRecorder.keyCombo = self.delegate.quickCreateKeyCombo;
+    if([self.delegate hasKeyComboForIdentifier:kADLQuickToggleHotKeyIdentifier]) {
+        self.quickCreateKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickToggleHotKeyIdentifier];
+    }
+    if([self.delegate hasKeyComboForIdentifier:kADLQuickCreateHotKeyIdentifier]) {
+        self.quickToggleKeyComboRecorder.keyCombo = [self.delegate keyComboForIdentifier:kADLQuickCreateHotKeyIdentifier];
     }
 }
 
@@ -79,7 +88,15 @@
 }
 
 - (void)shortcutRecorder:(SRRecorderControl *)aRecorder keyComboDidChange:(KeyCombo)newKeyCombo {
-    [self.delegate changedQuickCreateKeyComboTo:newKeyCombo];
+    if(aRecorder == self.quickToggleKeyComboRecorder) {
+        [self.delegate changedKeyComboTo:newKeyCombo forIdentifier:kADLQuickToggleHotKeyIdentifier];
+    }
+    else if(aRecorder == self.quickCreateKeyComboRecorder) {
+        [self.delegate changedKeyComboTo:newKeyCombo forIdentifier:kADLQuickCreateHotKeyIdentifier];
+    }
+    else {
+        NSAssert(NO, @"Unexpected key recorder control");
+    }
 }
 
 @end

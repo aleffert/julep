@@ -11,9 +11,7 @@
 @class ADLListsDocument;
 @class ADLDocumentViewController;
 
-@interface ADLListsWindowController : NSWindowController <NSWindowDelegate> {
-    ADLDocumentViewController* mDocumentViewController;
-}
+@interface ADLListsWindowController : NSWindowController <NSWindowDelegate>
 
 @end
 

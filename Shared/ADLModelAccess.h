@@ -40,6 +40,8 @@ typedef NSManagedObjectID ADLItemID;
 
 - (NSUInteger)unfinishedCountForBadge;
 
+- (ADLListID*)listOwningItem:(ADLItemID*)itemID;
+
 - (ADLItemID*)itemIDForURL:(NSURL*)url;
 - (NSUInteger)indexOfItem:(ADLItemID*)itemID inList:(ADLListID*)listID;
 
@@ -57,6 +59,8 @@ typedef NSManagedObjectID ADLItemID;
 - (id)pasteboardRepresentationOfItemID:(ADLItemID*)itemID;
 
 @property (retain, nonatomic) ADLListID* selectedListID;
+
+- (NSArray*)itemsWithSearchString:(NSString*)query;
 
 // Change processing
 

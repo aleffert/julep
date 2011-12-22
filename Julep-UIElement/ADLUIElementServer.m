@@ -39,4 +39,12 @@ NSString* kADLUIServerName = @"com.ognid.julep-ui-server";
     [self.delegate showQuickCreateWithListIDs:listIDs named:names];
 }
 
+- (void)showQuickToggle {
+    [self.delegate showQuickToggle];
+}
+
+- (void)updateQuickToggleItemsTo:(NSArray*)items {
+    [self.delegate updateQuickToggleItemsTo:items];
+}
+
 @end

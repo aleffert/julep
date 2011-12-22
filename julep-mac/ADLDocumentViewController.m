@@ -14,7 +14,6 @@
 #import "ADLListsPileViewController.h"
 #import "ADLListViewController.h"
 #import "ADLModelAccess.h"
-#import "ADLNewItemViewController.h"
 #import "ADLNSTabViewController.h"
 #import "ADLNSViewManipulator.h"
 #import "ADLShadowView.h"
@@ -238,34 +237,6 @@
     else {
         self.agnostic.modelAccess.selectedListID = [self.agnostic listIDAtIndex:0];
     }
-}
-
-- (void)createListItemSheetEnded:(NSWindow*)sheet returnCode:(NSInteger)returnCode viewController:(ADLNewItemViewController*)viewController {
-    if(returnCode == ADLNewItemCreateReturnCode) {
-        NSString* title = viewController.itemTitle;
-        ADLListID* listID = viewController.selectedList;
-        [self.agnostic.modelAccess addItemWithTitle:title toListWithID:listID];
-    }
-    
-    [sheet orderOut:self];
-    [viewController release];
-}
-
-- (IBAction)newListItem:(id)sender {
-    // TODO DELETE
-//    ADLNewItemViewController* newItemController = [[ADLNewItemViewController alloc] initWithNibName:@"ADLNewItemViewController" bundle:nil];
-//    CGFloat width = newItemController.view.frame.size.width;
-//    CGFloat height = newItemController.view.frame.size.height;
-//    NSPanel* sheet = [[NSPanel alloc] initWithContentRect:NSMakeRect(0, 0, width, height) styleMask:NSDocModalWindowMask | NSTitledWindowMask backing:NSBackingStoreBuffered defer:NO];
-//    
-//    [newItemController willPresentAsSheet];
-//    sheet.contentView = newItemController.view;
-//    [NSApp beginSheet:sheet modalForWindow:self.view.window modalDelegate:self didEndSelector:@selector(createListItemSheetEnded:returnCode:viewController:) contextInfo:newItemController];
-//    [self.agnostic.modelAccess.listIDs enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-//        [newItemController addListID:object withName:[self.agnostic.modelAccess titleOfList:object]];
-//    }];
-//    
-//    [sheet release];
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {

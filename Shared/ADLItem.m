@@ -14,5 +14,7 @@
 
 @dynamic uid;
 @dynamic owner;
+@dynamic title;
+@dynamic completionStatus;
 
 @end

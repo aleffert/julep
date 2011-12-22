@@ -39,4 +39,12 @@ NSString* kADLAppServerName = @"com.ognid.julep";
     [self.delegate addItemWithTitle:title toList:list];
 }
 
+- (NSArray*)itemsWithSearchString:(NSString *)query {
+    return [self.delegate itemsWithSearchString:query];
+}
+
+- (void)toggleItemAtURL:(NSURL *)url {
+    [self.delegate toggleItemAtURL:url];
+}
+
 @end

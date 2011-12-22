@@ -21,9 +21,8 @@
 
 #import "NSArray+ADLAdditions.h"
 
-static NSString* kADLQuickCreateCode = @"kADLQuickCreateCode";
-static NSString* kADLQuickCreateFlags = @"kADLQuickCreateFlags";
-static NSString* kADLQuickCreateHotKeyIdentifier = @"kADLQuickCreateHotKeyIdentifier";
+static NSString* kADLKeyboardShorcutCode = @"kADLQuickCreateCode";
+static NSString* kADLKeyboardShortcutFlags = @"kADLQuickCreateFlags";
 
 @interface ADLAppDelegate ()
 
@@ -32,7 +31,7 @@ static NSString* kADLQuickCreateHotKeyIdentifier = @"kADLQuickCreateHotKeyIdenti
 - (NSString*)applicationName;
 - (NSURL*)applicationSupportSubdirectoryURL;
 
-- (void)registerQuickCreateHotKey;
+- (void)registerHotKeyWithIdentifier:(NSString*)identifier;
 - (void)startServer;
 
 - (IBAction)showPreferences:(id)sender;
@@ -66,7 +65,8 @@ static NSString* kADLJulepDocumentType = @"julep";
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [self openMainDocument];
-    [self registerQuickCreateHotKey];
+    [self registerHotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
+    [self registerHotKeyWithIdentifier:kADLQuickToggleHotKeyIdentifier];
     [self UIElementChildProcess]; // spawn ui element daemon
     [self startServer];
     [self updateDockBadgeCount];
@@ -84,6 +84,11 @@ static NSString* kADLJulepDocumentType = @"julep";
     NSRunningApplication* app = [[NSWorkspace sharedWorkspace] launchApplicationAtURL:url options:NSWorkspaceLaunchWithoutActivation configuration:NULL error:&error];
     NSAssert(error == nil, @"error spawning child process");
     return app;
+}
+
+- (id <ADLUIElementServer>)UIElementServer {
+    [self UIElementChildProcess];
+    return (ADLUIElementServer*)[NSConnection rootProxyForConnectionWithRegisteredName:kADLUIServerName host:nil];
 }
 
 - (NSString*)mainDocumentName {
@@ -177,16 +182,62 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self.preferencesController showWindow:sender];
 }
 
+#pragma mark Hot Keys
 
-- (void)saveQuickCreateKeyCombo:(KeyCombo)combo {
-    [[NSUserDefaults standardUserDefaults] setInteger:combo.flags forKey:kADLQuickCreateFlags];
-    [[NSUserDefaults standardUserDefaults] setInteger:combo.code forKey:kADLQuickCreateCode];
+- (void)saveKeyCombo:(KeyCombo)combo withIdentifier:(NSString*)identifier {
+    NSDictionary* comboDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithUnsignedInteger:combo.flags], kADLKeyboardShortcutFlags,
+                               [NSNumber numberWithInteger:combo.code], kADLKeyboardShorcutCode,
+                               nil];
+    [[NSUserDefaults standardUserDefaults] setObject:comboDict forKey:identifier];
 }
 
-#pragma mark Quick Create Hot Key
+- (BOOL)hasKeyComboForIdentifier:(NSString *)identifier {
+    return [[NSUserDefaults standardUserDefaults] objectForKey:identifier] != nil;
+}
 
-- (void)showQuickCreateFromHotKey:(PTHotKey*)hotKey {
-    id <ADLUIElementServer> uiServer = (ADLUIElementServer*)[NSConnection rootProxyForConnectionWithRegisteredName:kADLUIServerName host:nil];
+- (KeyCombo)keyComboForIdentifier:(NSString *)identifier {
+    KeyCombo combo = SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags);
+    NSDictionary* comboDict = [[NSUserDefaults standardUserDefaults] objectForKey:identifier];
+    NSAssert(comboDict != nil, @"Asking for key combo when none exists");
+    combo.code = [[comboDict objectForKey:kADLKeyboardShorcutCode] integerValue];
+    combo.flags = [[comboDict objectForKey:kADLKeyboardShortcutFlags] integerValue];
+    return combo;
+}
+
+- (void)registerHotKeyWithIdentifier:(NSString *)identifier {
+    if ([self hasKeyComboForIdentifier:identifier]) {
+        KeyCombo combo = [self keyComboForIdentifier:identifier];
+        PTKeyCombo* keyCombo = [PTKeyCombo keyComboWithKeyCode:combo.code modifiers:SRCocoaToCarbonFlags(combo.flags)];
+        
+        PTHotKey* hotKey = [[PTHotKey alloc] initWithIdentifier:identifier keyCombo:keyCombo];
+        hotKey.target = self;
+        hotKey.action = @selector(hotKeyPressed:);
+        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
+        [hotKey release];
+    }
+}
+
+- (void)clearSavedHotKeyWithIdentifier:(NSString*)identifier {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:identifier];
+}
+
+- (void)changedKeyComboTo:(KeyCombo)combo forIdentifier:(NSString *)identifier {
+    PTHotKeyCenter* hotKeyCenter = [PTHotKeyCenter sharedCenter];
+    PTHotKey* hotKey = [hotKeyCenter hotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
+    [hotKeyCenter unregisterHotKey:hotKey];
+    if(combo.code == ShortcutRecorderEmptyCode) {
+        [self clearSavedHotKeyWithIdentifier:identifier];
+    }
+    else {
+        [self saveKeyCombo:combo withIdentifier:identifier];
+        [self registerHotKeyWithIdentifier:identifier];
+    }
+}
+
+
+- (void)showQuickCreate {
+    id <ADLUIElementServer> uiServer = self.UIElementServer;
     
     ADLModelAccess* modelAccess = self.mainDocument.modelAccess;
     NSArray* listIDs = modelAccess.listIDs;
@@ -202,43 +253,54 @@ static NSString* kADLJulepDocumentType = @"julep";
     [uiServer showQuickCreateWithListIDs:listURLs named:listNames];
 }
 
-- (BOOL)hasQuickCreateKeyCombo {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:kADLQuickCreateFlags] != nil;
+- (void)showQuickToggle {
+    id <ADLUIElementServer> uiServer = self.UIElementServer;
+    [uiServer showQuickToggle];
 }
 
-- (KeyCombo)quickCreateKeyCombo {
-    KeyCombo combo = SRMakeKeyCombo(ShortcutRecorderEmptyCode, ShortcutRecorderEmptyFlags);
-    combo.code = [[NSUserDefaults standardUserDefaults] integerForKey:kADLQuickCreateCode];
-    combo.flags = [[NSUserDefaults standardUserDefaults] integerForKey:kADLQuickCreateFlags];
-    return combo;
-}
-
-- (void)registerQuickCreateHotKey {
-    if ([self hasQuickCreateKeyCombo]) {
-        KeyCombo combo = [self quickCreateKeyCombo];
-        PTKeyCombo* keyCombo = [PTKeyCombo keyComboWithKeyCode:combo.code modifiers:SRCocoaToCarbonFlags(combo.flags)];
-        
-        PTHotKey* hotKey = [[PTHotKey alloc] initWithIdentifier:kADLQuickCreateHotKeyIdentifier keyCombo:keyCombo];
-        hotKey.target = self;
-        hotKey.action = @selector(showQuickCreateFromHotKey:);
-        [[PTHotKeyCenter sharedCenter] registerHotKey:hotKey];
-        [hotKey release];
+- (void)hotKeyPressed:(PTHotKey*)hotKey {
+    if([hotKey.identifier isEqual:kADLQuickCreateHotKeyIdentifier]) {
+        [self showQuickCreate];
     }
-}
-
-- (void)changedQuickCreateKeyComboTo:(KeyCombo)combo {
-    PTHotKeyCenter* hotKeyCenter = [PTHotKeyCenter sharedCenter];
-    PTHotKey* hotKey = [hotKeyCenter hotKeyWithIdentifier:kADLQuickCreateHotKeyIdentifier];
-    [hotKeyCenter unregisterHotKey:hotKey];
-    [self saveQuickCreateKeyCombo:combo];
-    [self registerQuickCreateHotKey];
+    else if([hotKey.identifier isEqual:kADLQuickToggleHotKeyIdentifier]) {
+        [self showQuickToggle];
+    }
+    else {
+        NSAssert(NO, @"Unexpected hot key");
+    }
 }
 
 #pragma mark UIServer Messages
 
 - (void)addItemWithTitle:(NSString *)title toList:(NSURL *)list {
-    ADLListID* listID = [self.mainDocument.modelAccess listIDForURL:list];
-    [self.mainDocument.modelAccess addItemWithTitle:title toListWithID:listID];
+    ADLModelAccess* modelAccess = self.mainDocument.modelAccess;
+    ADLListID* listID = [modelAccess listIDForURL:list];
+    [modelAccess addItemWithTitle:title toListWithID:listID];
+}
+
+
+- (NSArray*)itemsWithSearchString:(NSString*)query {
+    ADLModelAccess* modelAccess = self.mainDocument.modelAccess;
+    NSArray* items = [modelAccess itemsWithSearchString:query];
+    NSArray* result = [items arrayByMappingObjects:^(id object) {
+        ADLItemID* itemID = object;
+        ADLListID* list = [modelAccess listOwningItem:itemID];
+        NSString* listTitle = [modelAccess titleOfList:list];
+        return [NSDictionary dictionaryWithObjectsAndKeys:
+                itemID.URIRepresentation, @"url",
+                [modelAccess titleOfItem:itemID], @"title",
+                [NSNumber numberWithBool:[modelAccess completionStatusOfItem:itemID]], @"status",
+                listTitle, @"list",
+                nil];
+    }];
+    return result;
+}
+
+- (void)toggleItemAtURL:(NSURL *)url {
+    ADLModelAccess* modelAccess = self.mainDocument.modelAccess;
+    ADLItemID* itemID = [modelAccess itemIDForURL:url];
+    BOOL status = [modelAccess completionStatusOfItem:itemID];
+    [modelAccess setCompletionStatus:!status ofItem:itemID];
 }
 
 @end

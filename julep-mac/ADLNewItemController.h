@@ -10,7 +10,7 @@
 
 @protocol ADLNewItemControllerDelegate;
 
-@interface ADLNewItemController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate>
+@interface ADLNewItemController : NSWindowController <NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate, NSWindowDelegate>
 
 @property (assign, nonatomic) id <ADLNewItemControllerDelegate> delegate;
 @property (copy, nonatomic) NSArray* listNames;

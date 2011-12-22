@@ -22,7 +22,12 @@
 @end
 
 @protocol ADLPreferencesControllerDelegate <NSObject>
-- (KeyCombo)quickCreateKeyCombo;
-- (BOOL)hasQuickCreateKeyCombo;
-- (void)changedQuickCreateKeyComboTo:(KeyCombo)combo;
+
+- (KeyCombo)keyComboForIdentifier:(NSString*)identifier;
+- (BOOL)hasKeyComboForIdentifier:(NSString*)identifier;
+- (void)changedKeyComboTo:(KeyCombo)combo forIdentifier:(NSString*)identifier;
+
 @end
+
+extern NSString* kADLQuickCreateHotKeyIdentifier;
+extern NSString* kADLQuickToggleHotKeyIdentifier;

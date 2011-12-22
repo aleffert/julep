@@ -13,7 +13,9 @@
 
 @interface ADLItem : NSManagedObject
 
-@property (nonatomic, retain) NSString * uid;
-@property (nonatomic, retain) ADLList *owner;
+@property (nonatomic, retain) NSString* uid;
+@property (nonatomic, retain) ADLList* owner;
+@property (nonatomic, retain) NSString* title;
+@property (nonatomic, assign) BOOL completionStatus;
 
 @end

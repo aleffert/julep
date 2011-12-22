@@ -12,14 +12,7 @@
 
 @protocol ADLItemViewDelegate;
 
-@interface ADLItemView : NSView <NSTextFieldDelegate> {
-    ADLItemID* mItem;
-    BOOL mChecked;
-    NSButton* mCheckbox;
-    id <ADLItemViewDelegate> mDelegate;
-    NSTextField* mTitleView;
-    NSString* mTitle;
-}
+@interface ADLItemView : NSView <NSTextFieldDelegate>
 
 @property (retain, nonatomic) ADLItemID* item;
 @property (copy, nonatomic) NSString* title;

@@ -9,23 +9,25 @@
 #import "ADLUIElementDelegate.h"
 
 #import "ADLAppServer.h"
-#import "ADLNewItemController.h"
 
 @interface ADLUIElementDelegate ()
 
 @property (retain, nonatomic) ADLUIElementServer* server;
 @property (retain, nonatomic) ADLNewItemController* quickCreateController;
+@property (retain, nonatomic) ADLQuickToggleController* quickToggleController;
 
 @end
 
 @implementation ADLUIElementDelegate
 
 @synthesize quickCreateController = mQuickCreateController;
+@synthesize quickToggleController = mQuickToggleController;
 @synthesize server = mServer;
 
 - (void)dealloc
 {
     self.quickCreateController = nil;
+    self.quickToggleController = nil;
     self.server = nil;
     [super dealloc];
 }
@@ -56,13 +58,40 @@
     [self.quickCreateController showWindow:self];
 }
 
+- (id <ADLAppServer>)appServer {
+    return (id <ADLAppServer>)[NSConnection rootProxyForConnectionWithRegisteredName:kADLAppServerName host:nil];
+}
+
 - (void)addItemWithTitle:(NSString *)name toList:(NSURL *)listID {
-    id <ADLAppServer> appServer = (id <ADLAppServer>)[NSConnection rootProxyForConnectionWithRegisteredName:kADLAppServerName host:nil];
+    id <ADLAppServer> appServer = self.appServer;
     [appServer addItemWithTitle:name toList:listID];
 }
 
 - (void)applicationWillResignActive:(NSNotification *)notification {
     [self.quickCreateController.window orderOut:self];
+}
+
+- (void)showQuickToggle {
+    if(self.quickToggleController == nil) {
+        self.quickToggleController = [[[ADLQuickToggleController alloc] init] autorelease];
+        self.quickToggleController.delegate = self;
+    }
+    self.quickToggleController.items = [NSArray array];
+    [self.quickToggleController showWindow:self];
+}
+
+- (void)updateQuickToggleItemsTo:(NSArray *)items {
+    [self.quickToggleController updateItemsTo:items];
+}
+
+- (void)toggleItemWithURL:(NSURL*)url {
+    id <ADLAppServer> appServer = self.appServer;
+    [appServer toggleItemAtURL:url];
+}
+
+- (NSArray*)itemsWithSearchString:(NSString *)query {
+    id <ADLAppServer> appServer = self.appServer;
+    return [appServer itemsWithSearchString:query];
 }
 
 @end

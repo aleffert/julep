@@ -45,7 +45,7 @@ NSString* kADLItemPasteboardType = @"com.akivaleffert.julep.ItemPasteboardType";
 - (void)deleteTrackedListWithID:(ADLListID*)listID;
 - (ADLList*)listForCalendarUID:(NSString*)uid;
 
-- (void)addItem:(void (^)(ADLItem* item))defaults toList:(ADLList*)list atIndex:(NSUInteger)index;
+- (ADLItem*)addItem:(void (^)(ADLItem* item))defaults toList:(ADLList*)list atIndex:(NSUInteger)index;
 - (ADLItem*)itemForTaskUID:(NSString*)uid;
 - (void)deleteTrackedItemWithID:(ADLItemID*)itemID;
 
@@ -197,13 +197,17 @@ static NSString* kADLListItemEntityName= @"Item";
     NSArray* tasks = [uncompletedTasks arrayByAddingObjectsFromArray:recentlyCompletedTasks];
     for (CalTask* task in tasks) {
         // Look for a task with this uid
-        ADLItem* existingItem = [self itemForTaskUID:task.uid];
-        if(existingItem == nil) {
+        ADLItem* item = [self itemForTaskUID:task.uid];
+        if(item == nil) {
             ADLList* list = [self listForCalendarUID:task.calendar.uid];
-            [self addItem:^(ADLItem* item) {
-                item.uid = task.uid;
+            item = [self addItem:^(ADLItem* newItem) {
+                newItem.uid = task.uid;
             } toList: list atIndex:0];
         }
+        [self performMutation:^(void) {
+            item.title = task.title;
+            item.completionStatus = task.isCompleted;
+        }];
     }
     
     // Remove extras
@@ -225,6 +229,11 @@ static NSString* kADLListItemEntityName= @"Item";
     return task.isCompleted && ([task.completedDate compare:[NSDate yesterdayMorning]] == NSOrderedAscending);
 }
 
+- (ADLListID*)listOwningItem:(ADLItemID*)itemID {
+    ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
+    return item.owner.objectID;
+}
+
 - (ADLList*)listForCalendarUID:(NSString*)uid {
     NSFetchRequest* request = [[NSFetchRequest alloc] init];
     request.entity = self.listEntityDescription;
@@ -241,6 +250,23 @@ static NSString* kADLListItemEntityName= @"Item";
         NSAssert(results.count == 1, @"Consistency violation. Multiple lists with the same uid.");
         return [results objectAtIndex:0];
     }
+}
+
+- (NSArray*)itemsWithSearchString:(NSString*)query {
+    if(query.length == 0) {
+        return [NSArray array];
+    }
+    NSFetchRequest* request = [[NSFetchRequest alloc] init];
+    request.entity = self.listItemEntityDescription;
+    request.predicate = [NSPredicate predicateWithFormat:@"title like[cd] %@", [NSString stringWithFormat:@"*%@*", query]];
+    NSError* error = nil;
+    NSArray* results = [self.managedObjectContext executeFetchRequest:request error:&error];
+    [request release];
+    NSAssert(error == nil, @"Unable to search items");
+    return [results arrayByMappingObjects:^(id object) {
+        ADLItem* item = object;
+        return item.objectID;
+    }];
 }
 
 - (NSArray*)itemIDsForList:(ADLListID *)listID {
@@ -290,6 +316,8 @@ static NSString* kADLListItemEntityName= @"Item";
         [self deleteTrackedItemWithID:itemID];
         [self addItem:^(ADLItem* newItem) {
             newItem.uid = uid;
+            newItem.title = item.title;
+            newItem.completionStatus = item.completionStatus;
         } toList:newList atIndex:adjustedIndex];
         finalItemID = [self itemForTaskUID:uid].objectID;
     }
@@ -477,8 +505,7 @@ static NSString* kADLListItemEntityName= @"Item";
 
 - (NSString*)titleOfItem:(ADLItemID*)itemID {
     ADLItem* item = (ADLItem*)[self.managedObjectContext objectWithID:itemID];
-    CalTask* task = [[CalCalendarStore defaultCalendarStore] taskWithUID:item.uid];
-    return task.title;
+    return item.title;
 }
 
 - (void)setTitle:(NSString *)title ofItem:(NSManagedObjectID *)itemID {
@@ -511,9 +538,10 @@ static NSString* kADLListItemEntityName= @"Item";
     NSLog(@"dead. cry");
 }
 
-- (void)addItem:(void (^)(ADLItem* item))defaults toList:(ADLList*)list atIndex:(NSUInteger)index {
+- (ADLItem*)addItem:(void (^)(ADLItem* item))defaults toList:(ADLList*)list atIndex:(NSUInteger)index {
+    __block ADLItem* item = nil;
     [self performMutation:^(void) {
-        ADLItem* item = [[ADLItem alloc] initWithEntity:self.listItemEntityDescription insertIntoManagedObjectContext:self.managedObjectContext];
+        item = [[ADLItem alloc] initWithEntity:self.listItemEntityDescription insertIntoManagedObjectContext:self.managedObjectContext];
         [list mutateItemsSet:^(NSMutableOrderedSet* set) {
             [set insertObject:item atIndex:index];
         }];
@@ -521,6 +549,7 @@ static NSString* kADLListItemEntityName= @"Item";
         [item release];
 
     }];
+    return item;
 }
 
 - (ADLItem*)itemForTaskUID:(NSString*)uid {
@@ -566,6 +595,8 @@ static NSString* kADLListItemEntityName= @"Item";
     [self addItem:^(ADLItem* item) {
         newItem = item;
         item.uid = task.uid;
+        item.title = task.title;
+        item.completionStatus = task.isCompleted;
     } toList:list atIndex:index];
     
     [self.undoManager registerUndoWithTarget:self selector:@selector(performUndoBlock:) object:[[^(void) {
@@ -805,6 +836,8 @@ static NSString* kADLListItemEntityName= @"Item";
         if(![self isTaskStale:task] && ([self itemForTaskUID:uid] == nil)) {
             [self addItem:^(ADLItem* item) {
                 item.uid = task.uid;
+                item.title = task.title;
+                item.completionStatus = task.isCompleted;
             } toList:list atIndex:0];
         }
         [updatedCalendars addObject:task.calendar.uid];
@@ -821,6 +854,12 @@ static NSString* kADLListItemEntityName= @"Item";
     for(NSString* uid in updatedObjects) {
         if([self hasTaskWithUID:uid]) {
             CalTask* task = [store taskWithUID:uid];
+            ADLItem* item = [self itemForTaskUID:uid];
+            [self performMutation:^(void) {
+                item.title = task.title;
+                item.completionStatus = task.isCompleted;
+            }];
+            
             [updatedCalendars addObject:task.calendar.uid];
         }
     }

@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 #import "ADLNewItemController.h"
+#import "ADLQuickToggleController.h"
 #import "ADLUIElementServer.h"
 
-@interface ADLUIElementDelegate : NSObject <NSApplicationDelegate, ADLUIElementServerDelegate, ADLNewItemControllerDelegate>
+@interface ADLUIElementDelegate : NSObject <NSApplicationDelegate, ADLUIElementServerDelegate, ADLNewItemControllerDelegate, ADLQuickToggleControllerDelegate>
 
 @end

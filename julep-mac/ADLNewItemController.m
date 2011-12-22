@@ -83,11 +83,11 @@
         [self.delegate addItemWithTitle: title toList:listID];
     }
     
-    [self.window orderOut:sender];
+    [self.window performClose:sender];
 }
 
 - (IBAction)cancel:(id)sender {
-    [self.window orderOut:sender];
+    [self.window performClose:sender];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {
@@ -108,6 +108,11 @@
         return YES;
     }
     return NO;
+}
+
+- (void)windowDidResignKey:(NSNotification *)notification {
+    self.listIDs = [NSArray array];
+    [self.window performClose:nil];
 }
 
 @end

@@ -14,13 +14,7 @@
 
 @protocol ADLListViewControllerDelegate;
 
-@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTableViewDataSource, ADLTableViewDelegate, ADLItemViewDelegate> {
-    ADLModelAccess* mModelAccess;
-    ADLListID* mListID;
-    id <ADLListViewControllerDelegate> mDelegate;
-    NSTableView* mTableView;
-    NSArray* mItems;
-}
+@interface ADLListViewController : NSViewController <ADLListChangedListener, NSTableViewDataSource, ADLTableViewDelegate, ADLItemViewDelegate>
 
 @property (retain, nonatomic) ADLModelAccess* modelAccess;
 @property (retain, nonatomic) ADLListID* listID;

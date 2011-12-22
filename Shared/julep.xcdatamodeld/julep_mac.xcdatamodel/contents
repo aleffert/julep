@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11C74" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Item" representedClassName="ADLItem">
+        <attribute name="completionStatus" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="owner" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="List" inverseName="items" inverseEntity="List"/>
     </entity>
@@ -15,7 +17,7 @@
         <relationship name="lists" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="List" inverseName="list" inverseEntity="List"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-144" positionY="117" width="128" height="60"/>
+        <element name="Item" positionX="-144" positionY="117" width="128" height="105"/>
         <element name="List" positionX="160" positionY="192" width="128" height="105"/>
         <element name="ListCollection" positionX="160" positionY="192" width="128" height="75"/>
     </elements>

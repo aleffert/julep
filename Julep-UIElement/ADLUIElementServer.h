@@ -13,6 +13,8 @@
 @protocol ADLUIElementServer <NSObject>
 
 - (void)showQuickCreateWithListIDs:(NSArray*)listIDs named:(NSArray*)names;
+- (void)showQuickToggle;
+- (void)updateQuickToggleItemsTo:(NSArray*)items;
 
 @end
 
@@ -28,6 +30,8 @@
 @protocol ADLUIElementServerDelegate <NSObject>
 
 - (void)showQuickCreateWithListIDs:(NSArray*)listIDs named:(NSArray*)names;
+- (void)showQuickToggle;
+- (void)updateQuickToggleItemsTo:(NSArray*)items;
 
 @end
 

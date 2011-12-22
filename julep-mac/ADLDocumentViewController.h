@@ -14,11 +14,7 @@
 @class ADLListsPileViewController;
 @class ADLAgnosticDocumentViewController;
 
-@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener, ADLListViewControllerDelegate> {
-    ADLNSTabViewController* mTabController;
-    ADLListsPileViewController* mPileController;
-    ADLAgnosticDocumentViewController* mAgnostic;
-}
+@interface ADLDocumentViewController : NSViewController <ADLPileViewControllerDelegate, ADLCollectionChangedListener, ADLListViewControllerDelegate>
 
 - (id)initWithModel:(ADLModelAccess*)modelAccess;
 
