@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Build ShortcutRecorder.framework.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>ShortcutRecorder.framework - for embedding in ibplugin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>ShortcutRecorder.framework - with embedded ibplugin.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>ShortcutRecorder.ibplugin - for embedding in framework.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>ShortcutRecorder.ibplugin - standalone.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+		<key>ShortcutRecorderFramework_Tester.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>342E00BA109CCBF5009AD8CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>342E00EB109CCC36009AD8CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>342E0208109CCE71009AD8CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9398377F0DA42965007F53F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>939838A40DA4300F007F53F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>93983B060DA43C4E007F53F3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

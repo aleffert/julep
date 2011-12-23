@@ -1,0 +1,965 @@
+TShortcutRecorder.framework - for embedding in ibplugin
+v4
+r1
+cCheck dependencies
+cSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resources Versions/Current/Resources
+cSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorder Versions/Current/ShortcutRecorder
+cSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Current A
+cSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headers Versions/Current/Headers
+cProcessInfoPlistFile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist Framework/SR_LeopardFrameworkEmbed-Info.plist
+cProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-ftmzpixnluzptbbjkwiuagnhfvca/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.analyzer
+cProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal i386 objective-c com.apple.compilers.llvm.clang.1_0.analyzer
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cLd "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder" normal x86_64
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+cLd "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder" normal i386
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+cCreateUniversalBinary /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder normal "x86_64 i386"
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+cAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+cCpHeader Framework/ShortcutRecorder.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h
+cCpHeader Framework/SR_LeopardView.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h
+cCpHeader Source/SRRecorderControl.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h
+cCpHeader Source/SRRecorderCell.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h
+cCpHeader Source/SRValidator.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h
+cCpHeader Source/SRKeyCodeTransformer.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h
+cCpHeader Source/SRCommon.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h
+cTouch /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework
+
+N/Developer/SDKs/MacOSX10.7.sdk
+c000000004E7AD70B00000000000000EE
+t1316673291
+s238
+
+N/Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h
+c000000004E794DAC0000000000001911
+t1316572588
+s6417
+
+N/System/Library/Frameworks/Carbon.framework/Carbon
+c000000004E555F890000000000006530
+t1314217865
+s25904
+
+N/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004E555F890000000000006560
+t1314217865
+s25952
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+c000000004EE7C67D000000000000074E
+t1323812477
+s1870
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+c000000004EE7C67D0000000000001526
+t1323812477
+s5414
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+c000000004EE7C67D000000000000076E
+t1323812477
+s1902
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+c000000004EE7C67D0000000000001409
+t1323812477
+s5129
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.h
+c000000004EE7C67D00000000000000D4
+t1323812477
+s212
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+c000000004EE7C67D00000000000000CF
+t1323812477
+s207
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/ShortcutRecorder.h
+c000000004EE7C67D00000000000001BB
+t1323812477
+s443
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.h
+c000000004EE7C67C0000000000001962
+t1323812476
+s6498
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+c000000004EE7C67C0000000000003F72
+t1323812476
+s16242
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.h
+c000000004EE7C67C000000000000012E
+t1323812476
+s302
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+c000000004EE7C67C0000000000001A9C
+t1323812476
+s6812
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.h
+c000000004EE7C67C0000000000000D28
+t1323812476
+s3368
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+c000000004EE7C67C000000000000A735
+t1323812476
+s42805
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.h
+c000000004EE7C67C0000000000000772
+t1323812476
+s1906
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+c000000004EE7C67C0000000000002426
+t1323812476
+s9254
+i"SRRecorderControl.h"
+i"SRCommon.h"
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.h
+c000000004EE7C67C0000000000000333
+t1323812476
+s819
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+c000000004EE7C67C0000000000002810
+t1323812476
+s10256
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headers
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resources
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorder
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Current
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder.LinkFileList
+c000000004EF2CA7100000000000007D5
+t1324534385
+s2005
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder.LinkFileList
+c000000004EF2CA7100000000000007E9
+t1324534385
+s2025
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKey.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKeyCenter.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCodeTranslator.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCombo.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRCommon.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRKeyCodeTransformer.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderCell.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderControl.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRValidator.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SR_LeopardView.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/PTHotKey.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/PTHotKeyCenter.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/PTKeyCodeTranslator.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/PTKeyCombo.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SRCommon.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SRKeyCodeTransformer.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SRRecorderCell.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SRRecorderControl.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SRValidator.plist
+t2
+s0
+
+N/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/x86_64/SR_LeopardView.plist
+t2
+s0
+
+N/var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h.pth
+t1324233999
+s10906548
+
+N/var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h.pth
+t1324233999
+s11438176
+
+N/var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-ftmzpixnluzptbbjkwiuagnhfvca/AppKit.h.pth
+t1324233999
+s10906548
+
+N/var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h.pth
+t1324233999
+s11438176
+
+NFramework/SR_LeopardFrameworkEmbed-Info.plist
+c000000004EE7C67D0000000000000283
+t1323812477
+s643
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+s346227193.233769
+e346227193.567290
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection98"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.me8f93bf901a3b441^b43a91f901a3b441^---0#0#0#-19%DVTDocumentLocation2@106"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m0000000000000000^2248"Analyze Demo/HotKey/PTHotKey.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKey.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKey.plist"36"6E2CD76F-2C46-468E-AC64-75FA1077BDEF-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+s346227193.389062
+e346227193.756680
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection104"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m4dc063f901a3b441^4eb6c1f901a3b441^---0#0#0#-19%DVTDocumentLocation2@112"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m0000000000000000^2272"Analyze Demo/HotKey/PTHotKeyCenter.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKeyCenter.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTHotKeyCenter.plist"36"D6C75178-1E52-44C2-BFF4-0D2F593CF464-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+s346227193.568658
+e346227193.882663
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m1bba91f901a3b441^6c08e2f901a3b441^---0#0#0#-19%DVTDocumentLocation2@117"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m0000000000000000^2292"Analyze Demo/HotKey/PTKeyCodeTranslator.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCodeTranslator.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCodeTranslator.plist"36"86CA27FB-28E4-49B4-873D-7A6523BE57EA-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+s346227193.757955
+e346227194.092913
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection100"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.mf52ac2f901a3b441^21ca17fa01a3b441^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m0000000000000000^2256"Analyze Demo/HotKey/PTKeyCombo.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCombo.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/PTKeyCombo.plist"36"31A8A4D5-3330-437F-8E65-D7EBA7739CF8-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+s346227193.026518
+e346227193.232468
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m35ed06f901a3b441^f1833bf901a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m0000000000000000^2268"Analyze Framework/SR_LeopardView.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SR_LeopardView.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SR_LeopardView.plist"36"E7B0C86E-1C30-4AC1-B133-1A467FE0C9D8-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+s346227192.641030
+e346227193.025199
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection93"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m5c3ca4f801a3b441^c17406f901a3b441^---0#0#0#-19%DVTDocumentLocation2@101"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m0000000000000000^2238"Analyze Source/SRCommon.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRCommon.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRCommon.plist"36"CA47263C-D8DA-4B7E-BF13-83489DED01DB-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+s346227192.029512
+e346227192.566795
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m42d207f801a3b441^541a91f801a3b441^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m0000000000000000^2286"Analyze Source/SRKeyCodeTransformer.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRKeyCodeTransformer.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRKeyCodeTransformer.plist"36"5505EF28-B6C5-4825-B0CC-ECEA55D32C4F-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+s346227191.969160
+e346227193.387757
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection99"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m1a34f8f701a3b441^2e5763f901a3b441^---0#0#0#-19%DVTDocumentLocation2@107"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m0000000000000000^2262"Analyze Source/SRRecorderCell.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderCell.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderCell.plist"36"AFC0B4E1-506C-4CFD-8FFB-24DB97CA1EB0-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+s346227191.808025
+e346227192.639711
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m1efecef701a3b441^15c5a3f801a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m0000000000000000^2274"Analyze Source/SRRecorderControl.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderControl.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRRecorderControl.plist"36"7F29B825-F4CF-4CA7-ACDF-1ADCC62CBFBC-
+
+CAnalyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+s346227192.568111
+e346227202.794765
+r1
+xAnalyze
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection96"Analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m639a91f801a3b441^bc78cb0202a3b441^---0#0#0#-19%DVTDocumentLocation2@104"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m0000000000000000^2250"Analyze Source/SRValidator.m    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" -Xclang -analyzer-checker -Xclang osx.cocoa.experimental.SelfInit "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRValidator.d" --analyze /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/StaticAnalyzer/normal/i386/SRValidator.plist"36"0EE373A4-0E87-4145-9463-99210BE0BFEE-
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+r0
+
+CBuild AST from /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+r0
+
+CCheck dependencies
+r0
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependenciese2230ef101a3b441^1de8b1f101a3b441^---0#1#0#--18"Check dependencies36"40EB5D38-9D16-4C6C-8A56-EA586DA52E1F-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227189.960537
+e346227190.163412
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection98"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m6f0ff6f501a3b441^ddd329f601a3b441^---0#0#0#-19%DVTDocumentLocation2@106"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m0000000000000000^2355"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o" Demo/HotKey/PTHotKey.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKey.o"36"AF923510-0CEC-4EAD-B974-E72D273CB200-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227190.008518
+e346227190.255082
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection104"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.mc55802f601a3b441^b64d41f601a3b441^---0#0#0#-19%DVTDocumentLocation2@112"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m0000000000000000^2385"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o" Demo/HotKey/PTHotKeyCenter.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTHotKeyCenter.o"36"1C068CBE-C134-4978-809A-B023D0CA7756-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227190.035387
+e346227190.228050
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.mac3809f601a3b441^d4603af601a3b441^---0#0#0#-19%DVTDocumentLocation2@117"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m0000000000000000^2410"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o" Demo/HotKey/PTKeyCodeTranslator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCodeTranslator.o"36"2B883351-3185-4256-85D5-51895F3D3991-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227190.165285
+e346227190.329917
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection100"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m07782af601a3b441^547454f601a3b441^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m0000000000000000^2365"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o" Demo/HotKey/PTKeyCombo.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/PTKeyCombo.o"36"FE322547-38E1-42B0-8839-BEB0882A06DC-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227189.940460
+e346227190.218579
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection93"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m18eaf0f501a3b441^310838f601a3b441^---0#0#0#-19%DVTDocumentLocation2@101"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m0000000000000000^2345"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o" Source/SRCommon.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRCommon.o"36"DB069F4C-518A-428F-A254-092390FFC24A-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.553126
+e346227189.907516
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m9ab08df301a3b441^b951e8f501a3b441^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m0000000000000000^2405"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o" Source/SRKeyCodeTransformer.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRKeyCodeTransformer.o"36"2689FFC4-27CD-4F59-8482-0DA15440E487-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.517827
+e346227190.034018
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection99"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.md6a784f301a3b441^29b408f601a3b441^---0#0#0#-19%DVTDocumentLocation2@107"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m0000000000000000^2375"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o" Source/SRRecorderCell.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderCell.o"36"6718F710-7D9D-4F5F-B043-868105995494-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.447184
+e346227189.959163
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.md09772f301a3b441^a88af5f501a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m0000000000000000^2390"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o" Source/SRRecorderControl.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRRecorderControl.o"36"78279F2C-87BF-4BD2-81B6-20AB1334E2F4-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227189.501155
+e346227189.939690
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection96"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m346480f501a3b441^62a3f0f501a3b441^---0#0#0#-19%DVTDocumentLocation2@104"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m0000000000000000^2360"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o" Source/SRValidator.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SRValidator.o"36"11CA89CE-0EB8-4FC1-BAD7-5CD77955F095-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227189.940471
+e346227190.006935
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m36e7f0f501a3b441^a1f401f601a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m0000000000000000^2381"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o" Framework/SR_LeopardView.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/i386" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/SR_LeopardView.o"36"1CDE54AD-52DE-457D-92CA-4E59B12CEEE1-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.182159
+e346227187.425622
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection98"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m65c72ef301a3b441^75036df301a3b441^---0#0#0#-19%DVTDocumentLocation2@106"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m0000000000000000^2367"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o" Demo/HotKey/PTHotKey.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKey.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKey.o"36"4B62FE24-EBB4-44DE-9B91-66B20D7FCAFF-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.315738
+e346227187.516515
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection104"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.md9ec50f301a3b441^c93a84f301a3b441^---0#0#0#-19%DVTDocumentLocation2@112"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m0000000000000000^2397"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o" Demo/HotKey/PTHotKeyCenter.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTHotKeyCenter.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTHotKeyCenter.o"36"DC3F5366-E870-445B-B991-7E3C6D549F6C-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.348738
+e346227187.445842
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection109"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m8f6d59f301a3b441^102172f301a3b441^---0#0#0#-19%DVTDocumentLocation2@117"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m0000000000000000^2422"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o" Demo/HotKey/PTKeyCodeTranslator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCodeTranslator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCodeTranslator.o"36"4E9AF475-F35D-483F-94D1-D70DFA56BEA8-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.426986
+e346227187.551750
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection100"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m54736df301a3b441^f73e8df301a3b441^---0#0#0#-19%DVTDocumentLocation2@108"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m0000000000000000^2377"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o" Demo/HotKey/PTKeyCombo.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Demo/HotKey/PTKeyCombo.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/PTKeyCombo.o"36"3C724DB3-0576-4094-90B9-CA03537E950A-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.064770
+e346227187.314263
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection93"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.mc47c11f301a3b441^b07250f301a3b441^---0#0#0#-19%DVTDocumentLocation2@101"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m0000000000000000^2357"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o" Source/SRCommon.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRCommon.o"36"B980E0CB-7B18-42C3-A6E2-20419CE74A94-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227185.791653
+e346227187.024087
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection105"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m8fc5caf101a3b441^1a5209f301a3b441^---0#0#0#-19%DVTDocumentLocation2@113"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m0000000000000000^2417"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o" Source/SRKeyCodeTransformer.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRKeyCodeTransformer.o"36"02F4792B-27DE-40AD-BCE5-557A1767AB82-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227185.791635
+e346227187.347352
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection99"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m2ac5caf101a3b441^31ec58f301a3b441^---0#0#0#-19%DVTDocumentLocation2@107"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m0000000000000000^2387"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o" Source/SRRecorderCell.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderCell.o"36"5CBEC528-DE22-4D10-A66E-2D1A7F715E7D-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227185.791406
+e346227187.108815
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.mf1bacaf101a3b441^cbd91bf301a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m0000000000000000^2402"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o" Source/SRRecorderControl.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRRecorderControl.o"36"6C7B67E4-D6DA-42D6-A9D4-573757B2A3D5-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227185.979972
+e346227187.057743
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection96"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.ma4fafaf101a3b441^90dc0ef301a3b441^---0#0#0#-19%DVTDocumentLocation2@104"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m0000000000000000^2372"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o" Source/SRValidator.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SRValidator.o"36"125AFA8D-48F6-4BD0-A27A-5C29679E755B-
+
+CCompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o" /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s346227187.110192
+e346227187.180805
+r1
+xCompileC
+xbuild/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection102"Compile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m0b5e1cf301a3b441^67472ef301a3b441^---0#0#0#-19%DVTDocumentLocation2@110"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m0000000000000000^2393"CompileC "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o" Framework/SR_LeopardView.m normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -fdiagnostics-print-source-range-info -fdiagnostics-show-category=id -fdiagnostics-parseable-fixits -std=gnu99 -fobjc-gc -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wparentheses -Wswitch -Wno-unused-parameter -Wunused-variable -Wunused-value -Wshorten-64-to-32 -isysroot /Developer/SDKs/MacOSX10.7.sdk -fasm-blocks -mmacosx-version-min=10.7 -gdwarf-2 -Wno-sign-conversion "-DIBOutlet=__attribute__((iboutlet))" "-DIBOutletCollection(ClassName)=__attribute__((iboutletcollection(ClassName)))" "-DIBAction=void)__attribute__((ibaction)" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/ShortcutRecorder.hmap" -I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/include "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources/x86_64" "-I/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/DerivedSources" -Wall -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -include /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h -MMD -MT dependencies -MF "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.d" -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.m -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/SR_LeopardView.o"36"F17F2B31-76DE-43AE-8765-40E231728DFB-
+
+CCpHeader Framework/SR_LeopardView.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h
+s346227202.803038
+e346227202.808012
+r1
+xCpHeader
+xFramework/SR_LeopardView.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection79"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h8fabcd0202a3b441^cbdace0202a3b441^---0#0#0#-19%DVTDocumentLocation2@158"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h00f4e8b1dcffdf42^519"CpHeader Framework/SR_LeopardView.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SR_LeopardView.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardView.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"CB5D755E-B9B7-4AE7-A07D-5FBCE0836F94-
+
+CCpHeader Framework/ShortcutRecorder.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h
+s346227202.803034
+e346227202.806127
+r1
+xCpHeader
+xFramework/ShortcutRecorder.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection81"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h82aecd0202a3b441^bb5ece0202a3b441^---0#0#0#-19%DVTDocumentLocation2@160"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h00f4e8b1dcffdf42^525"CpHeader Framework/ShortcutRecorder.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/ShortcutRecorder.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/ShortcutRecorder.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"FF9F0D44-0646-45CC-9A79-8D0D032A90AB-
+
+CCpHeader Source/SRCommon.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h
+s346227202.809176
+e346227202.813228
+r1
+xCpHeader
+xSource/SRCommon.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection73"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.hac36cf0202a3b441^2b30d00202a3b441^---0#0#0#-19%DVTDocumentLocation2@152"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h00f4e8b1dcffdf42^495"CpHeader Source/SRCommon.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRCommon.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRCommon.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"3DB7B375-618D-4AC9-9A77-A31ECB0060DB-
+
+CCpHeader Source/SRKeyCodeTransformer.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h
+s346227202.807331
+e346227202.811670
+r1
+xCpHeader
+xSource/SRKeyCodeTransformer.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection85"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.ha1bdce0202a3b441^96cecf0202a3b441^---0#0#0#-19%DVTDocumentLocation2@164"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h00f4e8b1dcffdf42^531"CpHeader Source/SRKeyCodeTransformer.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRKeyCodeTransformer.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRKeyCodeTransformer.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"01E64641-5EF8-4843-9D05-E93F83548747-
+
+CCpHeader Source/SRRecorderCell.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h
+s346227202.803202
+e346227202.809163
+r1
+xCpHeader
+xSource/SRRecorderCell.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection79"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h4ab3cd0202a3b441^c425cf0202a3b441^---0#0#0#-19%DVTDocumentLocation2@158"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h00f4e8b1dcffdf42^513"CpHeader Source/SRRecorderCell.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderCell.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderCell.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"FB336135-C26C-4870-BA93-AB4B6C48836A-
+
+CCpHeader Source/SRRecorderControl.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h
+s346227202.803194
+e346227202.806570
+r1
+xCpHeader
+xSource/SRRecorderControl.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection82"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h6cafcd0202a3b441^c47bce0202a3b441^---0#0#0#-19%DVTDocumentLocation2@161"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h00f4e8b1dcffdf42^522"CpHeader Source/SRRecorderControl.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRRecorderControl.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRRecorderControl.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"C8B35398-4400-4E69-BB32-1EFF39E45FD0-
+
+CCpHeader Source/SRValidator.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h
+s346227202.807344
+e346227202.810058
+r1
+xCpHeader
+xSource/SRValidator.h
+xbuild/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection76"Copy build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.hdcbbce0202a3b441^2461cf0202a3b441^---0#0#0#-19%DVTDocumentLocation2@155"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h00f4e8b1dcffdf42^504"CpHeader Source/SRValidator.h build/Debug/ShortcutRecorder.framework/Versions/A/Headers/SRValidator.h    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Source/SRValidator.h /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Headers36"EA3FF1D5-9A13-4092-82F9-D4F084388208-
+
+CCreateUniversalBinary /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder normal "x86_64 i386"
+s346227191.369252
+e346227191.415546
+r1
+xCreateUniversalBinary
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder
+xnormal
+xx86_64 i386
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection158"Create universal binary /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorderf99d5ef701a3b441^80606af701a3b441^---0#0#0#-19%DVTDocumentLocation2@150"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder00f4e8b1dcffdf42^762"CreateUniversalBinary build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder normal "x86_64 i386"    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /usr/bin/lipo -create "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder" "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder" -output /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/ShortcutRecorder36"372E3486-B87A-4FC9-8910-76C386E49F45-
+
+CLd "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder" normal i386
+s346227190.967081
+e346227191.304815
+r1
+xLd
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder
+xnormal
+xi386
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection205"Link /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecordereaaff7f601a3b441^a3074ef701a3b441^---0#0#0#--1213"Ld "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder" normal i386    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv MACOSX_DEPLOYMENT_TARGET 10.7    /Developer/usr/bin/clang -arch i386 -dynamiclib -isysroot /Developer/SDKs/MacOSX10.7.sdk -L/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -filelist "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder.LinkFileList" -install_name "@loader_path/../Frameworks/ShortcutRecorder.framework/Versions/A/ShortcutRecorder" -mmacosx-version-min=10.7 -framework Foundation -framework AppKit -framework Cocoa -framework Carbon -single_module -compatibility_version 1 -current_version 1 -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/i386/ShortcutRecorder"36"7FBF4802-5FD3-4B83-B1A4-CAE2095AF175-
+
+CLd "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder" normal x86_64
+s346227188.622140
+e346227189.498545
+r1
+xLd
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder
+xnormal
+xx86_64
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection207"Link /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorderea5e9ff401a3b441^0ea07ff501a3b441^---0#0#0#--1223"Ld "build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder" normal x86_64    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    setenv MACOSX_DEPLOYMENT_TARGET 10.7    /Developer/usr/bin/clang -arch x86_64 -dynamiclib -isysroot /Developer/SDKs/MacOSX10.7.sdk -L/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -F/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug -filelist "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder.LinkFileList" -install_name "@loader_path/../Frameworks/ShortcutRecorder.framework/Versions/A/ShortcutRecorder" -mmacosx-version-min=10.7 -framework Foundation -framework AppKit -framework Cocoa -framework Carbon -single_module -compatibility_version 1 -current_version 1 -o "/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/ShortcutRecorder.build/Debug/ShortcutRecorder.framework - for embedding in ibplugin.build/Objects-normal/x86_64/ShortcutRecorder"36"0E53EA60-302B-42F7-B4F1-9E733C123495-
+
+CProcessInfoPlistFile /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist Framework/SR_LeopardFrameworkEmbed-Info.plist
+s346227185.766643
+e346227185.776025
+r1
+xProcessInfoPlistFile
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist
+xFramework/SR_LeopardFrameworkEmbed-Info.plist
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection53"Process Framework/SR_LeopardFrameworkEmbed-Info.plist6555c4f101a3b441^d2aac6f101a3b441^---0#0#0#-19%DVTDocumentLocation2@129"file://localhost/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/Framework/SR_LeopardFrameworkEmbed-Info.plist0000000000000000^468"ProcessInfoPlistFile build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist Framework/SR_LeopardFrameworkEmbed-Info.plist    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    builtin-infoPlistUtility Framework/SR_LeopardFrameworkEmbed-Info.plist -expandbuildsettings -platform macosx -o /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/A/Resources/Info.plist36"4ECF94CF-E163-415D-B8B9-DB3BA08B144D-
+
+CProcessPCH /Users/aleffert/Library/Developer/Xcode/DerivedData/julep-ekmmttmoiqkxvhggoonavplcdqwf/Index/PrecompiledHeaders/AppKit-adwrikthhltgvddzxycakuawcxxr_ast/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /Users/aleffert/Library/Developer/Xcode/DerivedData/julep-ekmmttmoiqkxvhggoonavplcdqwf/Index/PrecompiledHeaders/AppKit-cayulsfkvqbquldlsdcssqzgkaxz_ast/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dhfoighathonocgclyewlvnzxxen/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-dtfkvccmwlohwzaerrokyjbdxalk/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal i386 objective-c com.apple.compilers.llvm.clang.1_0.analyzer
+r0
+
+CProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-ftmzpixnluzptbbjkwiuagnhfvca/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.analyzer
+r0
+
+CProcessPCH /var/folders/tt/rhv92f7n4fs2741dm7cvw00w0000gn/C/com.apple.Xcode.501/SharedPrecompiledHeaders/AppKit-hcdyzkdeaqaaslhizmrunaqgaohz/AppKit.h.pth /Developer/SDKs/MacOSX10.7.sdk/System/Library/Frameworks/AppKit.framework/Headers/AppKit.h normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headers Versions/Current/Headers
+s346227185.752749
+e346227185.757695
+r1
+xSymLink
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headers
+xVersions/Current/Headers
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection122"Process /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headersb5c6c0f101a3b441^4df8c1f101a3b441^---0#0#0#--311"SymLink build/Debug/ShortcutRecorder.framework/Headers Versions/Current/Headers    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /bin/ln -sf Versions/Current/Headers /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Headers36"B56FEB15-EDBC-4ADB-9441-97A0C68A0197-
+
+CSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resources Versions/Current/Resources
+s346227185.740385
+e346227185.747216
+r1
+xSymLink
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resources
+xVersions/Current/Resources
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection124"Process /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resourcesaa9dbdf101a3b441^1749bff101a3b441^---0#0#0#--319"SymLink build/Debug/ShortcutRecorder.framework/Resources Versions/Current/Resources    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /bin/ln -sf Versions/Current/Resources /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Resources36"54917F73-2E37-4581-A794-FAF0EE3B1CA0-
+
+CSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorder Versions/Current/ShortcutRecorder
+s346227185.740388
+e346227185.748190
+r1
+xSymLink
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorder
+xVersions/Current/ShortcutRecorder
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection131"Process /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorderf99ebdf101a3b441^098abff101a3b441^---0#0#0#--347"SymLink build/Debug/ShortcutRecorder.framework/ShortcutRecorder Versions/Current/ShortcutRecorder    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /bin/ln -sf Versions/Current/ShortcutRecorder /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/ShortcutRecorder36"D0758A09-207C-46D3-875C-85F32C5E0FCC-
+
+CSymLink /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Current A
+s346227185.740429
+e346227185.746477
+r1
+xSymLink
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Current
+xA
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection131"Process /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Currentdc9dbdf101a3b441^2f19bff101a3b441^---0#0#0#--283"SymLink build/Debug/ShortcutRecorder.framework/Versions/Current A    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /bin/ln -sf A /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework/Versions/Current36"B60FD03E-DB3B-4B03-8050-A7E7A407A5F9-
+
+CTouch /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework
+s346227202.822359
+e346227202.827390
+r1
+xTouch
+x/Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework
+lSLF04#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection112"Touch /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.frameworkb492d20202a3b441^18d0d30202a3b441^---0#0#0#--249"Touch build/Debug/ShortcutRecorder.framework    cd /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only    /usr/bin/touch -c /Users/aleffert/Documents/Projects/julep/shortcutrecorder-read-only/build/Debug/ShortcutRecorder.framework36"B3EECFE0-E056-4F89-AA24-A242247D3C2D-
+

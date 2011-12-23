@@ -60,6 +60,7 @@
 		77B986D21402CCFD004A2293 /* ADLNSTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B986D11402CCFD004A2293 /* ADLNSTabView.m */; };
 		77BD89D514A39A1F00FE89A0 /* ADLQuickToggleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77BD89D414A39A1F00FE89A0 /* ADLQuickToggleController.m */; };
 		77BD89D814A3CE5F00FE89A0 /* ADLItemViewTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 77BD89D714A3CE5F00FE89A0 /* ADLItemViewTextField.m */; };
+		77BD89DA14A4008300FE89A0 /* julep.icns in Resources */ = {isa = PBXBuildFile; fileRef = 77BD89D914A4008300FE89A0 /* julep.icns */; };
 		77C1EB6E1486EA2D008AC04C /* ADLConcreteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C1EB6D1486EA2D008AC04C /* ADLConcreteItem.m */; };
 		77CEF9471496B4BF00504287 /* ADLShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CEF9461496B4BF00504287 /* ADLShadowView.m */; };
 		77D883941424361B00544311 /* ADLPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D883921424361A00544311 /* ADLPileViewController.m */; };
@@ -237,6 +238,7 @@
 		77BD89D414A39A1F00FE89A0 /* ADLQuickToggleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLQuickToggleController.m; path = "julep-mac/ADLQuickToggleController.m"; sourceTree = SOURCE_ROOT; };
 		77BD89D614A3CE5F00FE89A0 /* ADLItemViewTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLItemViewTextField.h; path = "julep-mac/ADLItemViewTextField.h"; sourceTree = SOURCE_ROOT; };
 		77BD89D714A3CE5F00FE89A0 /* ADLItemViewTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLItemViewTextField.m; path = "julep-mac/ADLItemViewTextField.m"; sourceTree = SOURCE_ROOT; };
+		77BD89D914A4008300FE89A0 /* julep.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = julep.icns; sourceTree = "<group>"; };
 		77C1EB6C1486EA2D008AC04C /* ADLConcreteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLConcreteItem.h; path = Shared/ADLConcreteItem.h; sourceTree = "<group>"; };
 		77C1EB6D1486EA2D008AC04C /* ADLConcreteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLConcreteItem.m; path = Shared/ADLConcreteItem.m; sourceTree = "<group>"; };
 		77CEF9451496B4BF00504287 /* ADLShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLShadowView.h; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 		77452089140585AF00B993F1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				77BD89D914A4008300FE89A0 /* julep.icns */,
 				77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */,
 				772C68421427E34F00CEF932 /* ADLListViewController.xib */,
 				77D8839D14255FD900544311 /* ADLListsWindowController.xib */,
@@ -686,6 +689,7 @@
 				772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */,
 				775D650B1497FF06000FC9EB /* ADLPreferences.xib in Resources */,
 				77E6FBC014A257A4000FD06E /* Julep-UIElement.app in Resources */,
+				77BD89DA14A4008300FE89A0 /* julep.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -63,6 +63,7 @@
     tableView.dataSource = self;
     tableView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     tableView.headerView = nil;
+    tableView.usesAlternatingRowBackgroundColors = YES;
     tableView.allowsMultipleSelection = YES;
     tableView.focusRingType = NSFocusRingTypeNone;
     tableView.doubleAction = @selector(cellDoubleClicked:);
