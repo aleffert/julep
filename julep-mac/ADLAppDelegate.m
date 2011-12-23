@@ -15,6 +15,7 @@
 
 #import "ADLAppDelegate.h"
 
+#import "ADLDocumentController.h"
 #import "ADLListsDocument.h"
 #import "ADLPreferencesController.h"
 #import "ADLUIElementServer.h"
@@ -112,6 +113,7 @@ static NSString* kADLJulepDocumentType = @"julep";
 }
 
 - (void)openMainDocument {
+    ADLDocumentController* documentController = [[[ADLDocumentController alloc] init] autorelease];
     NSError* error = nil;
     ADLListsDocument* document = nil;
     if([self.mainDocumentURL checkResourceIsReachableAndReturnError:&error]) {
@@ -133,7 +135,7 @@ static NSString* kADLJulepDocumentType = @"julep";
     
     self.mainDocument = document;
     
-    [[NSDocumentController sharedDocumentController] addDocument:self.mainDocument];
+    [documentController addDocument:self.mainDocument];
     [self.mainDocument makeWindowControllers];
     [self.mainDocument showWindows];
     
@@ -269,6 +271,11 @@ static NSString* kADLJulepDocumentType = @"julep";
     else {
         NSAssert(NO, @"Unexpected hot key");
     }
+}
+
+
+- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
+    return [[[NSMenu alloc] init] autorelease];
 }
 
 #pragma mark UIServer Messages
