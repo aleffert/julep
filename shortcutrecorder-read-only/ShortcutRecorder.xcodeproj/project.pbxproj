@@ -50,9 +50,9 @@
 		342E00FD109CCC36009AD8CA /* SRKeyCodeTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C3670C0A246B4900B69171 /* SRKeyCodeTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		342E00FE109CCC36009AD8CA /* SRValidator.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C3670E0A246B4900B69171 /* SRValidator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		342E00FF109CCC36009AD8CA /* SRCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 74C367100A246B4900B69171 /* SRCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		342E0100109CCC36009AD8CA /* PTKeyCodeTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = A1125B75104C8AF3005C6F7B /* PTKeyCodeTranslator.h */; };
-		77016CF9149E853D009FA396 /* PTHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0309CDBADE0085E9ED /* PTHotKey.h */; };
-		77016CFC149E8542009FA396 /* PTHotKeyCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0509CDBADE0085E9ED /* PTHotKeyCenter.h */; };
+		342E0100109CCC36009AD8CA /* PTKeyCodeTranslator.h in Headers */ = {isa = PBXBuildFile; fileRef = A1125B75104C8AF3005C6F7B /* PTKeyCodeTranslator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		77016CF9149E853D009FA396 /* PTHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0309CDBADE0085E9ED /* PTHotKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		77016CFC149E8542009FA396 /* PTHotKeyCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0509CDBADE0085E9ED /* PTHotKeyCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77016D02149E8548009FA396 /* PTHotKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0309CDBADE0085E9ED /* PTHotKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77016D03149E8548009FA396 /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E2A0409CDBADE0085E9ED /* PTHotKey.m */; };
 		77016D04149E8548009FA396 /* PTHotKeyCenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0509CDBADE0085E9ED /* PTHotKeyCenter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,7 +64,7 @@
 		77016D0A149E8549009FA396 /* PTHotKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E2A0409CDBADE0085E9ED /* PTHotKey.m */; };
 		77016D0B149E8549009FA396 /* PTHotKeyCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E2A0609CDBADE0085E9ED /* PTHotKeyCenter.m */; };
 		77016D0C149E8549009FA396 /* PTKeyCodeTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = A1125B76104C8AF3005C6F7B /* PTKeyCodeTranslator.m */; };
-		77016D0D149E8549009FA396 /* PTKeyCombo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0709CDBADE0085E9ED /* PTKeyCombo.h */; };
+		77016D0D149E8549009FA396 /* PTKeyCombo.h in Headers */ = {isa = PBXBuildFile; fileRef = 0B8E2A0709CDBADE0085E9ED /* PTKeyCombo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		77016D0E149E8549009FA396 /* PTKeyCombo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E2A0809CDBADE0085E9ED /* PTKeyCombo.m */; };
 		939837950DA429EC007F53F3 /* SRRecorderControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E29C109CDB9360085E9ED /* SRRecorderControl.m */; };
 		939837960DA429EC007F53F3 /* SRRecorderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B8E29C309CDB9360085E9ED /* SRRecorderCell.m */; };
@@ -926,6 +926,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = ShortcutRecorder;
+				SYMROOT = ../build;
 				ZERO_LINK = YES;
 			};
 			name = Debug;
@@ -951,6 +952,7 @@
 					AppKit,
 				);
 				PRODUCT_NAME = ShortcutRecorder;
+				SYMROOT = ../build;
 				ZERO_LINK = NO;
 			};
 			name = Release;

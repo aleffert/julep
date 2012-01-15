@@ -21,6 +21,7 @@
 #import "ADLUIElementServer.h"
 
 #import "NSArray+ADLAdditions.h"
+#import "NSDate+ADLAdditions.h"
 
 static NSString* kADLKeyboardShorcutCode = @"kADLQuickCreateCode";
 static NSString* kADLKeyboardShortcutFlags = @"kADLQuickCreateFlags";
@@ -43,6 +44,7 @@ static NSString* kADLKeyboardShortcutFlags = @"kADLQuickCreateFlags";
 
 - (void)spawnUIElementChildProcessAsync:(BOOL)async;
 - (void)updateDockBadgeCount;
+- (void)spawnSyncTimer;
 
 @end
 
@@ -71,6 +73,19 @@ static NSString* kADLJulepDocumentType = @"julep";
     [self spawnUIElementChildProcessAsync:YES];
     [self startServer];
     [self updateDockBadgeCount];
+    [self spawnSyncTimer];
+}
+
+- (void)spawnSyncTimer {
+    NSDate* date = [NSDate earlyTomorrowMorning];
+    static const NSTimeInterval daySeconds = 60 * 60 * 24;
+    NSTimer* timer = [[NSTimer alloc] initWithFireDate:date interval:daySeconds target:self selector:@selector(syncWithStore) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+    [timer release];
+}
+
+- (void)syncWithStore {
+    [self.mainDocument.modelAccess syncWithDataStore];
 }
 
 - (void)startServer {
@@ -271,11 +286,6 @@ static NSString* kADLJulepDocumentType = @"julep";
     else {
         NSAssert(NO, @"Unexpected hot key");
     }
-}
-
-
-- (NSMenu *)applicationDockMenu:(NSApplication *)sender {
-    return [[[NSMenu alloc] init] autorelease];
 }
 
 #pragma mark UIServer Messages

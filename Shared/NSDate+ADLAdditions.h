@@ -11,5 +11,6 @@
 @interface NSDate (ADLAdditions)
 
 + (NSDate*)yesterdayMorning;
++ (NSDate*)earlyTomorrowMorning;
 
 @end

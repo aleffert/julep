@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		77016CF8149E82D9009FA396 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77509C3014993A0900AFC11C /* ShortcutRecorder.framework */; };
+		77071A8C14A453D000039DA9 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77509C3814993A0900AFC11C /* ShortcutRecorder.framework */; };
+		77071A8F14A4542300039DA9 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77509C3814993A0900AFC11C /* ShortcutRecorder.framework */; };
 		7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */; };
 		7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */; };
 		7721D81A1402DBF90008A02D /* ADLNSScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721D8191402DBF90008A02D /* ADLNSScrollView.m */; };
@@ -28,7 +29,6 @@
 		773E9A4D14A280D5001217FE /* ADLUIElementServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E6FBC214A27826000FD06E /* ADLUIElementServer.m */; };
 		773E9A5014A291A7001217FE /* ADLAppServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E9A4F14A291A7001217FE /* ADLAppServer.m */; };
 		773E9A5114A29533001217FE /* ADLAppServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 773E9A4F14A291A7001217FE /* ADLAppServer.m */; };
-		77509C3E14993B1100AFC11C /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77509C3014993A0900AFC11C /* ShortcutRecorder.framework */; };
 		77509C51149E485F00AFC11C /* ADLPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77509C50149E485F00AFC11C /* ADLPreferencesController.m */; };
 		77530FE614229B3200C0645F /* ADLTabSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE414229B3200C0645F /* ADLTabSelected.png */; };
 		77530FE714229B3200C0645F /* ADLTabUnselected.png in Resources */ = {isa = PBXBuildFile; fileRef = 77530FE514229B3200C0645F /* ADLTabUnselected.png */; };
@@ -132,7 +132,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				77509C3E14993B1100AFC11C /* ShortcutRecorder.framework in CopyFiles */,
+				77071A8F14A4542300039DA9 /* ShortcutRecorder.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,10 +277,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77016CF8149E82D9009FA396 /* ShortcutRecorder.framework in Frameworks */,
 				7754A88714489E4200DBE182 /* CalendarStore.framework in Frameworks */,
 				77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */,
 				778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */,
+				77071A8C14A453D000039DA9 /* ShortcutRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,10 +899,7 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";
@@ -928,10 +925,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(DEVELOPER_FRAMEWORKS_DIR)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";

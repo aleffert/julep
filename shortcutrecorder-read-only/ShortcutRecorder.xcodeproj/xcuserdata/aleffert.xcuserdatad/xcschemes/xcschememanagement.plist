@@ -7,42 +7,42 @@
 		<key>Build ShortcutRecorder.framework.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 		<key>ShortcutRecorder.framework - for embedding in ibplugin.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
 		<key>ShortcutRecorder.framework - with embedded ibplugin.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
 		<key>ShortcutRecorder.ibplugin - for embedding in framework.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
 		<key>ShortcutRecorder.ibplugin - standalone.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
 		<key>ShortcutRecorderFramework_Tester.xcscheme</key>
 		<dict>
 			<key>isShown</key>
-			<false/>
+			<true/>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
