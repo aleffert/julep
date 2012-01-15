@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		77071A8C14A453D000039DA9 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77509C3814993A0900AFC11C /* ShortcutRecorder.framework */; };
 		77071A8F14A4542300039DA9 /* ShortcutRecorder.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 77509C3814993A0900AFC11C /* ShortcutRecorder.framework */; };
+		770866B714C36FC000705F17 /* ShortcutRecorder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77509C3014993A0900AFC11C /* ShortcutRecorder.framework */; };
+		770866BA14C36FCE00705F17 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 770866B814C36FCE00705F17 /* AppKit.framework */; };
+		770866BB14C36FCE00705F17 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 770866B914C36FCE00705F17 /* CoreData.framework */; };
+		770866BC14C36FF800705F17 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 770866B814C36FCE00705F17 /* AppKit.framework */; };
+		770866BF14C36FF800705F17 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77530FE814229CF700C0645F /* Cocoa.framework */; };
+		770866C014C3700000705F17 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778897661402D33D00493E14 /* QuartzCore.framework */; };
 		7709CE27143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */; };
 		7709CE35143BAF4E002DB3B6 /* ADLListsPileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7709CE34143BAF4D002DB3B6 /* ADLListsPileViewController.m */; };
 		7721D81A1402DBF90008A02D /* ADLNSScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7721D8191402DBF90008A02D /* ADLNSScrollView.m */; };
@@ -70,7 +75,6 @@
 		77D8839C142545B500544311 /* ADLListsWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D8839B142545B500544311 /* ADLListsWindowController.m */; };
 		77D8839E14255FD900544311 /* ADLListsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D8839D14255FD900544311 /* ADLListsWindowController.xib */; };
 		77E51ADE142FB28B005A445E /* ADLDocumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E51ADB142FB27C005A445E /* ADLDocumentViewController.m */; };
-		77E6FBA414A24D44000FD06E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7722BF281402A431003498D8 /* Cocoa.framework */; };
 		77E6FBAA14A24D44000FD06E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 77E6FBA814A24D44000FD06E /* InfoPlist.strings */; };
 		77E6FBAC14A24D44000FD06E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E6FBAB14A24D44000FD06E /* main.m */; };
 		77E6FBB014A24D44000FD06E /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 77E6FBAE14A24D44000FD06E /* Credits.rtf */; };
@@ -139,6 +143,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		770866B814C36FCE00705F17 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		770866B914C36FCE00705F17 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		7709CE24143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLAgnosticDocumentViewController.h; path = Shared/ADLAgnosticDocumentViewController.h; sourceTree = "<group>"; };
 		7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLAgnosticDocumentViewController.m; path = Shared/ADLAgnosticDocumentViewController.m; sourceTree = "<group>"; };
 		7709CE33143BAF4D002DB3B6 /* ADLListsPileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListsPileViewController.h; sourceTree = "<group>"; };
@@ -147,14 +153,9 @@
 		7721D8191402DBF90008A02D /* ADLNSScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSScrollView.m; sourceTree = "<group>"; };
 		7721D81C1402DDA20008A02D /* ADLNSViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLNSViewManipulator.h; sourceTree = "<group>"; };
 		7721D81D1402DDA20008A02D /* ADLNSViewManipulator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLNSViewManipulator.m; sourceTree = "<group>"; wrapsLines = 0; };
-		77225DFD1401AFA80003ECDE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		77229E9C1481480900651BA5 /* NSDate+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+ADLAdditions.h"; path = "../Shared/NSDate+ADLAdditions.h"; sourceTree = "<group>"; };
 		77229E9D1481480900651BA5 /* NSDate+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+ADLAdditions.m"; path = "../Shared/NSDate+ADLAdditions.m"; sourceTree = "<group>"; };
 		7722BF261402A431003498D8 /* Julep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Julep.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7722BF281402A431003498D8 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
-		7722BF2B1402A431003498D8 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		7722BF2C1402A431003498D8 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		7722BF2D1402A431003498D8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7722BF301402A431003498D8 /* julep-mac-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "julep-mac-Info.plist"; sourceTree = "<group>"; };
 		7722BF321402A431003498D8 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		7722BF341402A431003498D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -178,10 +179,6 @@
 		772C68401427E34F00CEF932 /* ADLListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListViewController.h; sourceTree = "<group>"; };
 		772C68411427E34F00CEF932 /* ADLListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListViewController.m; sourceTree = "<group>"; };
 		772C68421427E34F00CEF932 /* ADLListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListViewController.xib; sourceTree = "<group>"; };
-		773BBDCB143F8CD5001BCCB6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		773BBDCE143F8CFE001BCCB6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		773BBDCF143F8CFE001BCCB6 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		773BBDD2143F8D1C001BCCB6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		773E9A4E14A291A7001217FE /* ADLAppServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLAppServer.h; path = "julep-mac/ADLAppServer.h"; sourceTree = "<group>"; };
 		773E9A4F14A291A7001217FE /* ADLAppServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLAppServer.m; path = "julep-mac/ADLAppServer.m"; sourceTree = "<group>"; };
 		77509C2214993A0900AFC11C /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = "shortcutrecorder-read-only/ShortcutRecorder.xcodeproj"; sourceTree = "<group>"; };
@@ -277,10 +274,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				770866BA14C36FCE00705F17 /* AppKit.framework in Frameworks */,
+				770866BB14C36FCE00705F17 /* CoreData.framework in Frameworks */,
 				7754A88714489E4200DBE182 /* CalendarStore.framework in Frameworks */,
 				77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */,
 				778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */,
-				77071A8C14A453D000039DA9 /* ShortcutRecorder.framework in Frameworks */,
+				770866B714C36FC000705F17 /* ShortcutRecorder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +287,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				77E6FBA414A24D44000FD06E /* Cocoa.framework in Frameworks */,
+				770866BC14C36FF800705F17 /* AppKit.framework in Frameworks */,
+				770866BF14C36FF800705F17 /* Cocoa.framework in Frameworks */,
+				770866C014C3700000705F17 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,9 +330,11 @@
 		77225DFC1401AFA80003ECDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				773BBDCD143F8CE6001BCCB6 /* iOS */,
-				77530FEA14229D0700C0645F /* Desktop */,
-				7722BF281402A431003498D8 /* Cocoa.framework */,
+				770866B814C36FCE00705F17 /* AppKit.framework */,
+				770866B914C36FCE00705F17 /* CoreData.framework */,
+				7754A88614489E4200DBE182 /* CalendarStore.framework */,
+				77530FE814229CF700C0645F /* Cocoa.framework */,
+				778897661402D33D00493E14 /* QuartzCore.framework */,
 				7722BF4B1402A431003498D8 /* CoreServices.framework */,
 				7722BF4D1402A431003498D8 /* CoreFoundation.framework */,
 				7722BF4F1402A431003498D8 /* CoreData.framework */,
@@ -343,9 +346,6 @@
 		7722BF2A1402A431003498D8 /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7722BF2B1402A431003498D8 /* AppKit.framework */,
-				7722BF2C1402A431003498D8 /* CoreData.framework */,
-				7722BF2D1402A431003498D8 /* Foundation.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -380,18 +380,6 @@
 				7709CE25143A56B6002DB3B6 /* ADLAgnosticDocumentViewController.m */,
 			);
 			name = Shared;
-			sourceTree = "<group>";
-		};
-		773BBDCD143F8CE6001BCCB6 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				773BBDD2143F8D1C001BCCB6 /* QuartzCore.framework */,
-				773BBDCB143F8CD5001BCCB6 /* Foundation.framework */,
-				773BBDCE143F8CFE001BCCB6 /* CoreData.framework */,
-				773BBDCF143F8CFE001BCCB6 /* CoreGraphics.framework */,
-				77225DFD1401AFA80003ECDE /* UIKit.framework */,
-			);
-			name = iOS;
 			sourceTree = "<group>";
 		};
 		77452089140585AF00B993F1 /* Resources */ = {
@@ -439,16 +427,6 @@
 				77509C3814993A0900AFC11C /* ShortcutRecorder.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		77530FEA14229D0700C0645F /* Desktop */ = {
-			isa = PBXGroup;
-			children = (
-				7754A88614489E4200DBE182 /* CalendarStore.framework */,
-				77530FE814229CF700C0645F /* Cocoa.framework */,
-				778897661402D33D00493E14 /* QuartzCore.framework */,
-			);
-			name = Desktop;
 			sourceTree = "<group>";
 		};
 		7770675F140830850088AB85 /* Views */ = {
