@@ -51,7 +51,7 @@
         [self updateAppearance];
         [self addSubview:self.backgroundView];
         
-        self.titleView = [[[NSTextField alloc] initWithFrame:NSInsetRect(self.bounds, 8, 4)] autorelease];
+        self.titleView = [[[NSTextField alloc] initWithFrame:NSInsetRect(self.bounds, 8, 6)] autorelease];
         self.titleView.bezeled = NO;
         self.titleView.backgroundColor = [NSColor clearColor];
         self.titleView.alignment = NSCenterTextAlignment;
@@ -59,12 +59,16 @@
         self.titleView.editable = YES;
         self.titleView.selectable = NO;
         [self addSubview:self.titleView];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAppearance) name:NSApplicationDidResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateAppearance) name:NSApplicationDidBecomeActiveNotification object:nil];
     }
     
     return self;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.backgroundView = nil;
     self.titleView = nil;
     self.delegate = nil;
@@ -79,7 +83,19 @@
     [mTitle release];
     mTitle = temp;
     
-    self.titleView.stringValue = newTitle;
+    NSMutableAttributedString* shadowTitle = [[NSMutableAttributedString alloc] initWithString:newTitle];
+    NSShadow* shadow = [[NSShadow alloc] init];
+    shadow.shadowColor = [NSColor colorWithDeviceWhite:1. alpha:.5];
+    shadow.shadowOffset = NSMakeSize(0, -1);
+    shadow.shadowBlurRadius = 1;
+    NSDictionary* shadowProperties = [NSDictionary dictionaryWithObject:shadow forKey:NSShadowAttributeName];
+    [shadowTitle setAttributes:shadowProperties range:NSMakeRange(0, shadowTitle.length)];
+    [shadowTitle setAlignment:NSCenterTextAlignment range:NSMakeRange(0, shadowTitle.length)];
+    
+    self.titleView.attributedStringValue = shadowTitle;
+    
+    [shadow release];
+    [shadowTitle release];
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -90,11 +106,24 @@
 }
 
 - (void)updateAppearance {
-    if(self.selected) {
-        self.backgroundView.image = [NSImage imageNamed:@"ADLTabSelected"];
+    BOOL active = [[NSApplication sharedApplication] isActive];
+    if(active) {
+        self.titleView.textColor = [NSColor blackColor];
+        if(self.selected) {
+            self.backgroundView.image = [NSImage imageNamed:@"ADLTabSelected"];
+        }
+        else {
+            self.backgroundView.image = [NSImage imageNamed:@"ADLTabUnselected"];
+        }
     }
     else {
-        self.backgroundView.image = [NSImage imageNamed:@"ADLTabUnselected"];
+        self.titleView.textColor = [NSColor colorWithDeviceWhite:110./255. alpha:1.];
+        if(self.selected) {
+            self.backgroundView.image = [NSImage imageNamed:@"ADLTabSelectedInactive"];
+        }
+        else {
+            self.backgroundView.image = [NSImage imageNamed:@"ADLTabUnselectedInactive"];
+        }
     }
 }
 

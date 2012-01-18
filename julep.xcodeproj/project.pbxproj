@@ -43,6 +43,8 @@
 		7754A8B41448EBAE00DBE182 /* ADLList.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B21448EBAE00DBE182 /* ADLList.m */; };
 		7754A8B81448EBAF00DBE182 /* ADLListCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8B61448EBAF00DBE182 /* ADLListCollection.m */; };
 		7754A8BC1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */; };
+		775BB94514C6706900344770 /* ADLTabSelectedInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 775BB94314C6706900344770 /* ADLTabSelectedInactive.png */; };
+		775BB94614C6706900344770 /* ADLTabUnselectedInactive.png in Resources */ = {isa = PBXBuildFile; fileRef = 775BB94414C6706900344770 /* ADLTabUnselectedInactive.png */; };
 		775D650B1497FF06000FC9EB /* ADLPreferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 775D65091497FF06000FC9EB /* ADLPreferences.xib */; };
 		77735EBE14687E350024D99A /* ADLList+CollectionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */; };
 		77735EC3146A33210024D99A /* NSSet+ADLAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77735EC1146A33200024D99A /* NSSet+ADLAdditions.m */; };
@@ -196,6 +198,8 @@
 		7754A8B61448EBAF00DBE182 /* ADLListCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListCollection.m; path = Shared/ADLListCollection.m; sourceTree = "<group>"; };
 		7754A8B91448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CalCalendarStore+ADLAdditions.h"; sourceTree = "<group>"; };
 		7754A8BA1448ECBB00DBE182 /* CalCalendarStore+ADLAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CalCalendarStore+ADLAdditions.m"; sourceTree = "<group>"; };
+		775BB94314C6706900344770 /* ADLTabSelectedInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabSelectedInactive.png; path = Resources/ADLTabSelectedInactive.png; sourceTree = "<group>"; };
+		775BB94414C6706900344770 /* ADLTabUnselectedInactive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLTabUnselectedInactive.png; path = Resources/ADLTabUnselectedInactive.png; sourceTree = "<group>"; };
 		775D650A1497FF06000FC9EB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ADLPreferences.xib; sourceTree = "<group>"; };
 		77735EBB14687E340024D99A /* ADLList+CollectionAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADLList+CollectionAdditions.h"; path = "Shared/ADLList+CollectionAdditions.h"; sourceTree = "<group>"; };
 		77735EBC14687E350024D99A /* ADLList+CollectionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "ADLList+CollectionAdditions.m"; path = "Shared/ADLList+CollectionAdditions.m"; sourceTree = "<group>"; };
@@ -395,6 +399,8 @@
 				77A4D09914A38F6900607557 /* ADLQuickToggle.xib */,
 				77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */,
 				7722BF3D1402A431003498D8 /* MainMenu.xib */,
+				775BB94314C6706900344770 /* ADLTabSelectedInactive.png */,
+				775BB94414C6706900344770 /* ADLTabUnselectedInactive.png */,
 				77530FE414229B3200C0645F /* ADLTabSelected.png */,
 				77530FE514229B3200C0645F /* ADLTabUnselected.png */,
 				772C683E1427D9A900CEF932 /* ADLLinen.png */,
@@ -673,6 +679,8 @@
 				775D650B1497FF06000FC9EB /* ADLPreferences.xib in Resources */,
 				77E6FBC014A257A4000FD06E /* Julep-UIElement.app in Resources */,
 				77BD89DA14A4008300FE89A0 /* julep.icns in Resources */,
+				775BB94514C6706900344770 /* ADLTabSelectedInactive.png in Resources */,
+				775BB94614C6706900344770 /* ADLTabUnselectedInactive.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

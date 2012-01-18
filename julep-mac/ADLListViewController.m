@@ -55,6 +55,7 @@
     scrollView.horizontalScrollElasticity = NSScrollElasticityNone;
     scrollView.contentView.copiesOnScroll = NO;
     scrollView.usesPredominantAxisScrolling = YES;
+    scrollView.backgroundColor = [NSColor colorWithDeviceWhite:227./255. alpha:1.];
     
     [self.view addSubview:scrollView];
     
@@ -63,7 +64,7 @@
     tableView.dataSource = self;
     tableView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
     tableView.headerView = nil;
-    tableView.usesAlternatingRowBackgroundColors = YES;
+    tableView.backgroundColor = [NSColor clearColor];
     tableView.allowsMultipleSelection = YES;
     tableView.focusRingType = NSFocusRingTypeNone;
     tableView.doubleAction = @selector(cellDoubleClicked:);

@@ -84,13 +84,13 @@
     
     self.agnostic.tabController.selectedInfo = self.agnostic.modelAccess.selectedListID;
     
-    NSRect shadowFrame = NSInsetRect(self.tabController.view.frame, 0, -5);
-    ADLShadowView* tabShadow = [[ADLShadowView alloc] initWithFrame:shadowFrame];
-    tabShadow.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
-    tabShadow.shadow = [NSShadow standardShadow];
-    tabShadow.insets = NSEdgeInsetsMake(5, 0, 5, 0);
-    [self.view addSubview:tabShadow positioned:NSWindowBelow relativeTo:self.tabController.view];
-    [tabShadow release];
+//    NSRect shadowFrame = NSInsetRect(self.tabController.view.frame, 0, -5);
+//    ADLShadowView* tabShadow = [[ADLShadowView alloc] initWithFrame:shadowFrame];
+//    tabShadow.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+//    tabShadow.shadow = [NSShadow standardShadow];
+//    tabShadow.insets = NSEdgeInsetsMake(5, 0, 5, 0);
+//    [self.view addSubview:tabShadow positioned:NSWindowBelow relativeTo:self.tabController.view];
+//    [tabShadow release];
     
     [self updateActivePileViewsForSelection:self.agnostic.selectedListID];
 }

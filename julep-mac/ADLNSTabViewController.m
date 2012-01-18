@@ -10,7 +10,9 @@
 
 #import "ADLNSTabView.h"
 #import "ADLNSScrollView.h"
+#import "ADLShadowView.h"
 #import "ADLViewManipulator.h"
+#import "NSShadow+ADLExtensions.h"
 
 @interface ADLNSTabViewController ()
 
@@ -20,14 +22,27 @@
 
 @end
 
-const static CGFloat kADLNSTabWidth = 181;
-const static CGFloat kADLNSTabHeight = 28.;
+const static CGFloat kADLNSTabWidth = 149.;
+const static CGFloat kADLNSTabHeight = 29.;
+
+@interface ADLNSTabViewController ()
+
+@property (retain, nonatomic) id <ADLView> shadowView;
+
+@end
+
+@interface ADLNSTabViewController (ADLCast)
+
+@property (retain, nonatomic) ADLShadowView* shadowView;
+
+@end
 
 @implementation ADLNSTabViewController
 
 @synthesize scrollView = mScrollView;
 @synthesize bodyView = mBodyView;
 @synthesize agnostic = mAgnostic;
+@synthesize shadowView = mShadowView;
 @synthesize viewManipulator = mViewManipulator;
 
 - (id)initWithDataSource:(id <ADLTabControllerDataSource>)dataSource {
@@ -41,8 +56,33 @@ const static CGFloat kADLNSTabHeight = 28.;
 
 - (void)dealloc {
     self.agnostic = nil;
+    self.scrollView = nil;
+    self.bodyView = nil;
+    self.shadowView = nil;
+    self.viewManipulator = nil;
     
     [super dealloc];
+}
+
+- (void)viewDidLoad {
+    NSRect bodyFrame = self.bodyView.frame;
+    NSRect shadowFrame = NSMakeRect(0, -5, bodyFrame.size.width, 10);
+    ADLShadowView* shadowView = [[[ADLShadowView alloc] initWithFrame:shadowFrame] autorelease];
+    shadowView.autoresizingMask = NSViewMaxYMargin | NSViewWidthSizable;
+    shadowView.shadow = [NSShadow standardShadow];
+    shadowView.shadow.shadowBlurRadius = 2;
+    shadowView.shadow.shadowColor = [NSColor colorWithDeviceWhite:0 alpha:.2];
+
+    shadowView.insets = NSEdgeInsetsMake(5, 0, 0, 0);
+    self.shadowView = (id <ADLView>)shadowView;
+    self.scrollView.hasHorizontalScroller = YES;
+    self.scrollView.horizontalScroller.hidden = YES;
+    
+}
+
+- (void)loadView {
+    [super loadView];
+    [self viewDidLoad];
 }
 
 - (NSView*)makeTabViewForTabController:(ADLTabController*)tabController {

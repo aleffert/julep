@@ -13,6 +13,8 @@
 #import "ADLTabView.h"
 #import "ADLViewManipulator.h"
 
+static CGFloat kADLTabInset = 3;
+
 @interface ADLTabController ()
 
 @property (assign, nonatomic) id <ADLTabControllerDelegate> delegate;
@@ -78,6 +80,7 @@
         [mSelectedInfo release];
         mSelectedInfo = selectedInfo;
         [self.delegate makeTabVisible:tab];
+        [self layoutSubviewsNotAnimating:[NSArray array]];
     }
 }
 
@@ -171,6 +174,7 @@
 }
 
 - (void)layoutSubviewsNotAnimating:(NSArray*)immediateTabs {
+    id <ADLView> shadowView = [self.delegate shadowView];
     CGFloat accumulatedWidth = 0;
     id <ADLViewManipulator> viewManipulator = self.delegate.viewManipulator;
     NSArray* tabs = self.currentlyDraggingTab != nil ? self.reorderedTabs : self.tabs;
@@ -188,16 +192,16 @@
             }
         }
         [viewManipulator orderViewFront:tabView];
-        accumulatedWidth += frame.size.width - 15;
+        accumulatedWidth += frame.size.width - kADLTabInset;
     }
+    [shadowView removeFromSuperview];
+    [viewManipulator addSubview:shadowView toView:self.delegate.bodyView];
+    [viewManipulator orderViewFront:self.selectedTab];
     if(self.currentlyDraggingTab == nil) {
-        [viewManipulator orderViewFront:self.selectedTab];
-    }
-    else {
         [viewManipulator orderViewFront:self.currentlyDraggingTab];
     }
     
-    [self.delegate updateSizeForContentWidth:accumulatedWidth + 15];
+    [self.delegate updateSizeForContentWidth:accumulatedWidth + kADLTabInset];
 }
 
 - (void)layoutSubviews {
@@ -236,7 +240,7 @@
     
     for(id <ADLTabView> currentTab in self.reorderedTabs) {
         CGRect currentFrame = [viewManipulator frameOfView:currentTab];
-        currentFrame = CGRectInset(currentFrame, 15, 0);
+        currentFrame = CGRectInset(currentFrame, kADLTabInset, 0);
         if(currentTab != tab && CGRectContainsPoint(currentFrame, CGPointMake(xLocation, CGRectGetMidY(currentFrame)))) {
             newTabOrder = [[self.reorderedTabs mutableCopy] autorelease];
             [newTabOrder removeObject:currentTab];

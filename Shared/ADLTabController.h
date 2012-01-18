@@ -50,6 +50,7 @@
 @property (retain, readonly, nonatomic) id <ADLViewManipulator> viewManipulator;
 
 - (id <ADLTabView>)makeTabViewForTabController:(ADLTabController*)tabController;
+- (id <ADLView>)shadowView;
 - (void)updateSizeForContentWidth:(CGFloat)width;
 - (void)animateInTabView:(id <ADLTabView>)tabView;
 - (void)animateOutTabView:(id <ADLTabView>)tabView;
