@@ -27,6 +27,9 @@
 
 @protocol ADLItemViewDelegate <NSObject>
 
+- (void)itemViewDidBeginEditing:(ADLItemView*)item;
+- (void)itemViewDidEndEditing:(ADLItemView*)item;
+
 - (void)itemView:(ADLItemView*)itemView changedTitle:(NSString*)item;
 - (void)itemView:(ADLItemView*)itemView changedCompletionStatus:(BOOL)status;
 - (void)itemViewCancelledEditing:(ADLItemView*)itemView;

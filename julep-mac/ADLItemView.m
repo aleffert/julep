@@ -61,6 +61,7 @@
 
 - (void)beginEditing {
     [self.window makeFirstResponder:self.titleView];
+    [self.delegate itemViewDidBeginEditing:self];
 }
 
 - (void)setTitle:(NSString *)newTitle {
@@ -84,6 +85,7 @@
     if (![newTitle isEqualToString:self.title]) {
         [self.delegate itemView:self changedTitle:newTitle];
     }
+    [self.delegate itemViewDidEndEditing:self];
 }
 
 - (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector {

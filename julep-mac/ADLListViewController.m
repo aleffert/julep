@@ -19,6 +19,7 @@
 @property (retain, nonatomic) NSTableView* tableView;
 @property (assign, nonatomic) BOOL dragItemsConsecutive;
 @property (assign, nonatomic) NSUInteger dragStartingRow;
+@property (retain, nonatomic) ADLItemView* editingView;
 
 @end
 
@@ -31,6 +32,7 @@
 @synthesize items = mItems;
 @synthesize dragStartingRow = mDragStartingRow;
 @synthesize dragItemsConsecutive = mDragItemsConsecutive;
+@synthesize editingView = mEditingView;
 
 - (id)init {
     if((self = [super initWithNibName:@"ADLListViewController" bundle:nil])) {
@@ -120,7 +122,16 @@
     [self startEditingSelection];
 }
 
+- (BOOL)currentlyEditingRow {
+    return self.editingView != nil;
+}
+
 - (void)list:(ADLListID *)list changedItemIDsTo:(NSArray *)newOrder {
+    // Don't reload if we're in the middle of editing
+    // So that if 
+    if(self.currentlyEditingRow) {
+        return;
+    }
     NSIndexSet* currentSelection = self.tableView.selectedRowIndexes;
     NSIndexSet* newSelection = [newOrder indexesOfObjectsPassingTest:^(id object, NSUInteger index, BOOL* stop) {
         BOOL result = [currentSelection containsIndex:[self.items indexOfObject:object]] && [newOrder containsObject:object];
@@ -262,6 +273,16 @@
 
 #pragma mark Item View Delegate
 
+- (void)itemViewDidBeginEditing:(ADLItemView *)item {
+    self.editingView = item;
+}
+
+- (void)itemViewDidEndEditing:(ADLItemView *)item {
+    if(self.editingView == item) {
+        self.editingView = nil;
+    }
+}
+
 - (void)itemViewCancelledEditing:(ADLItemView *)itemView {
     [self.view.window makeFirstResponder:self.tableView];
 }
@@ -274,8 +295,9 @@
         self.items = items;
         [items release];
         [self.tableView beginUpdates];
-        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectGap];
+        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectNone];
         [self.tableView endUpdates];
+        [self.tableView setNeedsDisplay];
         
         if([newItem isNotEqualTo:@""]) {
             [self.modelAccess addItemWithTitle:newItem toListWithID:self.listID atIndex:index];
@@ -335,21 +357,28 @@
 
 #pragma mark New Item
 - (IBAction)newListItem:(id)sender {
-    NSIndexSet* selectedIndices = self.tableView.selectedRowIndexes;
-    NSUInteger insertionIndex = selectedIndices.count == 0 ? 0 : selectedIndices.lastIndex + 1;
-    
-    NSMutableArray* items = [self.items mutableCopy];
-    [items insertObject:[NSNull null] atIndex:insertionIndex];
-    self.items = items;
-    [items release];
-    
-    [self.tableView beginUpdates];
-    [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:insertionIndex] withAnimation:NSTableViewAnimationEffectGap];
-    [self.tableView endUpdates];
-    
-    [self.tableView scrollRowToVisible:insertionIndex];
-    ADLItemView* itemView = [self.tableView viewAtColumn:0 row:insertionIndex makeIfNecessary:YES];
-    [itemView beginEditing];
+    // Clear the editing view so that when we end the current editing session
+    // The change still goes through
+    self.editingView = nil;
+    [self.view.window makeFirstResponder:self.tableView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        NSIndexSet* selectedIndices = self.tableView.selectedRowIndexes;
+        NSUInteger insertionIndex = selectedIndices.count == 0 ? 0 : selectedIndices.lastIndex + 1;
+        
+        NSMutableArray* items = [self.items mutableCopy];
+        [items insertObject:[NSNull null] atIndex:insertionIndex];
+        self.items = items;
+        [items release];
+        
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexes:[NSIndexSet indexSetWithIndex:insertionIndex] withAnimation:NSTableViewAnimationEffectGap];
+        [self.tableView endUpdates];
+        
+        [self.tableView scrollRowToVisible:insertionIndex];
+        ADLItemView* itemView = [self.tableView viewAtColumn:0 row:insertionIndex makeIfNecessary:YES];
+        [itemView beginEditing];
+    });
 }
 
 #pragma mark Pasteboard
