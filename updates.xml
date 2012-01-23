@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <title>Julep's Changelog</title>
+        <link>http://akivaleffert.com/julep/updates.xml</link>
+        <description>Most recent changes with links to updates.</description>
+        <language>en</language>
+        <item>
+            <title>Version 0.1 (2 bugs fixed)</title>
+            <description><![CDATA[
+                <h2>Fix insertion bug</h2>
+                <h2>Fix deleteion bug</h2>
+                <h2>Add Sparkle support</h2>
+            ]]>
+            </description>
+            <pubDate>Mon, 23 Jan 2012 7:20:11 +0000</pubDate>
+            <enclosure url="http://akivaleffert.com/julep/archive/Julep 0.1.zip" sparkle:version="0.1" length="891441" type="application/octet-stream" sparkle:dsaSignature="MC0CFGITUuzg2jeIN6lMZlaMIoLw/PzWAhUAsHYDRiDggtXNckRB702g0utUc2A=" />
+     </item>
+   </channel>
+</rss>

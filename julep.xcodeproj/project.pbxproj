@@ -25,6 +25,9 @@
 		7722BF3C1402A431003498D8 /* ADLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7722BF3B1402A431003498D8 /* ADLAppDelegate.m */; };
 		7722BF3F1402A431003498D8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7722BF3D1402A431003498D8 /* MainMenu.xib */; };
 		77262CFD14314AB800392054 /* ADLListsDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 77262CFB14314AB800392054 /* ADLListsDocument.m */; };
+		7728BE4314CD856D00469F23 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7728BE4214CD856D00469F23 /* Sparkle.framework */; };
+		7728BE4414CD85A400469F23 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7728BE4214CD856D00469F23 /* Sparkle.framework */; };
+		7728BE4614CD86B400469F23 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 7728BE4514CD86B400469F23 /* dsa_pub.pem */; };
 		772C683D1427D45200CEF932 /* ADLColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C683C1427D45200CEF932 /* ADLColorView.m */; };
 		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
 		772C68431427E34F00CEF932 /* ADLListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C68411427E34F00CEF932 /* ADLListViewController.m */; };
@@ -139,6 +142,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				77071A8F14A4542300039DA9 /* ShortcutRecorder.framework in CopyFiles */,
+				7728BE4414CD85A400469F23 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -175,6 +179,8 @@
 		7722BF6D1402AA97003498D8 /* ADLViewManipulator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLViewManipulator.h; path = Shared/ADLViewManipulator.h; sourceTree = "<group>"; };
 		77262CFA14314AB800392054 /* ADLListsDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLListsDocument.h; path = "julep-mac/ADLListsDocument.h"; sourceTree = "<group>"; };
 		77262CFB14314AB800392054 /* ADLListsDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLListsDocument.m; path = "julep-mac/ADLListsDocument.m"; sourceTree = "<group>"; };
+		7728BE4214CD856D00469F23 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
+		7728BE4514CD86B400469F23 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		772C683B1427D45200CEF932 /* ADLColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLColorView.h; sourceTree = "<group>"; };
 		772C683C1427D45200CEF932 /* ADLColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLColorView.m; sourceTree = "<group>"; };
 		772C683E1427D9A900CEF932 /* ADLLinen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLLinen.png; path = Resources/ADLLinen.png; sourceTree = "<group>"; };
@@ -284,6 +290,7 @@
 				77530FE914229CF700C0645F /* Cocoa.framework in Frameworks */,
 				778897671402D33D00493E14 /* QuartzCore.framework in Frameworks */,
 				770866B714C36FC000705F17 /* ShortcutRecorder.framework in Frameworks */,
+				7728BE4314CD856D00469F23 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +341,7 @@
 		77225DFC1401AFA80003ECDE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7728BE4214CD856D00469F23 /* Sparkle.framework */,
 				770866B814C36FCE00705F17 /* AppKit.framework */,
 				770866B914C36FCE00705F17 /* CoreData.framework */,
 				7754A88614489E4200DBE182 /* CalendarStore.framework */,
@@ -389,6 +397,7 @@
 		77452089140585AF00B993F1 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7728BE4514CD86B400469F23 /* dsa_pub.pem */,
 				77BD89D914A4008300FE89A0 /* julep.icns */,
 				77B63FB9143E0D7E00739196 /* julep.xcdatamodeld */,
 				772C68421427E34F00CEF932 /* ADLListViewController.xib */,
@@ -681,6 +690,7 @@
 				77BD89DA14A4008300FE89A0 /* julep.icns in Resources */,
 				775BB94514C6706900344770 /* ADLTabSelectedInactive.png in Resources */,
 				775BB94614C6706900344770 /* ADLTabUnselectedInactive.png in Resources */,
+				7728BE4614CD86B400469F23 /* dsa_pub.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -885,7 +895,10 @@
 				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_DIR)/",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";
@@ -911,7 +924,10 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_OBJC_IMPLICIT_ATOMIC_PROPERTIES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = "$(BUILD_DIR)/";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(BUILD_DIR)/",
+					"\"$(SRCROOT)\"",
+				);
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "julep-mac/julep-mac-Prefix.pch";
