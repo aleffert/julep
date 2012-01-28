@@ -10,6 +10,7 @@
 
 #import "ADLConcreteItem.h"
 #import "ADLItemDragRecord.h"
+#import "ADLItemRowView.h"
 #import "ADLItemView.h"
 #import "ADLNSScrollView.h"
 #import "NSArray+ADLAdditions.h"
@@ -71,6 +72,7 @@
     tableView.focusRingType = NSFocusRingTypeNone;
     tableView.doubleAction = @selector(cellDoubleClicked:);
     tableView.target = self;
+    tableView.rowHeight = 28;
     [tableView setDraggingSourceOperationMask:NSDragOperationMove | NSDragOperationDelete forLocal:YES];
     [tableView registerForDraggedTypes:[NSArray arrayWithObject:kADLItemDragRecordPasteboardType]];
     
@@ -193,6 +195,7 @@
 }
 
 #pragma mark Table View Delegate
+
 - (void)tableViewShouldClearSelection:(ADLTableView *)tableView {
     [self.tableView selectRowIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 }
@@ -217,6 +220,11 @@
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
     return self.items.count;
+}
+
+- (NSTableRowView *)tableView:(NSTableView *)tableView rowViewForRow:(NSInteger)row {
+    ADLItemRowView* rowView = [[[ADLItemRowView alloc] initWithFrame:NSZeroRect] autorelease];
+    return rowView;
 }
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {

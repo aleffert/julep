@@ -28,16 +28,17 @@
 - (id)initWithFrame:(NSRect)frameRect {
     if((self = [super initWithFrame:frameRect])) {
         NSRect textFrame = [self textFrameForMainFrame:frameRect];
-        self.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         self.titleView = [[[NSTextField alloc] initWithFrame:textFrame] autorelease];
         self.titleView.autoresizingMask = NSViewWidthSizable | NSViewHeightSizable;
         self.titleView.delegate = self;
         self.titleView.backgroundColor = [NSColor clearColor];
         self.titleView.bordered = NO;
+        self.titleView.focusRingType = NSFocusRingTypeNone;
+        [self.titleView.cell setWraps:NO];
         [self addSubview:self.titleView];
         
-        self.checkbox = [[[NSButton alloc] initWithFrame:NSMakeRect(0, 0, 18, 18)] autorelease];
-        self.checkbox.autoresizingMask = NSViewMinYMargin | NSViewMaxYMargin;
+        self.checkbox = [[[NSButton alloc] initWithFrame:NSMakeRect(14, 4, 18, 18)] autorelease];
+        self.checkbox.autoresizingMask = NSViewMaxYMargin;
         self.checkbox.buttonType = NSSwitchButton;
         self.checkbox.target = self;
         self.checkbox.action = @selector(toggledCheckbox:);
@@ -56,7 +57,7 @@
 }
 
 - (NSRect)textFrameForMainFrame:(NSRect)mainFrame {
-    return NSMakeRect(30, 0, mainFrame.size.width - 30, mainFrame.size.height);
+    return NSMakeRect(50, 3, mainFrame.size.width - 88, mainFrame.size.height - 9);
 }
 
 - (void)beginEditing {
@@ -64,17 +65,50 @@
     [self.delegate itemViewDidBeginEditing:self];
 }
 
-- (void)setTitle:(NSString *)newTitle {
-    NSString* temp = [newTitle copy];
-    [mTitle release];
-    mTitle = temp;
+- (void)styleTitle {
+    NSMutableAttributedString* styledString = [[NSMutableAttributedString alloc] initWithString:self.title];
+    NSMutableDictionary* attributes = [NSMutableDictionary dictionary];
+    NSMutableParagraphStyle* paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+    [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [paragraphStyle release];
     
+    if(self.backgroundStyle == NSBackgroundStyleLight) {
+        self.titleView.textColor = [NSColor blackColor];
+    }
+    else if([[NSApplication sharedApplication] isActive]) {
+        self.titleView.textColor = [NSColor whiteColor];
+        NSShadow* shadow = [[NSShadow alloc] init];
+        shadow.shadowColor = [NSColor colorWithDeviceWhite:0. alpha:.5];
+        shadow.shadowOffset = NSMakeSize(0, 1);
+        shadow.shadowBlurRadius = 1;
+        [attributes setObject:shadow forKey:NSShadowAttributeName];;
+        [shadow release];
+    }    [styledString setAttributes:attributes range:NSMakeRange(0, styledString.length)];
+
+    
+    self.titleView.attributedStringValue = styledString;
+    
+    [styledString release];
+}
+
+- (void)setTitle:(NSString *)newTitle {
     self.titleView.stringValue = newTitle;
+    [self styleTitle];
+}
+
+- (NSString*)title {
+    return self.titleView.stringValue;
 }
 
 - (void)setChecked:(BOOL)checked {
     mChecked = checked;
     self.checkbox.state = checked;
+}
+
+- (void)setBackgroundStyle:(NSBackgroundStyle)backgroundStyle {
+    [super setBackgroundStyle:backgroundStyle];
+    [self styleTitle];
 }
 
 #pragma mark Text Field Delegate

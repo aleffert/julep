@@ -12,7 +12,7 @@
 
 @protocol ADLItemViewDelegate;
 
-@interface ADLItemView : NSView <NSTextFieldDelegate>
+@interface ADLItemView : NSTableCellView <NSTextFieldDelegate>
 
 @property (retain, nonatomic) ADLItemID* item;
 @property (copy, nonatomic) NSString* title;
