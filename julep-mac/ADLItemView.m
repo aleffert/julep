@@ -44,11 +44,15 @@
         self.checkbox.action = @selector(toggledCheckbox:);
         [self addSubview:self.checkbox];
         self.title = @"";
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(styleTitle) name:NSApplicationDidResignActiveNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(styleTitle) name:NSApplicationDidBecomeActiveNotification object:nil];
     }
     return self;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.item = nil;
     self.delegate = nil;
     self.titleView = nil;
@@ -67,6 +71,8 @@
 }
 
 - (void)styleTitle {
+    BOOL active = [[NSApplication sharedApplication] isActive];
+    
     NSMutableAttributedString* styledString = [[NSMutableAttributedString alloc] initWithString:self.title];
     NSMutableDictionary* attributes = [NSMutableDictionary dictionary];
     NSMutableParagraphStyle* paragraphStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -74,8 +80,11 @@
     [attributes setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
     [paragraphStyle release];
     
-    if(self.backgroundStyle == NSBackgroundStyleLight) {
+    if(self.backgroundStyle == NSBackgroundStyleLight && active) {
         self.titleView.textColor = [NSColor blackColor];
+    }
+    else if(self.backgroundStyle == NSBackgroundStyleLight) {
+        self.titleView.textColor = [NSColor colorWithDeviceWhite:110./255. alpha:1.];
     }
     else if([[NSApplication sharedApplication] isActive]) {
         self.titleView.textColor = [NSColor whiteColor];
