@@ -302,10 +302,6 @@
         [items removeObjectAtIndex:index];
         self.items = items;
         [items release];
-        [self.tableView beginUpdates];
-        [self.tableView removeRowsAtIndexes:[NSIndexSet indexSetWithIndex:index] withAnimation:NSTableViewAnimationEffectNone];
-        [self.tableView endUpdates];
-        [self.tableView setNeedsDisplay];
         
         if([newItem isNotEqualTo:@""]) {
             [self.modelAccess addItemWithTitle:newItem toListWithID:self.listID atIndex:index];

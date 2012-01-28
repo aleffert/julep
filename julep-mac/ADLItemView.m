@@ -43,6 +43,7 @@
         self.checkbox.target = self;
         self.checkbox.action = @selector(toggledCheckbox:);
         [self addSubview:self.checkbox];
+        self.title = @"";
     }
     return self;
 }
@@ -93,12 +94,11 @@
 }
 
 - (void)setTitle:(NSString *)newTitle {
+    NSString* temp = [newTitle copy];
+    [mTitle release];
+    mTitle = temp;
     self.titleView.stringValue = newTitle;
     [self styleTitle];
-}
-
-- (NSString*)title {
-    return self.titleView.stringValue;
 }
 
 - (void)setChecked:(BOOL)checked {

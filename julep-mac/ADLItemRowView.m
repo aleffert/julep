@@ -87,4 +87,9 @@ void ADLDrawThreePartImage(NSImage* image, NSRect targetRect, CGFloat leftCapWid
     ADLDrawThreePartImage(image, NSOffsetRect(NSInsetRect(self.bounds, 4, 2), 0, -2), 40);
 }
 
+- (void)setFrame:(NSRect)frameRect {
+    [super setFrame:frameRect];
+}
+
+
 @end

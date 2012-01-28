@@ -25,4 +25,12 @@
     }
 }
 
+-(void)setFrameSize:(NSSize)newSize {
+    [super setFrameSize:newSize];
+    CGFloat newWidth = self.enclosingScrollView.frame.size.width;
+    if(self.tableColumns.count > 0) {
+        [[self.tableColumns objectAtIndex:0] setWidth:newWidth];
+    }
+}
+
 @end
