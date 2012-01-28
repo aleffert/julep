@@ -19,6 +19,8 @@
 @property (retain, nonatomic) IBOutlet NSView* bodyView;
 @property (retain, nonatomic) IBOutlet ADLNSScrollView* scrollView;
 @property (retain, nonatomic) ADLTabController* agnostic;
+@property (retain, nonatomic) ADLShadowView* leftShadow;
+@property (retain, nonatomic) ADLShadowView* rightShadow;
 
 @end
 
@@ -43,6 +45,8 @@ const static CGFloat kADLNSTabHeight = 29.;
 @synthesize bodyView = mBodyView;
 @synthesize agnostic = mAgnostic;
 @synthesize shadowView = mShadowView;
+@synthesize leftShadow = mLeftShadow;
+@synthesize rightShadow = mRightShadow;
 @synthesize viewManipulator = mViewManipulator;
 
 - (id)initWithDataSource:(id <ADLTabControllerDataSource>)dataSource {
@@ -55,11 +59,14 @@ const static CGFloat kADLNSTabHeight = 29.;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.agnostic = nil;
     self.scrollView = nil;
     self.bodyView = nil;
     self.shadowView = nil;
     self.viewManipulator = nil;
+    self.leftShadow = nil;
+    self.rightShadow = nil;
     
     [super dealloc];
 }
@@ -67,17 +74,37 @@ const static CGFloat kADLNSTabHeight = 29.;
 - (void)viewDidLoad {
     NSRect bodyFrame = self.bodyView.frame;
     NSRect shadowFrame = NSMakeRect(0, -5, bodyFrame.size.width, 10);
+    
+    NSShadow* shadow = [NSShadow standardShadow];
+    shadow.shadowBlurRadius = 2;
+    shadow.shadowColor =[NSColor colorWithDeviceWhite:0 alpha:.2];
+    NSEdgeInsets shadowInsets = NSEdgeInsetsMake(5, 0, 0, 0);
+    
     ADLShadowView* shadowView = [[[ADLShadowView alloc] initWithFrame:shadowFrame] autorelease];
     shadowView.autoresizingMask = NSViewMaxYMargin | NSViewWidthSizable;
-    shadowView.shadow = [NSShadow standardShadow];
-    shadowView.shadow.shadowBlurRadius = 2;
-    shadowView.shadow.shadowColor = [NSColor colorWithDeviceWhite:0 alpha:.2];
-
-    shadowView.insets = NSEdgeInsetsMake(5, 0, 0, 0);
+    shadowView.shadow = shadow;
+    shadowView.insets = shadowInsets;
     self.shadowView = (id <ADLView>)shadowView;
+    
+    ADLShadowView* leftShadowView = [[[ADLShadowView alloc] initWithFrame:CGRectMake(0, 0, 0, 10)] autorelease];
+    leftShadowView.shadow = shadow;
+    leftShadowView.insets = shadowInsets;
+    self.leftShadow = leftShadowView;
+    [self.scrollView addSubview:self.leftShadow];
+    
+    ADLShadowView* rightShadowView = [[[ADLShadowView alloc] initWithFrame:CGRectMake(0, 0, 0, 10)] autorelease];
+    rightShadowView.shadow = shadow;
+    rightShadowView.insets = shadowInsets;
+    self.rightShadow = rightShadowView;
+    [self.scrollView addSubview:self.rightShadow];
+    
+    // We don't really want this on, but it's okay and it works around a bug in the OS
     self.scrollView.hasHorizontalScroller = YES;
     self.scrollView.horizontalScroller.hidden = YES;
+    self.scrollView.contentView.copiesOnScroll = NO;
     
+    self.scrollView.contentView.postsBoundsChangedNotifications = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollBoundsChanged:) name:NSViewBoundsDidChangeNotification object:self.scrollView.contentView];
 }
 
 - (void)loadView {
@@ -126,6 +153,17 @@ const static CGFloat kADLNSTabHeight = 29.;
     bodyFrame.size.width = width;
     bodyFrame.size.height = kADLNSTabHeight;
     bodyView.frame = bodyFrame;
+}
+
+- (void)scrollBoundsChanged:(NSNotification*)notification {
+    NSClipView* clipView = notification.object;
+    CGFloat leftWidth = (MAX(0,-clipView.bounds.origin.x));
+    CGFloat rightWidth = -MIN(0, (clipView.documentRect.size.width - CGRectGetMaxX(clipView.bounds)));
+    
+    CGRect leftRect = CGRectMake(0, clipView.frame.size.height - 5, leftWidth, 10);
+    CGRect rightRect = CGRectMake(clipView.superview.frame.size.width - rightWidth, clipView.frame.size.height - 5, rightWidth, 10);
+    self.leftShadow.frame = leftRect;
+    self.rightShadow.frame = rightRect;
 }
 
 - (void)animateInTabView:(id <ADLTabView>)tabView {
