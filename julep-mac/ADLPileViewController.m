@@ -279,16 +279,16 @@ void ADLWithAnimationsDisabled(void(^block)(void)) {
 }
 
 - (void)scrollWheel:(NSEvent *)event {
-    if([NSEvent isSwipeTrackingFromScrollEventsEnabled]) {
-        BOOL inCorrectPhase = event.phase == NSEventPhaseBegan || event.phase == NSEventPhaseChanged;
-        if(self.pileSlide == nil && inCorrectPhase) {
-            [self startTrackingSwipeWithEvent:event];
-        }
-        else if(self.pileSlide != nil && !self.pileSlide.abort) {
-            // New gesture interaction while we're tracking. Abort the current operation
-            self.pileSlide.abort = YES;
-        }
-    }
+//    if([NSEvent isSwipeTrackingFromScrollEventsEnabled]) {
+//        BOOL inCorrectPhase = event.phase == NSEventPhaseBegan || event.phase == NSEventPhaseChanged;
+//        if(self.pileSlide == nil && inCorrectPhase) {
+//            [self startTrackingSwipeWithEvent:event];
+//        }
+//        else if(self.pileSlide != nil && !self.pileSlide.abort) {
+//            // New gesture interaction while we're tracking. Abort the current operation
+//            self.pileSlide.abort = YES;
+//        }
+//    }
 }
 
 - (void)viewDidLoad {

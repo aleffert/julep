@@ -21,6 +21,7 @@
 @property (assign, nonatomic) BOOL dragItemsConsecutive;
 @property (assign, nonatomic) NSUInteger dragStartingRow;
 @property (retain, nonatomic) ADLItemView* editingView;
+@property (retain, nonatomic) NSImageView* tabShadowView;
 
 @end
 
@@ -34,6 +35,7 @@
 @synthesize dragStartingRow = mDragStartingRow;
 @synthesize dragItemsConsecutive = mDragItemsConsecutive;
 @synthesize editingView = mEditingView;
+@synthesize tabShadowView = mTabShadowView;
 
 - (id)init {
     if((self = [super initWithNibName:@"ADLListViewController" bundle:nil])) {
@@ -44,6 +46,12 @@
 
 - (void)dealloc {
     [self.delegate listViewControllerWillDealloc:self];
+    self.listID = nil;
+    self.modelAccess = nil;
+    self.tableView = nil;
+    self.items = nil;
+    self.editingView = nil;
+    self.tabShadowView = nil;
     [super dealloc];
 }
 
@@ -88,6 +96,17 @@
     [column release];
     [tableView release];
     [scrollView release];
+    
+    scrollView.contentView.postsBoundsChangedNotifications = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(scrollBoundsChanged:) name:NSViewBoundsDidChangeNotification object:scrollView.contentView];
+    
+    NSImageView* topShadowView = [[[NSImageView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 4, self.view.frame.size.width, 4)] autorelease];
+    topShadowView.image = [NSImage imageNamed:@"ADLScrollTabShadow"];
+    topShadowView.imageScaling = NSImageScaleAxesIndependently;
+    topShadowView.autoresizingMask = NSViewWidthSizable | NSViewMinYMargin;
+    topShadowView.alphaValue = 0;
+    self.tabShadowView = topShadowView;
+    [self.view addSubview:topShadowView];
 }
 
 - (void)loadView {
@@ -118,6 +137,13 @@
         [itemView beginEditing];
     }
 
+}
+
+- (void)scrollBoundsChanged:(NSNotification*)notification {
+    NSClipView* clipView = notification.object;
+    CGFloat yValue = clipView.bounds.origin.y;
+    CGFloat opacity = fmin(1., fmax(yValue / 4., 0.));
+    self.tabShadowView.alphaValue = opacity;
 }
 
 - (void)cellDoubleClicked:(NSTableView*)sender {
