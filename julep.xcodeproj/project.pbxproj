@@ -32,6 +32,7 @@
 		772C683F1427D9A900CEF932 /* ADLLinen.png in Resources */ = {isa = PBXBuildFile; fileRef = 772C683E1427D9A900CEF932 /* ADLLinen.png */; };
 		772C68431427E34F00CEF932 /* ADLListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C68411427E34F00CEF932 /* ADLListViewController.m */; };
 		772C68441427E34F00CEF932 /* ADLListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 772C68421427E34F00CEF932 /* ADLListViewController.xib */; };
+		7739E3C214DBAE9600C9659F /* ADLScrollTabShadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 7739E3C114DBAE9600C9659F /* ADLScrollTabShadow.png */; };
 		773E9A4B14A28013001217FE /* ADLNewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77E6FB9914A2339E000FD06E /* ADLNewItem.xib */; };
 		773E9A4C14A28022001217FE /* ADLNewItemController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E6FB9C14A233B8000FD06E /* ADLNewItemController.m */; };
 		773E9A4D14A280D5001217FE /* ADLUIElementServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E6FBC214A27826000FD06E /* ADLUIElementServer.m */; };
@@ -192,6 +193,7 @@
 		772C68401427E34F00CEF932 /* ADLListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADLListViewController.h; sourceTree = "<group>"; };
 		772C68411427E34F00CEF932 /* ADLListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADLListViewController.m; sourceTree = "<group>"; };
 		772C68421427E34F00CEF932 /* ADLListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADLListViewController.xib; sourceTree = "<group>"; };
+		7739E3C114DBAE9600C9659F /* ADLScrollTabShadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ADLScrollTabShadow.png; path = Resources/ADLScrollTabShadow.png; sourceTree = "<group>"; };
 		773E9A4E14A291A7001217FE /* ADLAppServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ADLAppServer.h; path = "julep-mac/ADLAppServer.h"; sourceTree = "<group>"; };
 		773E9A4F14A291A7001217FE /* ADLAppServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ADLAppServer.m; path = "julep-mac/ADLAppServer.m"; sourceTree = "<group>"; };
 		77509C2214993A0900AFC11C /* ShortcutRecorder.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ShortcutRecorder.xcodeproj; path = "shortcutrecorder-read-only/ShortcutRecorder.xcodeproj"; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 				77A4D09914A38F6900607557 /* ADLQuickToggle.xib */,
 				77B986CC1402C56D004A2293 /* ADLNSTabViewController.xib */,
 				7722BF3D1402A431003498D8 /* MainMenu.xib */,
+				7739E3C114DBAE9600C9659F /* ADLScrollTabShadow.png */,
 				7797C9F614D45A3800DB23D2 /* ADLItemSelected.png */,
 				7797C9F714D45A3800DB23D2 /* ADLItemUnselected.png */,
 				77735D2B14D47CBC003175C4 /* ADLItemSelectedInactive.png */,
@@ -712,6 +715,7 @@
 				7797C9F914D45A3800DB23D2 /* ADLItemUnselected.png in Resources */,
 				77735D2D14D47CBC003175C4 /* ADLItemSelectedInactive.png in Resources */,
 				77735D2E14D47CBC003175C4 /* ADLItemUnselectedInactive.png in Resources */,
+				7739E3C214DBAE9600C9659F /* ADLScrollTabShadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
