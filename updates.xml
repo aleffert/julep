@@ -6,6 +6,15 @@
         <description>Most recent changes with links to updates.</description>
         <language>en</language>
         <item>
+            <title>Version 0.9</title>
+            <description><![CDATA[
+                <h2>More visual tweaks</h2>
+            ]]>
+            </description>
+            <pubDate>Thu, 3 Feb 2012 00:41:11 +0000</pubDate>
+            <enclosure url="http://akivaleffert.com/julep/archive/Julep 0.9.zip" sparkle:version="0.8" length="911423" type="application/octet-stream" sparkle:dsaSignature="MCwCFB75MlUe5I+hOoxKAAc/zS8/DoUBAhQjwOLN5+o6/wXhssEtDguFialpNA==" />
+     </item>
+        <item>
             <title>Version 0.8 (New List Style)</title>
             <description><![CDATA[
                 <h2>Update list style</h2>
