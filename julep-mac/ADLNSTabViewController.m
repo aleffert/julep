@@ -99,7 +99,7 @@ const static CGFloat kADLNSTabHeight = 29.;
     [self.scrollView addSubview:self.rightShadow];
     
     // We don't really want this on, but it's okay and it works around a bug in the OS
-    self.scrollView.hasHorizontalScroller = YES;
+//    self.scrollView.hasHorizontalScroller = YES;
     self.scrollView.horizontalScroller.hidden = YES;
     self.scrollView.contentView.copiesOnScroll = NO;
     
@@ -153,6 +153,7 @@ const static CGFloat kADLNSTabHeight = 29.;
     bodyFrame.size.width = width;
     bodyFrame.size.height = kADLNSTabHeight;
     bodyView.frame = bodyFrame;
+    NSLog(@"body view = %@, frame = %@", bodyView, NSStringFromRect(bodyView.frame));
 }
 
 - (void)scrollBoundsChanged:(NSNotification*)notification {
