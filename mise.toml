@@ -200,6 +200,59 @@ echo "not notarized after 20 minutes -- check Xcode's Organizer for the rejectio
 exit 1
 """
 
+[tasks.testflight]
+description = "Archive the iOS app and upload it to TestFlight"
+depends = ["generate"]
+run = """
+set -euo pipefail
+out="{{config_root}}/build/ios"
+archive="$out/Julep.xcarchive"
+rm -rf "$out"
+mkdir -p "$out"
+
+xcodebuild archive \
+    -project Julep.xcodeproj -scheme Julep-iOS \
+    -destination 'generic/platform=iOS' -configuration Release \
+    -archivePath "$archive" \
+    -allowProvisioningUpdates -quiet
+
+# Same trick as archive-mac: `destination: upload` sends the build to App Store
+# Connect over the account already signed in to Xcode, so there is no API key to
+# store. manageAppVersionAndBuildNumber is off because the build number is the one
+# thing TestFlight will not let you repeat -- it comes from project.yml, and Xcode
+# silently bumping it behind us would put the file and the upload out of step.
+cat > "$out/ExportOptions.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key><string>app-store-connect</string>
+    <key>destination</key><string>upload</string>
+    <key>teamID</key><string>D2JFF2VC6K</string>
+    <key>signingStyle</key><string>automatic</string>
+    <key>manageAppVersionAndBuildNumber</key><false/>
+    <key>uploadSymbols</key><true/>
+</dict>
+</plist>
+PLIST
+
+xcodebuild -exportArchive \
+    -archivePath "$archive" \
+    -exportOptionsPlist "$out/ExportOptions.plist" \
+    -allowProvisioningUpdates
+
+# Resolved rather than grepped: the build number is on the target now, and the value
+# at the top of project.yml is only the test bundles' default.
+settings=$(xcodebuild -project "{{config_root}}/Julep.xcodeproj" -scheme Julep-iOS \
+    -configuration Release -showBuildSettings 2>/dev/null)
+version=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/{print $2; exit}')
+build=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/{print $2; exit}')
+echo
+echo "uploaded $version ($build) -- App Store Connect processes it before TestFlight"
+echo "shows it, usually a few minutes. Every upload needs a build number no earlier"
+echo "upload has used, so bump CURRENT_PROJECT_VERSION before running this again."
+"""
+
 [tasks.publish-mac]
 description = "Zip the notarized app from archive-mac and cut the release the workflow signs"
 run = """
@@ -222,9 +275,22 @@ version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/C
 # The app carries the version it was built with, and the release is named after it. If
 # the source has moved on since, this would quietly publish the old one under the old
 # tag -- so the mismatch is caught here rather than discovered in the feed.
-expected=$(grep MARKETING_VERSION "{{config_root}}/project.yml" | head -1 | cut -d'"' -f2)
-if [ "$version" != "$expected" ]; then
-    echo "$app is $version but project.yml says $expected -- run archive-mac again" >&2
+#
+# Read from the resolved build settings rather than by grepping project.yml: the build
+# number now lives on the target rather than at the top, and only xcodebuild knows what
+# a target actually inherits.
+#
+# Both are checked. The build number is what Sparkle compares, and a Mac-only fix can
+# bump it without touching the marketing version -- so a guard on the version string
+# alone would wave through exactly that stale archive.
+settings=$(xcodebuild -project "{{config_root}}/Julep.xcodeproj" -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Release -showBuildSettings 2>/dev/null)
+expected=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/{print $2; exit}')
+expectedBuild=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/{print $2; exit}')
+build=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Contents/Info.plist")
+
+if [ "$version" != "$expected" ] || [ "$build" != "$expectedBuild" ]; then
+    echo "$app is $version ($build) but the project says $expected ($expectedBuild) -- run archive-mac again" >&2
     exit 2
 fi
 
