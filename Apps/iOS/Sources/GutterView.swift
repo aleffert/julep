@@ -1,12 +1,67 @@
 import UIKit
 import JulepKit
 
+/// One mark in the margin.
+///
+/// A view per mark rather than one `draw(_:)` across the whole margin. The gutter spans the
+/// entire journal so that it scrolls with the text for free, and a view that draws is handed
+/// a bitmap the size of its bounds -- which at journal length is an allocation UIKit
+/// eventually declines. That failure is silent and total: the marks still hit-test and still
+/// speak to VoiceOver, because those are geometry, while nothing is drawn at all. A mark's
+/// own view is a few dozen points tall whatever the journal does. The macOS gutter is built
+/// the same way, for a different reason.
+final class GutterMarkView: UIView {
+    let mark: GutterMark
+
+    init(mark: GutterMark) {
+        self.mark = mark
+        super.init(frame: .zero)
+        backgroundColor = .clear
+        // Taps belong to the container, which grows each row to a thumb-sized target and
+        // knows which line was hit. A mark is decoration.
+        isUserInteractionEnabled = false
+        isAccessibilityElement = false
+    }
+
+    required init?(coder: NSCoder) { fatalError("not used") }
+
+    override func draw(_ rect: CGRect) {
+        let center = CGPoint(x: bounds.midX, y: bounds.midY)
+        switch mark {
+        case .openItem:
+            // A hollow ring: an affordance, not a checkbox. Nothing is checked off
+            // without a tap.
+            let radius: CGFloat = 7
+            let circle = UIBezierPath(
+                arcCenter: center, radius: radius,
+                startAngle: 0, endAngle: .pi * 2, clockwise: true
+            )
+            circle.lineWidth = 1.5
+            UIColor.tertiaryLabel.setStroke()
+            circle.stroke()
+
+        case .diagnostic(let hasFix):
+            let symbol = UIImage(
+                systemName: hasFix ? "exclamationmark.triangle.fill" : "questionmark.circle"
+            )?.withTintColor(.systemOrange, renderingMode: .alwaysOriginal)
+            guard let symbol else { return }
+            let size = CGSize(width: 18, height: 18)
+            symbol.draw(in: CGRect(
+                x: center.x - size.width / 2, y: center.y - size.height / 2,
+                width: size.width, height: size.height
+            ))
+        }
+    }
+}
+
 /// The margin beside the text: a dot to mark an item done, a warning where the app and the
 /// file disagree.
 ///
 /// Lives inside the text view's scroll content, so it scrolls with the text for free rather
 /// than needing its offset tracked. Line positions come from TextKit 2's layout fragments,
 /// because wrapped lines make uniform row heights wrong.
+///
+/// Draws nothing itself -- see `GutterMarkView` for why that matters at journal length.
 final class GutterView: UIView {
     var onTapMark: (Int) -> Void = { _ in }
 
@@ -58,7 +113,49 @@ final class GutterView: UIView {
         self.marks = marks
         self.rows = rows
         rebuildAccessibilityElements()
-        setNeedsDisplay()
+        layoutMarkViews()
+    }
+
+    // MARK: - Marks
+
+    /// The view drawing each line's mark, by line.
+    ///
+    /// Kept and repositioned rather than rebuilt: rows change on every frame of a scroll, and
+    /// tearing down a screenful of views that many times a second is work for nothing.
+    private var markViews: [Int: GutterMarkView] = [:]
+
+    /// The smallest a mark may be drawn in. A row is only as tall as its line, and a ring of
+    /// radius 7 does not fit in one that has been squeezed.
+    private static let minimumMarkHeight: CGFloat = 20
+
+    private func layoutMarkViews() {
+        var live: Set<Int> = []
+        for row in rows {
+            guard let mark = marks[row.line] else { continue }
+            live.insert(row.line)
+
+            let view: GutterMarkView
+            // A line whose mark has changed -- an open item that is now a diagnostic -- needs
+            // a new view, because a mark view draws the one it was made with.
+            if let existing = markViews[row.line], existing.mark == mark {
+                view = existing
+            } else {
+                markViews[row.line]?.removeFromSuperview()
+                view = GutterMarkView(mark: mark)
+                addSubview(view)
+                markViews[row.line] = view
+            }
+
+            let height = max(row.frame.height, Self.minimumMarkHeight)
+            view.frame = CGRect(
+                x: 0, y: row.frame.midY - height / 2, width: Self.width, height: height
+            )
+        }
+
+        for (line, view) in markViews where !live.contains(line) {
+            view.removeFromSuperview()
+            markViews[line] = nil
+        }
     }
 
     // MARK: - Accessibility
@@ -102,40 +199,6 @@ final class GutterView: UIView {
         onTapMark(row.line)
     }
 
-    override func draw(_ rect: CGRect) {
-        for row in rows {
-            guard let mark = marks[row.line], row.frame.intersects(rect) else { continue }
-            let center = CGPoint(x: bounds.midX, y: row.frame.minY + row.frame.height / 2)
-
-            switch mark {
-            case .openItem:
-                // A hollow ring: an affordance, not a checkbox. Nothing is checked off
-                // without a tap.
-                let radius: CGFloat = 7
-                let circle = UIBezierPath(
-                    arcCenter: center, radius: radius,
-                    startAngle: 0, endAngle: .pi * 2, clockwise: true
-                )
-                circle.lineWidth = 2
-                // Secondary, not tertiary, and a touch heavier than the mark on the desktop:
-                // tertiary all but vanishes on black, and a hairline ring is thin on a phone
-                // even once it has the contrast to be seen at all.
-                UIColor.secondaryLabel.setStroke()
-                circle.stroke()
-
-            case .diagnostic(let hasFix):
-                let symbol = UIImage(
-                    systemName: hasFix ? "exclamationmark.triangle.fill" : "questionmark.circle"
-                )?.withTintColor(.systemOrange, renderingMode: .alwaysOriginal)
-                guard let symbol else { continue }
-                let size = CGSize(width: 18, height: 18)
-                symbol.draw(in: CGRect(
-                    x: center.x - size.width / 2, y: center.y - size.height / 2,
-                    width: size.width, height: size.height
-                ))
-            }
-        }
-    }
 }
 
 extension UITextView {
