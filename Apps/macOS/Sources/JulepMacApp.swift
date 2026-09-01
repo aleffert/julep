@@ -1,0 +1,112 @@
+import SwiftUI
+import JulepKit
+
+@main
+struct JulepMacApp: App {
+    init() { ContainerDiagnostic.runIfRequested() }
+
+    var body: some Scene {
+        Window("Julep", id: "journal") {
+            JournalView()
+                .frame(minWidth: 520, minHeight: 400)
+        }
+        .commands {
+            CommandMenu("Item") {
+                // The same two behaviors as the iOS accessory toolbar, where a Mac
+                // expects to find them.
+                // Sent to nil so it reaches whatever is first responder -- the text view.
+                Button("Toggle Item") {
+                    NSApp.sendAction(#selector(JournalNSTextView.toggleItem(_:)), to: nil, from: nil)
+                }
+                .keyboardShortcut(.return, modifiers: .command)
+            }
+        }
+    }
+}
+
+struct JournalView: View {
+    @State private var workspace = Workspace()
+    @State private var offeredFix: OfferedFix?
+    @State private var isShowingSchedule = false
+
+    /// One action. Everything open comes forward; the editor is where pruning happens.
+    private func roll() {
+        guard let rolled = Roll.roll(document: workspace.document, today: NaturalDates.today())
+        else { return }
+        workspace.replaceJournal(with: rolled.serialized)
+    }
+
+    var body: some View {
+        editor
+            .toolbar {
+                ToolbarItem {
+                    Button("Schedule", systemImage: "calendar") { isShowingSchedule = true }
+                        .accessibilityIdentifier("nav.schedule")
+                }
+                ToolbarItem {
+                    Button("Roll", systemImage: "arrow.turn.down.right") { roll() }
+                        .disabled(workspace.status != .ready)
+                        .accessibilityIdentifier("nav.roll")
+                }
+            }
+            .sheet(isPresented: $isShowingSchedule) {
+                NavigationStack { ScheduleView(workspace: workspace) }
+                    .frame(minWidth: 420, minHeight: 480)
+            }
+            .sheet(isPresented: Binding(
+                get: { !workspace.conflicts.isEmpty },
+                set: { if !$0 { workspace.checkForConflicts() } }
+            )) {
+                NavigationStack { ConflictView(workspace: workspace) }
+                    .frame(minWidth: 460, minHeight: 480)
+            }
+    }
+
+    private var editor: some View {
+        Group {
+            switch workspace.status {
+            case .loading:
+                ProgressView()
+            case .ready:
+                JournalTextView(
+                    text: { workspace.journalText },
+                    document: { workspace.document },
+                    onEdit: { workspace.applyEdit(range: $0, replacement: $1) },
+                    onResync: { workspace.resyncJournal(from: $0) },
+                    revision: workspace.journalRevision,
+                    revisionIsUndoable: workspace.journalChangeIsUndoable,
+                    onDiagnosticClicked: { offeredFix = OfferedFix(lineIndex: $0, document: workspace.document) }
+                )
+            case .failed(let message):
+                ContentUnavailableView(
+                    "iCloud unavailable",
+                    systemImage: "exclamationmark.icloud",
+                    description: Text(message)
+                )
+            }
+        }
+        .task { await workspace.load() }
+        .overlay(alignment: .top) {
+            if let writeError = workspace.writeError {
+                Label("Not saving: \(writeError)", systemImage: "exclamationmark.triangle.fill")
+                    .font(.caption)
+                    .padding(8)
+                    .background(.regularMaterial, in: .rect(cornerRadius: 8))
+                    .padding(8)
+                    .accessibilityIdentifier("banner.writeError")
+            }
+        }
+        .sheet(item: $offeredFix) { offer in
+            FixItView(
+                offer: offer,
+                onAccept: {
+                    if let updated = offer.applied() {
+                        workspace.replaceJournal(with: updated)
+                    }
+                    offeredFix = nil
+                },
+                onDismiss: { offeredFix = nil }
+            )
+        }
+    }
+}

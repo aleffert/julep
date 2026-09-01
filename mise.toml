@@ -1,0 +1,134 @@
+# Julep build tasks. `mise run` lists them; `mise run all` is the full check.
+
+[tools]
+xcodegen = "2.46.0"
+uv = "latest"
+
+[env]
+# The iOS simulator this project drives, pinned by UDID so a concurrent session
+# working on another simulator is never disturbed. Override in mise.local.toml.
+JULEP_SIMULATOR_UDID = "0BC1890E-7ADB-4094-850C-5799A477867D"  # iPhone 17 Pro, iOS 26.5
+
+[tasks.generate]
+description = "Regenerate Julep.xcodeproj from project.yml"
+run = "xcodegen generate --quiet"
+
+[tasks.icon]
+description = "Regenerate Apps/Shared/Julep.icon from Tools/icon-source.{svg,png}"
+run = "uv run --quiet {{config_root}}/Tools/build_icon.py"
+
+[tasks.mac]
+description = "Build the macOS app"
+depends = ["generate"]
+run = """
+xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug -quiet \
+    -allowProvisioningUpdates -allowProvisioningDeviceRegistration build
+"""
+
+[tasks.ios]
+description = "Build the iOS app for the pinned simulator"
+depends = ["generate"]
+run = """
+xcodebuild -project Julep.xcodeproj -scheme Julep-iOS \
+    -destination "platform=iOS Simulator,id=$JULEP_SIMULATOR_UDID" \
+    -configuration Debug -quiet build
+"""
+
+[tasks.test]
+description = "Run the JulepKit package tests"
+dir = "{{config_root}}/JulepKit"
+run = "swift test"
+
+[tasks.entitlements]
+description = "Show what codesign actually granted the built macOS app"
+depends = ["mac"]
+run = """
+app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug -showBuildSettings 2>/dev/null \
+    | awk -F' = ' '/ BUILT_PRODUCTS_DIR/{d=$2} / FULL_PRODUCT_NAME/{n=$2} END{print d"/"n}')
+codesign -d --entitlements - "$app" 2>&1 | grep -v '^Executable='
+"""
+
+[tasks.app]
+description = "Build and launch the macOS app (uses the real iCloud container)"
+depends = ["mac"]
+run = """
+app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug -showBuildSettings 2>/dev/null \
+    | awk -F' = ' '/ BUILT_PRODUCTS_DIR/{d=$2} / FULL_PRODUCT_NAME/{n=$2} END{print d"/"n}')
+pkill -x Julep 2>/dev/null || true
+open "$app"
+echo "launched $app"
+"""
+
+[tasks.app-ios]
+description = "Build, install and launch on the pinned simulator, backed by a local file"
+depends = ["ios"]
+run = """
+set -e
+app=/Users/$USER/Library/Developer/Xcode/DerivedData
+app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-iOS \
+    -destination "platform=iOS Simulator,id=$JULEP_SIMULATOR_UDID" \
+    -configuration Debug -showBuildSettings 2>/dev/null \
+    | awk -F' = ' '/ BUILT_PRODUCTS_DIR/{d=$2} / FULL_PRODUCT_NAME/{n=$2} END{print d"/"n}')
+
+xcrun simctl boot "$JULEP_SIMULATOR_UDID" 2>/dev/null || true
+xcrun simctl bootstatus "$JULEP_SIMULATOR_UDID" -b > /dev/null
+open -a Simulator --args -CurrentDeviceUDID "$JULEP_SIMULATOR_UDID"
+xcrun simctl terminate "$JULEP_SIMULATOR_UDID" com.quipsoteric.julep 2>/dev/null || true
+xcrun simctl install "$JULEP_SIMULATOR_UDID" "$app"
+
+# The simulator has no iCloud account, so back it with a plain directory that survives
+# relaunches. Seed it from the corpus the first time so there is something to look at.
+data=$(xcrun simctl get_app_container "$JULEP_SIMULATOR_UDID" com.quipsoteric.julep data)
+journal="$data/Documents/journal"
+mkdir -p "$journal"
+[ -f "$journal/journal.txt" ] || cp JulepKit/Tests/JulepKitTests/Resources/corpus.txt "$journal/journal.txt"
+
+xcrun simctl launch "$JULEP_SIMULATOR_UDID" com.quipsoteric.julep --local-container "$journal"
+echo "journal: $journal/journal.txt"
+"""
+
+[tasks.doctor]
+description = "Ask the signed macOS app whether its iCloud container actually resolves"
+depends = ["mac"]
+run = """
+app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug -showBuildSettings 2>/dev/null \
+    | awk -F' = ' '/ BUILT_PRODUCTS_DIR/{d=$2} / FULL_PRODUCT_NAME/{n=$2} END{print d"/"n}')
+"$app/Contents/MacOS/Julep" --container-check
+"""
+
+[tasks.uitest]
+description = "Run the iOS UI tests on the pinned simulator"
+depends = ["generate"]
+run = """
+xcodebuild -project Julep.xcodeproj -scheme Julep-iOS \
+    -destination "platform=iOS Simulator,id=$JULEP_SIMULATOR_UDID" \
+    -configuration Debug test 2>&1 | grep -E "Test Case|Test Suite 'All tests'|error:|\\*\\* TEST"
+"""
+
+[tasks.uitest-mac]
+description = "Run the macOS UI tests"
+depends = ["generate"]
+run = """
+xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug \
+    -allowProvisioningUpdates -allowProvisioningDeviceRegistration test 2>&1 \
+  | grep -E "Test Case|error:|Testing failed|encountered an error|\\*\\* TEST"
+"""
+
+[tasks.schedule]
+description = "Print the schedule store and what the app derives from it"
+depends = ["mac"]
+run = """
+app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Debug -showBuildSettings 2>/dev/null \
+    | awk -F' = ' '/ BUILT_PRODUCTS_DIR/{d=$2} / FULL_PRODUCT_NAME/{n=$2} END{print d"/"n}')
+"$app/Contents/MacOS/Julep" --schedule-check
+"""
+
+[tasks.all]
+description = "Build both apps and run tests"
+run = ["mise run mac", "mise run ios", "mise run test", "mise run uitest", "mise run uitest-mac"]

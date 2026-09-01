@@ -1,0 +1,162 @@
+name: Julep
+
+options:
+  bundleIdPrefix: com.quipsoteric
+  createIntermediateGroups: true
+  deploymentTarget:
+    macOS: "26.0"
+    iOS: "26.0"
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: D2JFF2VC6K
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1"
+    CURRENT_PROJECT_VERSION: "1"
+
+packages:
+  JulepKit:
+    path: JulepKit
+
+targets:
+  Julep-macOS:
+    type: application
+    platform: macOS
+    sources:
+      - Apps/macOS/Sources
+      - Apps/macOS/Resources
+      - path: Apps/Shared
+        excludes:
+          - "Julep.icon/**"
+      # An Icon Composer .icon is a package, not a folder of loose files. `type: file`
+      # stops XcodeGen descending into it and adding icon.json and Assets separately.
+      - path: Apps/Shared/Julep.icon
+        type: file
+        buildPhase: resources
+    dependencies:
+      - package: JulepKit
+    # XcodeGen *generates* this file from `properties` on every run -- it does not
+    # reference a hand-written one. The keys have to live here or they get blanked.
+    entitlements:
+      path: Apps/macOS/Supporting/Julep-macOS.entitlements
+      properties:
+        com.apple.security.app-sandbox: true
+        com.apple.security.files.user-selected.read-write: true
+        com.apple.developer.icloud-services: [CloudDocuments]
+        com.apple.developer.icloud-container-identifiers: [iCloud.com.quipsoteric.julep]
+        com.apple.developer.ubiquity-container-identifiers: [iCloud.com.quipsoteric.julep]
+    info:
+      path: Apps/macOS/Supporting/Info.plist
+      properties:
+        LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
+        NSHumanReadableCopyright: ""
+        # Exposes the journal in Finder's iCloud Drive, so the file stays openable
+        # by any text editor -- the whole point of iCloud files over CloudKit.
+        NSUbiquitousContainers:
+          iCloud.com.quipsoteric.julep:
+            NSUbiquitousContainerIsDocumentScopePublic: true
+            NSUbiquitousContainerName: Julep
+            NSUbiquitousContainerSupportedFolderLevels: Any
+    settings:
+      base:
+        PRODUCT_NAME: Julep
+        PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
+        ENABLE_HARDENED_RUNTIME: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: Julep
+
+  Julep-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - Apps/iOS/Sources
+      - Apps/iOS/Resources
+      - path: Apps/Shared
+        excludes:
+          - "Julep.icon/**"
+      - path: Apps/Shared/Julep.icon
+        type: file
+        buildPhase: resources
+    dependencies:
+      - package: JulepKit
+    entitlements:
+      path: Apps/iOS/Supporting/Julep-iOS.entitlements
+      properties:
+        com.apple.developer.icloud-services: [CloudDocuments]
+        com.apple.developer.icloud-container-identifiers: [iCloud.com.quipsoteric.julep]
+        com.apple.developer.ubiquity-container-identifiers: [iCloud.com.quipsoteric.julep]
+    info:
+      path: Apps/iOS/Supporting/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        # Same container, exposed to the Files app.
+        NSUbiquitousContainers:
+          iCloud.com.quipsoteric.julep:
+            NSUbiquitousContainerIsDocumentScopePublic: true
+            NSUbiquitousContainerName: Julep
+            NSUbiquitousContainerSupportedFolderLevels: Any
+    settings:
+      base:
+        PRODUCT_NAME: Julep
+        PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: Julep
+
+  Julep-macOSUITests:
+    type: bundle.ui-testing
+    platform: macOS
+    sources:
+      - Apps/macOS/UITests
+    dependencies:
+      - target: Julep-macOS
+    # The runner must be unsandboxed. Sandboxed, its home is redirected into its own
+    # container, so a journal it seeds lands somewhere the app is allowed to read but not
+    # write -- which reads as "the app does not save" and is nothing of the sort.
+    entitlements:
+      path: Apps/macOS/UITests/Julep-macOSUITests.entitlements
+      properties:
+        com.apple.security.app-sandbox: false
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep.macuitests
+        TEST_TARGET_NAME: Julep-macOS
+        GENERATE_INFOPLIST_FILE: YES
+
+  Julep-iOSUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - Apps/iOS/UITests
+    dependencies:
+      - target: Julep-iOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep.uitests
+        TEST_TARGET_NAME: Julep-iOS
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  Julep-macOS:
+    build:
+      targets:
+        Julep-macOS: all
+        Julep-macOSUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - Julep-macOSUITests
+    run:
+      config: Debug
+  Julep-iOS:
+    build:
+      targets:
+        Julep-iOS: all
+        Julep-iOSUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - Julep-iOSUITests
+    run:
+      config: Debug

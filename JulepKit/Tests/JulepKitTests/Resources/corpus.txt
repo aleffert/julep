@@ -1,0 +1,576 @@
+sunday 8/30/2026
+- chase down the rebate
+done
+- initiate jacket return
+- sort the mail
+- bring up air conditioner
+- set up rent payment
+- set up payment spreadsheet
+next
+- harass landlord
+
+delta 5 days
+
+tuesday 8/25/2026
+- chase down the rebate
+done
+- call landlord
+- make stew
+next
+- paper & string schedule
+- [orchid] record walkthrough
+
+sunday 8/23/2026
+- chase down the rebate
+done
+- pay trip phone service
+- housewarming invite
+- [orchid] record the calendar walkthrough
+next
+- call landlord
+
+saturday 8/22/2026
+- chase down the rebate
+- [orchid] record the calendar walkthrough
+- pay trip phone service
+done
+- water the plants
+- dana whitfield wedding gift
+- rsvp for whitfield wedding
+- [orchid] register the business account
+- sort the books
+- setup bookshelves
+- [kiln] pr status
+- poetry reading tickets
+- credit card
+next
+- housewarming invite
+- call landlord
+
+friday 8/21/2026
+- chase down the rebate
+- rsvp for whitfield wedding
+- poetry reading tickets
+- credit card
+
+thursday 8/20/2026
+- chase down the rebate
+done
+- order hair dye
+- activate bank card
+- audit paint supplies
+
+wednesday 8/19/2026
+- activate bank card
+- audit paint supplies
+done
+- eye appointment
+- resubmit the registration
+next
+- chase down the rebate
+
+wednesday 7/22/2026
+next
+- cancel gas 30581-77402  1-555-0177
+- qxrtl
+done
+- cancel electric
+- get out of apartment
+- contact landlord
+
+delta 9 days
+
+monday 7/13/2026
+done
+- mail service signup
+- update payroll portal
+- account id
+- update bank account
+- update the other bank account
+- cancel rent autopay
+
+friday 7/10/2026
+- sort out the pension
+done
+- get bank card
+
+delta 11 days
+
+monday 6/29/2026
+- call the bank
+
+sunday 6/21/2026
+- [orchid] projects for service deploy
+done
+- [orchid] service deploy
+- ask movers for quote
+
+delta 5 days
+
+tuesday 6/15/2026
+- finish blocking out apartment
+- [quarry] fix up event prs
+- [quarry] totals on sorted views
+done
+- ping pike
+- matinee tickets
+- handle parents dinner
+
+sunday 6/14/2026
+done
+- passport renewal pic
+- passport renewal form
+- get more boxes
+- pay saffi
+- put tape measure in bag
+- ping cedar
+- get tp
+next
+- block out apartment
+
+delta 5 days
+
+tuesday 6/8/2026
+- [quarry] finish resolver implementation
+done
+- get back to landlord
+- ping juno and fenn
+- [quarry] can we land the events pr
+- [quarry] get rid of the old notes api
+- [quarry] land notes
+- look at box situation
+- [quarry] share the invite link
+next
+- mover quote
+
+monday 6/8/2026
+done
+- [quarry] refine analytics implementation plan
+- [quarry] try out artifacts
+- [quarry] refine analytics api plan
+
+sunday 6/7/2026
+done
+- send mail to wexler
+- tote bags
+- dig up permit s-o-p email
+- figure out when lease ends
+- talk to garrick about boxes
+- pay rent
+- add jury duty to calendar
+- try the 3d plugin
+- share the game event
+
+delta 47 days
+
+tuesday 4/21/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [meadow] reroute mailers
+- collect receipt
+- pay back saffi for trips
+
+thursday 4/16/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- pitch doc
+- rfp attendance
+done
+- look at the conference hotel
+- nw, se flights
+
+tuesday 4/14/2026
+- comms offsite travel plan
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] events plan
+- [quarry] deploy the view pr
+- expense the lab bill
+
+monday 4/13/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] events plan
+- [quarry] deploy the view pr
+- expense the lab bill
+done
+- mail garrick package
+- pay the lab bill
+- reread rfp
+- reference for lark
+- look at offsite travel plan
+next
+- comms offsite travel plan
+
+
+delta 2 days
+
+saturday 4/11/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- call the lab about results (555-0143—ref: 204118)
+done
+- write garrick letter
+- notebook
+- headshot
+- try on jacket
+- pot spider plant
+- try to pay the lab bill
+next
+- reference for lark
+
+delta 16 days
+
+wednesday 3/26/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- gift registry
+- [quarry] review s2w pr
+- [quarry] contacts app importer
+- [atrium] email dalton
+- collect reading list
+done
+- put in vacation
+
+thursday 3/19/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- gift registry
+- [quarry] load the full roster
+done
+- [quarry] fix the importers pr
+- [quarry] models doc
+
+wednesday 3/11/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] put out rewrite rules pr
+- [quarry] records model doc
+- sign up for the alumni event
+- gift registry
+done
+- [quarry] put out models pr
+- ping zev
+- ping vance
+- [orchid] get onto the new router
+- share the trip hotel
+
+
+tuesday 3/10/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [orchid] get onto the new router
+- [quarry] put out models pr
+- [quarry] put out rewrite rules pr
+done
+- [quarry] review api doc
+- [quarry] put out notes pr
+- ping the clinic
+- [quarry] review nickname pr
+next
+- [quarry] records model doc
+
+monday 2/28/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] clean up the ranges pr
+- [quarry] clean up the projection pr
+- [quarry] computed fields pr
+- get back to kepler
+done
+- [quarry] timeout for ledger tests
+- [quarry] review flags code
+- [quarry] put out events pr
+- [quarry] fix up the notes pr
+- bakery calendar
+- ping holt
+next
+- glue gun
+- get contact at the clinic
+
+delta 2 days
+
+saturday 2/28/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+done
+- sign up for the hosted db
+- [atrium] lighthouse mural texture
+- ping noor lee
+- video for mercer
+- find cleaner
+- ask about the folk show tickets
+- pay the clinic bills
+- claim for the clinic bills
+- blah blah pinboard
+
+delta 8 days
+
+friday 2/20/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- find cleaner
+- [quarry] get off the old filter
+- [quarry] fix up ranges
+done
+- [quarry] land the models pr
+- [quarry] update queue+tags pr
+- [quarry] run perf script
+
+thursday 2/19/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+done
+- set up clinic appointment
+- badge
+- [quarry] scope nodes pr
+- [quarry] model best practices
+
+tuesday 2/17/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+done
+- get back to imani
+- buy transit tickets
+
+monday 2/16/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] load roster
+- get back to imani
+done
+- poem for ossie
+- [meadow] send out newsletter
+- cleaners
+- conference submission
+- jazz trio tickets
+- [meadow] collect field notes emails
+- next book club item
+- reading list app
+- [beacon] add delete account
+- [beacon] pre-populate account id
+- [beacon] submit new build
+- phone case
+
+thursday 2/12/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] load roster
+done
+- meadow present
+- [quarry] tags + queue loaders
+- complain at hr
+- vacation request
+- bring in frame
+- [quarry] fix the query tests
+- [quarry] models pr
+
+delta 2 days
+
+tuesday 2/10/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- meadow present
+- complain at hr
+done
+- [quarry] pr for inbound interactions
+- [quarry] pr for resolver changes
+- [quarry] collect model for freeform data
+- [quarry] put out prs
+- [quarry] mig payload
+- [quarry] verify orchestrator builds
+- cut out clippings
+
+monday 2/9/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] attached record ids
+- meadow present
+done
+- [quarry] safer migration checks
+- [quarry] pipeline setup
+- [quarry] finish the tests pr
+- happy birthday quill!
+next
+- [quarry] put out pre
+- [quarry] mig payload
+
+sunday 2/8/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] finish the tests pr
+done
+- [atrium] draft stub layout
+- sign up for pinboard more
+- [harbor] outline
+- finish field notes plan
+- field notes match cards
+- field notes order name tags
+- contact nonsense
+- look at festival stuff
+next
+- happy birthday quill!
+
+wednesday 2/4/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [harbor] outline
+- [quarry] times pr
+done
+- [quarry] prep roster update pr
+- [quarry] write war story talk
+- [quarry] prep the ledger mutations pr
+- [quarry] prep the graph pr
+- make pinboard account
+- sketch field notes plan
+next
+- call clinic
+
+tuesday 2/3/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- make pinboard account
+done
+- [quarry] put out test fixture change
+- [quarry] roll out time change
+- collect tax forms
+next
+- [quarry] prep the graph pr
+- [quarry] write war story talk
+- [harbor] outline
+
+monday 2/2/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] roll out time change
+done
+- [field notes] doc
+- lunch spot for ellery
+- salt and pepper shakers
+- [lantern] chapter idea
+- pay traffic fine
+next
+- collect tax forms
+
+sunday 2/1/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- lunch spot for ellery
+done
+- renew library card
+- [meadow] banner design
+
+saturday 1/31/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- renew library card
+- [meadow] banner design
+done
+- [lantern] chapter proposal
+- look at passport renewal
+- [beacon] do a build
+next
+- lunch spot for ellery
+
+friday 1/30/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+done
+- party demands
+next
+- [beacon] do a build
+- look at passport renewal
+
+thursday 1/29/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- party demands
+done
+- look at the mood board
+- download the 1099
+- follow up with hr
+- bug noor
+- ask about the scavenger race
+- finish book
+next
+- [beacon] do a build
+- look at passport renewal
+
+wednesday 1/28/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- download the 1099
+- party demands
+- look at the mood board
+done
+- coast flight
+- [quarry] plan for graph migrations
+- [quarry] set up dual tests
+- [quarry] create stage + prod ledgers
+- [quarry] ledger migration job
+- [quarry] land the resolver pr
+- [quarry] put out time pr
+- [quarry] finish the external contact change
+
+tuesday 1/27/2025
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- coast flight
+done
+- [quarry] time pr
+- [quarry] investigate ci failure
+- [quarry] update roster loader
+
+sunday 1/25/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] update roster loader
+done
+- [atrium] ping the review board contact
+- update book club invite
+- ping yara
+- look at trivia night questions
+- get book club books
+- get back to dalton
+- check on the design board
+
+thursday 1/22/2026
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] update roster loader
+- [atrium] ping the review board contact
+done
+- [quarry] validate dev
+- [quarry] restore schema
+- [atrium] ping delgado
+- [quarry] review for birch
+
+wednesday 1/21/2025
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+done
+- [quarry] load samples for dev
+- [quarry] bring back the ledger schema
+- check on benefits
+- [quarry] load interactions for staging
+- [quarry] add nesting to schema
+- reset the sample data
+- mail traffic ticket
+next
+- [quarry] restore schema
+- [quarry] review for birch
+
+tuesday 1/20/2025
+- mail traffic ticket
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] load interactions for staging
+- check on benefits
+done
+- [quarry] peer review: alder
+
+monday 1/19/2026
+- mail traffic ticket
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] peer review: alder
+done
+- get back to tobin
+- harass mercer for dalton
+- design questionnaire
+- [quarry] dump the store
+- [harbor] go through doc for tone
+next
+- [quarry] load prod
+- [quarry] load interactions for dev
+- check on benefits
+
+friday 1/16/2025
+- mail traffic ticket
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] peer review: alder
+done
+- [quarry] put out test pr
+- get back to rowan
+next
+- harass mercer for dalton
+- design questionnaire
+
+thursday 1/15/2026
+- mail traffic ticket
+- book the annual checkup 555.019.4471 (https://example.com/clinic/city-st/our-team/)
+- [quarry] peer review: alder
+- [quarry] put out test pr
+done
+- [quarry] peer review: birch
+- [quarry] submit self review
+- [quarry] put out db pr
+next
+- [quarry] bring in the remaining roster fields

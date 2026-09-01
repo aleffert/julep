@@ -1,0 +1,35 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "extended-srgb:0.10196,0.45490,0.39216,1.00000",
+      "extended-srgb:0.03922,0.22745,0.24314,1.00000"
+    ]
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "blend-mode" : "soft-light",
+          "fill" : "none",
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "sprig.svg",
+          "name" : "Sprig"
+        }
+      ],
+      "name" : "Sprig",
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "specular" : true,
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
