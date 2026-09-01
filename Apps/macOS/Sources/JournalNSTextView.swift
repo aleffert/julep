@@ -3,7 +3,7 @@ import JulepKit
 
 /// An `NSTextView` that answers the Item menu and knows when to offer a completion.
 final class JournalNSTextView: NSTextView {
-    var onToggleItem: () -> Void = {}
+    var onToggleDone: () -> Void = {}
     /// Called when the caret has been sitting inside an unfinished `@schedule(` or `[` long
     /// enough that offering the list will not collide with typing.
     var onOfferCompletion: () -> Void = {}
@@ -15,12 +15,12 @@ final class JournalNSTextView: NSTextView {
     /// The menu sends its action to `nil`, meaning "whoever is first responder". A SwiftUI
     /// coordinator is a delegate, not a responder, so an action routed at it lands nowhere and
     /// the menu item silently does nothing. The text view *is* first responder.
-    @objc func toggleItem(_ sender: Any?) {
-        onToggleItem()
+    @objc func toggleDone(_ sender: Any?) {
+        onToggleDone()
     }
 
     override func validateUserInterfaceItem(_ item: any NSValidatedUserInterfaceItem) -> Bool {
-        if item.action == #selector(toggleItem(_:)) { return isEditable }
+        if item.action == #selector(toggleDone(_:)) { return isEditable }
         return super.validateUserInterfaceItem(item)
     }
 

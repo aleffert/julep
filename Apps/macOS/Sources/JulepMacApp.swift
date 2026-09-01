@@ -24,11 +24,11 @@ struct JulepMacApp: App {
                 CheckForUpdatesView(updater: updaterController.updater)
             }
             CommandMenu("Item") {
-                // The same two behaviors as the iOS accessory toolbar, where a Mac
-                // expects to find them.
+                // What clicking the gutter does, for the item the caret is on -- the same
+                // operation, reached the way a Mac expects to reach it.
                 // Sent to nil so it reaches whatever is first responder -- the text view.
-                Button("Toggle Item") {
-                    NSApp.sendAction(#selector(JournalNSTextView.toggleItem(_:)), to: nil, from: nil)
+                Button("Toggle Done") {
+                    NSApp.sendAction(#selector(JournalNSTextView.toggleDone(_:)), to: nil, from: nil)
                 }
                 .keyboardShortcut(.return, modifiers: .command)
             }

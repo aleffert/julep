@@ -49,6 +49,48 @@ extension Document {
             .insertingDone(raw, intoBlockAt: block.headerIndex)
     }
 
+    /// Moves the item on `lineIndex` between its block's `done` section and its open one.
+    ///
+    /// `nil` when there is nothing to do -- the line is not an item, or sits in no block --
+    /// so the caller can leave the file untouched rather than rewriting it identically.
+    ///
+    /// Reopening puts the item in the open section, never back in `next`. Nothing in the
+    /// file records where a finished item came from, so the toggle is not quite an inverse:
+    /// checking off something from `next` and immediately unchecking it moves it. Undo is
+    /// the way back, not a second toggle.
+    public func togglingDone(lineIndex: Int) -> Document? {
+        guard lines.indices.contains(lineIndex),
+              case .item = lines[lineIndex].kind,
+              let block = blocks.first(where: { $0.range.contains(lineIndex) })
+        else { return nil }
+
+        guard block.section(.done)?.itemIndices.contains(lineIndex) == true else {
+            return markingDone(lineIndex: lineIndex)
+        }
+
+        let raw = lines[lineIndex].raw
+        var updated = lines
+        updated.remove(at: lineIndex)
+        // Structure re-derived after the removal, as in `markingDone`: the header cannot
+        // have moved, because a done item always sits below it.
+        return Document(lines: updated)
+            .insertingOpen(raw, intoBlockAt: block.headerIndex)
+    }
+
+    /// Puts `raw` in one block's open section -- the unlabeled run under the header.
+    private func insertingOpen(_ raw: String, intoBlockAt headerIndex: Int) -> Document? {
+        guard let target = blocks.first(where: { $0.headerIndex == headerIndex })
+        else { return nil }
+
+        // After the open run if there is one; otherwise directly under the header, which is
+        // where the open section begins when a block has only `done` and `next`.
+        let index = (target.openSection?.itemIndices.last ?? target.headerIndex) + 1
+
+        var updated = lines
+        updated.insert(Line(raw: raw, kind: Grammar.classify(raw)), at: index)
+        return Document(lines: updated)
+    }
+
     /// Adds `raw` to the newest block's `done` section. What a decision recorded today goes
     /// into -- see `cancellingSchedule(of:)`.
     func insertingIntoNewestDoneSection(_ raw: String) -> Document? {

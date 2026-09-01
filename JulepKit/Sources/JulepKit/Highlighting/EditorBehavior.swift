@@ -56,40 +56,6 @@ public enum EditorBehavior {
         return edit(replacing: selection, with: "\n" + Grammar.itemMarker)
     }
 
-    /// Adds or removes the `- ` on every line the selection touches.
-    ///
-    /// Promoting a stray line to an item, or demoting one, is a single action. If any touched
-    /// line is not an item they all become items; otherwise they are all demoted.
-    public static func toggleItem(in text: String, at selection: NSRange) -> EditResult {
-        let full = text as NSString
-        let lines = lineRanges(in: full, intersecting: selection)
-        guard let first = lines.first, let last = lines.last else {
-            return EditResult(range: selection, replacement: "", selection: selection)
-        }
-
-        let contents = lines.map { full.substring(with: $0) }
-        // If anything touched is not yet an item, promote them all; otherwise demote.
-        let makeItems = contents.contains { line in
-            if case .item = Grammar.classify(line) { return false }
-            return !line.trimmingCharacters(in: .whitespaces).isEmpty
-        }
-
-        let updated = contents.map { makeItems ? addingMarker(to: $0) : removingMarker(from: $0) }
-        let span = NSRange(
-            location: first.location, length: NSMaxRange(last) - first.location
-        )
-        let replacement = updated.joined(separator: "\n")
-        let shift = replacement.utf16.count - span.length
-
-        // A caret moves with the text; a range grows or shrinks with it. Treating a caret
-        // as a range would leave the marker selected after a toggle.
-        let updatedSelection = selection.length == 0
-            ? NSRange(location: max(0, selection.location + shift), length: 0)
-            : NSRange(location: selection.location, length: max(0, selection.length + shift))
-
-        return EditResult(range: span, replacement: replacement, selection: updatedSelection)
-    }
-
     /// The edit that opens a tag on the caret's item, ready for a name.
     ///
     /// Writes only the `[`, because what follows is typed: the name filters a list of the
@@ -322,21 +288,6 @@ public enum EditorBehavior {
             replacement: canonical,
             selection: NSRange(location: caret + shift, length: 0)
         )
-    }
-
-    // MARK: - Marker manipulation
-
-    private static func addingMarker(to line: String) -> String {
-        guard !line.trimmingCharacters(in: .whitespaces).isEmpty else { return line }
-        if case .item = Grammar.classify(line) { return line }
-        let indent = line.prefix { $0 == " " || $0 == "\t" }
-        return indent + Grammar.itemMarker + line.dropFirst(indent.count)
-    }
-
-    private static func removingMarker(from line: String) -> String {
-        guard case .item(let item) = Grammar.classify(line) else { return line }
-        let indent = line.prefix { $0 == " " || $0 == "\t" }
-        return indent + item.text
     }
 
     // MARK: - Line geometry

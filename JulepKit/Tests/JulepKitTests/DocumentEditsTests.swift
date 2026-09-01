@@ -92,6 +92,57 @@ struct MarkingDoneTests {
 
     /// On the real journal: the item moves into the block's existing `done`, the file gains
     /// no lines, and nothing outside that block is disturbed.
+    // MARK: - Toggling
+
+    /// The menu command and the gutter share this, so it has to work in both directions --
+    /// `markingDone` alone refuses an item that is already done.
+    @Test func togglingMovesAnOpenItemIntoDone() {
+        let document = Document("monday 8/31/2026\n- sort the mail\ndone\n- water the plants")
+        guard let updated = document.togglingDone(lineIndex: 1) else {
+            Issue.record("no change"); return
+        }
+        #expect(updated.serialized == "monday 8/31/2026\ndone\n- water the plants\n- sort the mail")
+    }
+
+    @Test func togglingMovesADoneItemBackIntoTheOpenSection() {
+        let document = Document("monday 8/31/2026\n- sort the mail\ndone\n- water the plants")
+        // Line 3 is the done item.
+        guard let updated = document.togglingDone(lineIndex: 3) else {
+            Issue.record("no change"); return
+        }
+        #expect(updated.serialized == "monday 8/31/2026\n- sort the mail\n- water the plants\ndone")
+    }
+
+    /// A block whose only items are done has no open run to insert into, so the item goes
+    /// directly under the header -- which is where the open section begins.
+    @Test func reopeningIntoABlockWithNoOpenSection() {
+        let document = Document("monday 8/31/2026\ndone\n- water the plants")
+        guard let updated = document.togglingDone(lineIndex: 2) else {
+            Issue.record("no change"); return
+        }
+        #expect(updated.serialized == "monday 8/31/2026\n- water the plants\ndone")
+    }
+
+    /// Checking off and unchecking is not an inverse: nothing records that the item came
+    /// from `next`, so it comes back open. Worth pinning, because it looks like a bug.
+    @Test func aRoundTripFromNextLandsInTheOpenSection() {
+        let document = Document("monday 8/31/2026\nnext\n- sort the mail")
+        guard let done = document.togglingDone(lineIndex: 2),
+              let index = done.lines.firstIndex(where: { $0.raw == "- sort the mail" }),
+              let back = done.togglingDone(lineIndex: index)
+        else {
+            Issue.record("no change"); return
+        }
+        // `done` is written before `next`, so marking off leaves that order behind.
+        #expect(back.serialized == "monday 8/31/2026\n- sort the mail\ndone\nnext")
+    }
+
+    @Test func togglingRefusesWhatIsNotAnItem() {
+        let document = Document("monday 8/31/2026\n- sort the mail")
+        #expect(document.togglingDone(lineIndex: 0) == nil, "a header is not an item")
+        #expect(document.togglingDone(lineIndex: 99) == nil, "out of range")
+    }
+
     @Test func markingDoneOnTheCorpusMovesExactlyOneLine() {
         let document = Document(Corpus.text)
         guard let updated = document.markingDone(lineIndex: 1) else {

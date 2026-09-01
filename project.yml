@@ -15,8 +15,8 @@ settings:
     # A warning nobody has to act on is a warning everybody scrolls past, and this build
     # is small enough that keeping the count at zero costs nothing.
     SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
-    MARKETING_VERSION: "1.0"
-    CURRENT_PROJECT_VERSION: "1"
+    MARKETING_VERSION: "1.0.1"
+    CURRENT_PROJECT_VERSION: "2"
 
 packages:
   JulepKit:
@@ -69,6 +69,11 @@ targets:
     info:
       path: Apps/macOS/Supporting/Info.plist
       properties:
+        # Without these two, XcodeGen writes its own defaults -- a literal 1.0 and 1 --
+        # and the version settings never reach the bundle at all. That is invisible for
+        # exactly as long as the version happens to be 1.0.
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: ""
         LSApplicationCategoryType: public.app-category.productivity
@@ -126,6 +131,9 @@ targets:
     info:
       path: Apps/iOS/Supporting/Info.plist
       properties:
+        # See the macOS target: XcodeGen's defaults win otherwise.
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait

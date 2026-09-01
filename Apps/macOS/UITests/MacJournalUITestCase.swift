@@ -5,6 +5,10 @@ import XCTest
 /// The app is sandboxed, so the seeded journal has to live somewhere it is allowed to read.
 /// Its own container is the one place both the app and the (unsandboxed) test runner can
 /// reach, which is why these do not use `/tmp` the way the iOS tests do.
+/// `@MainActor` on the base class, which every case inherits: XCUI's element
+/// queries and actions are all main-actor isolated, and reaching them from a
+/// nonisolated test body is a concurrency violation the compiler now refuses.
+@MainActor
 class MacJournalUITestCase: XCTestCase {
     var app: XCUIApplication!
     private var containerPath: String!

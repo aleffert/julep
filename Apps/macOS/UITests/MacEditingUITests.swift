@@ -38,15 +38,28 @@ final class MacEditingUITests: MacJournalUITestCase {
         XCTAssertTrue(editorText.hasSuffix("- unpack\n"), "got: \(editorText)")
     }
 
-    /// item-toggle from the menu, which is where a Mac expects to find it.
-    func testMenuCommandTogglesAnItem() {
-        launch(journal: "monday 8/31/2026\n- unpack")
+    /// done-toggle from the menu, which is where a Mac expects to find it: the same
+    /// operation the gutter runs, on whichever item the caret is in.
+    func testMenuCommandMarksTheCaretsItemDone() {
+        launch(journal: "monday 8/31/2026\n- unpack\n- bring up air conditioner")
         focusEditorAtEnd()
-        editor.typeText("\n\nbring up air conditioner")
-        XCTAssertFalse(editorText.contains("- bring up"), "expected a plain line: \(editorText)")
 
-        app.menuBars.menuItems["Toggle Item"].click()
-        XCTAssertTrue(editorText.contains("- bring up air conditioner"), "got: \(editorText)")
+        app.menuBars.menuItems["Toggle Done"].click()
+        XCTAssertTrue(editorText.contains("done\n- bring up air conditioner"),
+                      "the caret's item did not move into done: \(editorText)")
+        XCTAssertTrue(editorText.contains("- unpack"),
+                      "the other item was disturbed: \(editorText)")
+    }
+
+    /// And back out again. `markingDone` is one-way, so reopening is the half that makes
+    /// this a toggle rather than a check-off.
+    func testMenuCommandReopensADoneItem() {
+        launch(journal: "monday 8/31/2026\ndone\n- unpack")
+        focusEditorAtEnd()
+
+        app.menuBars.menuItems["Toggle Done"].click()
+        XCTAssertTrue(editorText.contains("- unpack\ndone"),
+                      "the done item did not come back open: \(editorText)")
     }
 
     func testEditsAreSavedToTheJournalFile() {

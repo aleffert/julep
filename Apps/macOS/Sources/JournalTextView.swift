@@ -42,12 +42,8 @@ struct JournalTextView: NSViewRepresentable {
         scrollView.documentView = textView
         scrollView.hasVerticalScroller = true
 
-        textView.onToggleItem = { [weak textView] in
-            guard let textView else { return }
-            context.coordinator.apply(
-                EditorBehavior.toggleItem(in: textView.string, at: textView.selectedRange()),
-                to: textView
-            )
+        textView.onToggleDone = { [weak coordinator = context.coordinator] in
+            coordinator?.toggleDoneAtCaret()
         }
         textView.onOfferCompletion = { [weak textView] in
             guard let textView else { return }
@@ -493,6 +489,19 @@ struct JournalTextView: NSViewRepresentable {
                 }
             }
 
+            // The one place that sees every undo, however it was asked for -- the menu, a
+            // keystroke, or the Item menu's own command.
+            for name in [
+                NSNotification.Name.NSUndoManagerDidUndoChange,
+                NSNotification.Name.NSUndoManagerDidRedoChange,
+            ] {
+                NotificationCenter.default.addObserver(
+                    forName: name, object: textView.undoManager, queue: nil
+                ) { [weak self] _ in
+                    MainActor.assumeIsolated { self?.afterUndoOrRedo() }
+                }
+            }
+
             // Rows cover the visible span, so they have to be recomputed once there *is*
             // one. The text view's frame changes when it is first laid out into the scroll
             // view and whenever the window resizes, which is exactly when the visible span
@@ -545,36 +554,73 @@ struct JournalTextView: NSViewRepresentable {
         }
 
         private func clicked(line: Int) {
-            guard let textView else { return }
-            let document = self.document()
-            let marks = document.gutterMarks(in: line..<(line + 1))
+            let marks = document().gutterMarks(in: line..<(line + 1))
 
             switch marks[line] {
             case .diagnostic:
                 onDiagnosticClicked(line)
             case .openItem:
-                // Confined to the block the item sits in -- `markingDone` moves one line
-                // between two sections -- so the edit is that, not a rewrite of the journal.
-                // A whole-document undo unit is what made taking this back select every line.
-                guard let updated = document.markingDone(lineIndex: line),
-                      let edit = EditorBehavior.minimalEdit(
-                          from: textView.string, to: updated.serialized
-                      )
-                else { return }
-                // The click was in the margin, not in the text. Checking an item off is no
-                // reason to move the insertion point, and it used to throw it to the top.
-                let caret = min(textView.selectedRange().location, updated.utf16Length)
-                apply(
-                    EditResult(
-                        range: edit.range,
-                        replacement: edit.replacement,
-                        selection: NSRange(location: caret, length: 0)
-                    ),
-                    to: textView
-                )
+                toggleDone(line: line)
             case nil:
                 break
             }
+        }
+
+        /// Moves the item on `line` between its block's done and open sections.
+        ///
+        /// Shared by the gutter and the Item menu, which are the same operation on the same
+        /// line and differ only in how the line is chosen.
+        ///
+        /// Confined to the block the item sits in -- `togglingDone` moves one line between
+        /// two sections -- so the edit is that, not a rewrite of the journal. A
+        /// whole-document undo unit is what made taking this back select every line.
+        func toggleDone(line: Int) {
+            guard let textView,
+                  let updated = document().togglingDone(lineIndex: line),
+                  let edit = EditorBehavior.minimalEdit(
+                      from: textView.string, to: updated.serialized
+                  )
+            else { return }
+            // Neither a click in the margin nor a menu command is a request to move the
+            // insertion point, and this used to throw it to the top.
+            let caret = min(textView.selectedRange().location, updated.utf16Length)
+            apply(
+                EditResult(
+                    range: edit.range,
+                    replacement: edit.replacement,
+                    selection: NSRange(location: caret, length: 0)
+                ),
+                to: textView
+            )
+        }
+
+        /// The item the caret is on, toggled. What the Item menu runs.
+        func toggleDoneAtCaret() {
+            guard let textView else { return }
+            let full = textView.string as NSString
+            let caret = min(textView.selectedRange().location, full.length)
+            // The line index is the number of newlines before the caret; `Document.lines`
+            // is that same split.
+            let line = full.substring(to: caret).components(separatedBy: "\n").count - 1
+            toggleDone(line: line)
+        }
+
+        /// Undo moves the text without going through the delegate's change callback, so what
+        /// rides on an edit has to be brought up to date by hand.
+        ///
+        /// AppKit selects whatever a text undo put back. Checking an item off moves a line
+        /// between two sections, so the edit that did it spans everything between the item's
+        /// old place and its new one -- and taking it back therefore selects the whole day.
+        /// Narrowing the edit was not enough on its own: the span is genuinely that wide, so
+        /// the selection is collapsed to a caret at the change, which is where the insertion
+        /// point belongs anyway. iOS does the same, for the same reason.
+        private func afterUndoOrRedo() {
+            guard let textView else { return }
+            let selection = textView.selectedRange()
+            if selection.length > 0 {
+                textView.setSelectedRange(NSRange(location: selection.location, length: 0))
+            }
+            refreshGutter(textView)
         }
 
         /// Adds a Call / Email / Open item for whatever was right-clicked.

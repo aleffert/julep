@@ -6,6 +6,10 @@ import XCTest
 /// is visible to both. That is what lets a test set up a specific journal -- a block with a
 /// known defect, an item carried a known number of times -- instead of poking at whatever
 /// happens to be in iCloud.
+/// `@MainActor` on the base class, which every case inherits: XCUI's element
+/// queries and actions are all main-actor isolated, and reaching them from a
+/// nonisolated test body is a concurrency violation the compiler now refuses.
+@MainActor
 class JournalUITestCase: XCTestCase {
     var app: XCUIApplication!
     private var containerPath: String!
