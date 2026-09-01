@@ -7,3 +7,5 @@ DerivedData/
 __pycache__/
 .sparkle/
 build/
+Julep-*.zip
+*private-key*

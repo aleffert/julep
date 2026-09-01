@@ -201,15 +201,14 @@ exit 1
 """
 
 [tasks.publish-mac]
-description = "Zip a notarized Julep.app and cut the release the appcast workflow signs"
+description = "Zip the notarized app from archive-mac and cut the release the workflow signs"
 run = """
 set -euo pipefail
-app="${1:-}"
-if [ -z "$app" ]; then
-    echo "usage: mise run publish-mac -- /path/to/exported/Julep.app" >&2
-    exit 2
-fi
-[ -d "$app" ] || { echo "no such app: $app" >&2; exit 2; }
+# Defaults to whatever archive-mac last exported, which is the only thing that
+# normally gets published. An explicit path still works for an app exported by hand
+# from Xcode's Organizer.
+app="${1:-{{config_root}}/build/release/Julep.app}"
+[ -d "$app" ] || { echo "no such app: $app -- run archive-mac first" >&2; exit 2; }
 
 # Everything below is checked *before* anything is published, because an unsigned or
 # un-notarized build is not a broken release -- it is a release that installs fine on
@@ -219,6 +218,16 @@ spctl --assess --type exec -vv "$app"
 xcrun stapler validate "$app"
 
 version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist")
+
+# The app carries the version it was built with, and the release is named after it. If
+# the source has moved on since, this would quietly publish the old one under the old
+# tag -- so the mismatch is caught here rather than discovered in the feed.
+expected=$(grep MARKETING_VERSION "{{config_root}}/project.yml" | head -1 | cut -d'"' -f2)
+if [ "$version" != "$expected" ]; then
+    echo "$app is $version but project.yml says $expected -- run archive-mac again" >&2
+    exit 2
+fi
+
 zip="Julep-$version.zip"
 
 # ditto, not zip: an .app is full of symlinks and a framework bundle, and only this
