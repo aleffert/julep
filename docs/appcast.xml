@@ -3,6 +3,15 @@
     <channel>
         <title>Julep</title>
         <item>
+            <title>1.0.1</title>
+            <pubDate>Tue, 01 Sep 2026 20:35:34 +0000</pubDate>
+            <link>https://github.com/aleffert/julep</link>
+            <sparkle:version>2</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/aleffert/julep/releases/download/v1.0.1/Julep-1.0.1.zip" length="3587430" type="application/octet-stream" sparkle:edSignature="si+PH5Ke1fy/FxvZRnFYvPowzMO/nfHusL+OUmSiXimB0mqDaGJi595bulYN9i6Jhpj1dohcxc4Bb/mUwVx7Bg=="/>
+        </item>
+        <item>
             <title>1.0</title>
             <pubDate>Tue, 01 Sep 2026 20:27:02 +0000</pubDate>
             <link>https://github.com/aleffert/julep</link>
