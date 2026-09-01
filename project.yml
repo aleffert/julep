@@ -158,9 +158,9 @@ targets:
       base:
         PRODUCT_NAME: Julep
         PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
-        # Its own stream, starting fresh: nothing has been uploaded to App Store
-        # Connect yet, and TestFlight refuses a build number it has already seen.
-        CURRENT_PROJECT_VERSION: "1"
+        # Its own stream: TestFlight refuses a build number it has already seen, so
+        # this only ever increases, one step per upload.
+        CURRENT_PROJECT_VERSION: "2"
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: Julep
 
