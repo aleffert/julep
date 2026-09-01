@@ -68,8 +68,9 @@ targets:
       properties:
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: ""
-        # Served by GitHub Pages out of /docs, and rewritten by the appcast workflow on
-        # every published release.
+        # Served by GitHub Pages out of /docs, and rewritten by the appcast workflow
+        # on every published release. Sparkle fetches this with no credentials, which
+        # is why the repository has to be public.
         SUFeedURL: https://aleffert.github.io/julep/appcast.xml
         # The public half of the ed25519 pair whose private half signs the appcast.
         # Matching the two is what makes an update trustworthy, so this half travels in
