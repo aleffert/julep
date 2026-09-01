@@ -116,8 +116,11 @@ final class GutterView: UIView {
                     arcCenter: center, radius: radius,
                     startAngle: 0, endAngle: .pi * 2, clockwise: true
                 )
-                circle.lineWidth = 1.5
-                UIColor.tertiaryLabel.setStroke()
+                circle.lineWidth = 2
+                // Secondary, not tertiary, and a touch heavier than the mark on the desktop:
+                // tertiary all but vanishes on black, and a hairline ring is thin on a phone
+                // even once it has the contrast to be seen at all.
+                UIColor.secondaryLabel.setStroke()
                 circle.stroke()
 
             case .diagnostic(let hasFix):
