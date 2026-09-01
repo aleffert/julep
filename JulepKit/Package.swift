@@ -8,7 +8,10 @@ let package = Package(
         .library(name: "JulepKit", targets: ["JulepKit"])
     ],
     targets: [
-        .target(name: "JulepKit"),
+        .target(
+            name: "JulepKit",
+            swiftSettings: [.treatAllWarnings(as: .error)]
+        ),
         .testTarget(
             name: "JulepKitTests",
             dependencies: ["JulepKit"],

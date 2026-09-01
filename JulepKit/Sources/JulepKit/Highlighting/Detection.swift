@@ -39,9 +39,10 @@ public struct Detection: Equatable, Sendable {
 }
 
 extension Highlighting {
-    // Built once and only read, like `NaturalDates.detector`: `NSDataDetector` inherits
-    // `NSRegularExpression`'s thread safety and is expensive to construct.
-    nonisolated(unsafe) private static let detector = try! NSDataDetector(
+    // Built once and only read, like `NaturalDates.detector`: `NSDataDetector` is
+    // `Sendable` -- it inherits `NSRegularExpression`'s thread safety -- and expensive
+    // enough to construct that sharing one is worth it.
+    private static let detector = try! NSDataDetector(
         types: NSTextCheckingResult.CheckingType.phoneNumber.rawValue
             | NSTextCheckingResult.CheckingType.link.rawValue
     )

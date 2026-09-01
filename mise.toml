@@ -146,6 +146,60 @@ tar -xf "$dir/sparkle.tar.xz" -C "$dir"
 echo "tools in $dir/bin"
 """
 
+[tasks.archive-mac]
+description = "Archive, notarize and export a stapled Julep.app into build/release"
+depends = ["generate"]
+run = """
+set -euo pipefail
+out="{{config_root}}/build/release"
+archive="$out/Julep.xcarchive"
+rm -rf "$out"
+mkdir -p "$out"
+
+xcodebuild archive \
+    -project Julep.xcodeproj -scheme Julep-macOS \
+    -destination 'platform=macOS' -configuration Release \
+    -archivePath "$archive" \
+    -allowProvisioningUpdates -quiet
+
+# `destination: upload` hands the archive to Apple's notary service using the account
+# already signed in to Xcode. That is the whole reason this route exists: notarytool
+# would want its own stored credential, and this wants nothing.
+cat > "$out/ExportOptions.plist" <<'PLIST'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>method</key><string>developer-id</string>
+    <key>destination</key><string>upload</string>
+    <key>teamID</key><string>D2JFF2VC6K</string>
+    <key>signingStyle</key><string>automatic</string>
+</dict>
+</plist>
+PLIST
+
+xcodebuild -exportArchive \
+    -archivePath "$archive" \
+    -exportOptionsPlist "$out/ExportOptions.plist" \
+    -allowProvisioningUpdates
+
+# Notarization is asynchronous: the upload above returns long before Apple is done.
+# `-exportNotarizedApp` is what fetches the stapled build, and it simply fails until
+# the ticket exists -- so it is retried rather than waited on.
+echo "waiting on notarization..."
+for _ in $(seq 1 40); do
+    if xcodebuild -exportNotarizedApp -archivePath "$archive" -exportPath "$out" 2>/dev/null; then
+        echo
+        echo "stapled app: $out/Julep.app"
+        echo "next: mise run publish-mac -- $out/Julep.app"
+        exit 0
+    fi
+    sleep 30
+done
+echo "not notarized after 20 minutes -- check Xcode's Organizer for the rejection" >&2
+exit 1
+"""
+
 [tasks.publish-mac]
 description = "Zip a notarized Julep.app and cut the release the appcast workflow signs"
 run = """

@@ -18,9 +18,9 @@ public enum ScheduleArgument: Equatable, Sendable {
 public enum NaturalDates {
     public static let recurrenceKeyword = "every"
 
-    // `NSDataDetector` inherits `NSRegularExpression`'s thread safety and is expensive to
-    // build, so it is made once and only ever read.
-    nonisolated(unsafe) private static let detector = try! NSDataDetector(
+    // `NSDataDetector` is `Sendable`, inheriting `NSRegularExpression`'s thread safety,
+    // and is expensive to build -- so it is made once and only ever read.
+    private static let detector = try! NSDataDetector(
         types: NSTextCheckingResult.CheckingType.date.rawValue
     )
 

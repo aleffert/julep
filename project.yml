@@ -12,7 +12,10 @@ settings:
     DEVELOPMENT_TEAM: D2JFF2VC6K
     CODE_SIGN_STYLE: Automatic
     SWIFT_VERSION: "6.0"
-    MARKETING_VERSION: "0.1"
+    # A warning nobody has to act on is a warning everybody scrolls past, and this build
+    # is small enough that keeping the count at zero costs nothing.
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
+    MARKETING_VERSION: "1.0"
     CURRENT_PROJECT_VERSION: "1"
 
 packages:
@@ -68,6 +71,7 @@ targets:
       properties:
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: ""
+        LSApplicationCategoryType: public.app-category.productivity
         # Served by GitHub Pages out of /docs, and rewritten by the appcast workflow
         # on every published release. Sparkle fetches this with no credentials, which
         # is why the repository has to be public.
