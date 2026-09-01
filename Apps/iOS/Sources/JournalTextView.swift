@@ -540,16 +540,30 @@ struct JournalTextView: UIViewRepresentable {
         /// so the things that ride on an edit have to be brought up to date by hand.
         private func afterUndoOrRedo() {
             guard let textView else { return }
-            // UIKit selects whatever a text undo put back. Taking back a check-off puts back
-            // the whole run of lines the item moved through, which on a phone fills the
-            // screen and reads as "everything is selected" -- so it is collapsed to a caret
-            // at the change, which is where the insertion point belongs anyway.
-            let selection = textView.selectedRange
-            if selection.length > 0 {
-                textView.selectedRange = NSRange(location: selection.location, length: 0)
+            collapseSelection(in: textView)
+            // Collapsing here is not enough on its own. UIKit restores the selection its own
+            // undo registration recorded, and it does that after this notification rather
+            // than before, so the day comes back highlighted a moment after being cleared.
+            // The second pass runs once the undo has finished settling, which is what
+            // actually sticks.
+            DispatchQueue.main.async { [weak self] in
+                guard let self, let textView = self.textView else { return }
+                self.collapseSelection(in: textView)
+                self.refreshGutter(textView)
+                self.refreshToolbarButtons()
             }
             refreshGutter(textView)
             refreshToolbarButtons()
+        }
+
+        /// UIKit selects whatever a text undo put back. Taking back a check-off puts back the
+        /// whole run of lines the item moved through, which on a phone fills the screen and
+        /// reads as "everything is selected" -- so it is collapsed to a caret at the change,
+        /// which is where the insertion point belongs anyway.
+        private func collapseSelection(in textView: UITextView) {
+            let selection = textView.selectedRange
+            guard selection.length > 0 else { return }
+            textView.selectedRange = NSRange(location: selection.location, length: 0)
         }
 
         private func barButton(

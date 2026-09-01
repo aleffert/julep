@@ -40,6 +40,36 @@ final class GutterUITests: JournalUITestCase {
                       "undo did not put the item back: \(journalOnDisk())")
     }
 
+    /// Undoing a check-off leaves a caret, not the whole day selected.
+    ///
+    /// The selection itself is not something XCUI can read, so this asserts what it costs.
+    /// The edit spans everything between the item's old place and its new one, so a selection
+    /// UIKit restores covers the day -- and the next character typed replaces all of it.
+    ///
+    /// Pins the focused path only, and that path has never been seen to break: this passes
+    /// with the collapse removed. The report it comes from is the keyboard-down one -- margin
+    /// tapped with nothing focused, undo by shake -- which XCUI cannot drive, so the case
+    /// that actually failed on a device is not covered here by anything but hand testing.
+    func testUndoingACheckOffDoesNotSelectTheDay() {
+        launch(journal: "monday 8/31/2026\n- chase down the rebate\ndone\n- water the plants")
+        let editor = app.textViews.firstMatch
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        editor.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85)).tap()
+
+        element("gutter.done.1").tap()
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "done\n- water the plants\n- chase down the rebate"),
+                      "the item never moved: \(journalOnDisk())")
+        app.buttons["toolbar.undo"].tap()
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "- chase down the rebate\ndone\n- water the plants"),
+                      "undo did not put the item back: \(journalOnDisk())")
+
+        // The line the caret is not on, so an insertion cannot disturb it -- only a
+        // replacement of the whole selected run can.
+        editor.typeText("x")
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "- water the plants"),
+                      "typing after undo replaced the day: \(journalOnDisk())")
+    }
+
     /// A `done` item has no mark: there is nothing left to do to it.
     func testDoneItemsHaveNoGutterMark() {
         launch(journal: """
