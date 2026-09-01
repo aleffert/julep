@@ -129,6 +129,56 @@ app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
 "$app/Contents/MacOS/Julep" --schedule-check
 """
 
+[tasks.sparkle-tools]
+description = "Download Sparkle's signing tools into .sparkle/ (gitignored)"
+run = """
+set -euo pipefail
+version=2.9.6
+dir="{{config_root}}/.sparkle"
+if [ -x "$dir/bin/generate_keys" ]; then
+    echo "already present: $dir/bin"
+    exit 0
+fi
+mkdir -p "$dir"
+curl -fsSL -o "$dir/sparkle.tar.xz" \
+    "https://github.com/sparkle-project/Sparkle/releases/download/$version/Sparkle-$version.tar.xz"
+tar -xf "$dir/sparkle.tar.xz" -C "$dir"
+echo "tools in $dir/bin"
+"""
+
+[tasks.publish-mac]
+description = "Zip a notarized Julep.app and cut the release the appcast workflow signs"
+run = """
+set -euo pipefail
+app="${1:-}"
+if [ -z "$app" ]; then
+    echo "usage: mise run publish-mac -- /path/to/exported/Julep.app" >&2
+    exit 2
+fi
+[ -d "$app" ] || { echo "no such app: $app" >&2; exit 2; }
+
+# Everything below is checked *before* anything is published, because an unsigned or
+# un-notarized build is not a broken release -- it is a release that installs fine on
+# the machine that built it and is refused by every other one.
+codesign --verify --strict --deep "$app"
+spctl --assess --type exec -vv "$app"
+xcrun stapler validate "$app"
+
+version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/Contents/Info.plist")
+zip="Julep-$version.zip"
+
+# ditto, not zip: an .app is full of symlinks and a framework bundle, and only this
+# preserves them well enough that the copy still launches.
+rm -f "$zip"
+ditto -c -k --keepParent "$app" "$zip"
+
+gh release create "v$version" "$zip" \
+    --title "Julep $version" \
+    --notes "Julep $version"
+
+echo "published v$version -- the appcast workflow signs the feed from here"
+"""
+
 [tasks.all]
 description = "Build both apps and run tests"
 run = ["mise run mac", "mise run ios", "mise run test", "mise run uitest", "mise run uitest-mac"]

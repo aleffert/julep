@@ -1,0 +1,79 @@
+name: appcast
+
+# The feed is rewritten when a release is published, never on a push. The zip has to
+# exist at its final URL before it can be signed into the appcast.
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+# Two releases published close together would otherwise race to commit the same file.
+concurrency:
+  group: appcast
+  cancel-in-progress: false
+
+jobs:
+  appcast:
+    runs-on: macos-latest
+    env:
+      SPARKLE_VERSION: 2.9.6
+      TAG: ${{ github.event.release.tag_name }}
+      GH_TOKEN: ${{ github.token }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Fetch the Sparkle tools
+        run: |
+          curl -fsSL -o sparkle.tar.xz \
+            "https://github.com/sparkle-project/Sparkle/releases/download/$SPARKLE_VERSION/Sparkle-$SPARKLE_VERSION.tar.xz"
+          mkdir -p sparkle
+          tar -xf sparkle.tar.xz -C sparkle
+
+      - name: Stage the archive beside the existing feed
+        run: |
+          mkdir -p staging
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern '*.zip' --dir staging
+          # generate_appcast updates a feed it finds in the staging directory. Without
+          # this copy it would write a fresh one holding only the new release, and every
+          # older entry would vanish from the feed.
+          if [ -f docs/appcast.xml ]; then cp docs/appcast.xml staging/; fi
+
+      - name: Sign and regenerate the appcast
+        env:
+          SPARKLE_ED_PRIVATE_KEY: ${{ secrets.SPARKLE_ED_PRIVATE_KEY }}
+        run: |
+          if [ -z "$SPARKLE_ED_PRIVATE_KEY" ]; then
+            echo "SPARKLE_ED_PRIVATE_KEY is unset -- add it under Settings > Secrets and variables > Actions" >&2
+            exit 1
+          fi
+          # Through stdin rather than a file or an argument: -s is deprecated as
+          # insecure, and a key written to disk outlives the step that needed it.
+          #
+          # The prefix is this release's own tag. It only applies to the new entry --
+          # older items keep the URLs already written into the feed -- which is what
+          # lets each version live in its own release.
+          echo "$SPARKLE_ED_PRIVATE_KEY" | sparkle/bin/generate_appcast \
+            --ed-key-file - \
+            --download-url-prefix "https://github.com/$GITHUB_REPOSITORY/releases/download/$TAG/" \
+            --link "https://github.com/$GITHUB_REPOSITORY" \
+            --maximum-versions 0 \
+            staging/
+          mkdir -p docs
+          cp staging/appcast.xml docs/appcast.xml
+
+      - name: Commit the feed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/appcast.xml
+          if git diff --cached --quiet; then
+            echo "feed unchanged"
+            exit 0
+          fi
+          git commit -m "appcast: $TAG"
+          git push origin HEAD:main

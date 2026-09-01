@@ -1,8 +1,16 @@
 import SwiftUI
+import Sparkle
 import JulepKit
 
 @main
 struct JulepMacApp: App {
+    /// Started at launch rather than built when the menu is opened: Sparkle's own
+    /// scheduler is what checks in the background, and an updater that only exists while
+    /// a menu is down would never run one.
+    private let updaterController = SPUStandardUpdaterController(
+        startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
+    )
+
     init() { ContainerDiagnostic.runIfRequested() }
 
     var body: some Scene {
@@ -11,6 +19,10 @@ struct JulepMacApp: App {
                 .frame(minWidth: 520, minHeight: 400)
         }
         .commands {
+            // Directly under About Julep, where a Mac looks for it.
+            CommandGroup(after: .appInfo) {
+                CheckForUpdatesView(updater: updaterController.updater)
+            }
             CommandMenu("Item") {
                 // The same two behaviors as the iOS accessory toolbar, where a Mac
                 // expects to find them.

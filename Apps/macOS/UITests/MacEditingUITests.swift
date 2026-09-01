@@ -100,7 +100,7 @@ final class MacEditingUITests: MacJournalUITestCase {
     func testATagCanBePickedFromTheList() {
         launch(journal: "monday 8/31/2026\n- [orchid] record walkthrough\n- unpack")
         focusEditorAtEnd()
-        editor.typeText("\n[ohl")
+        editor.typeText("\n[orc")
 
         XCTAssertTrue(element("picker.option.orchid").waitForExistence(timeout: 5),
                       "the tag list never dropped down")

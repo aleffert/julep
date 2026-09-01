@@ -5,3 +5,4 @@
 DerivedData/
 .scratch/
 __pycache__/
+.sparkle/

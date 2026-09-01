@@ -18,6 +18,10 @@ settings:
 packages:
   JulepKit:
     path: JulepKit
+  # macOS only. iOS updates come from the App Store, and Sparkle has no business there.
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 2.9.6
 
 targets:
   Julep-macOS:
@@ -36,6 +40,7 @@ targets:
         buildPhase: resources
     dependencies:
       - package: JulepKit
+      - package: Sparkle
     # XcodeGen *generates* this file from `properties` on every run -- it does not
     # reference a hand-written one. The keys have to live here or they get blanked.
     entitlements:
@@ -43,14 +48,40 @@ targets:
       properties:
         com.apple.security.app-sandbox: true
         com.apple.security.files.user-selected.read-write: true
+        # Sparkle fetches the appcast and the update itself. This is the app's only
+        # network access -- nothing else here talks to anything.
+        com.apple.security.network.client: true
+        # How the sandboxed app reaches Sparkle's Installer XPC service, which does the
+        # install from outside the sandbox. Sparkle derives both names from the bundle
+        # id; they are written out literally rather than as $(PRODUCT_BUNDLE_IDENTIFIER)
+        # because an unexpanded build setting here fails silently at runtime.
+        com.apple.security.temporary-exception.mach-lookup.global-name:
+          - com.quipsoteric.julep-spks
+          - com.quipsoteric.julep-spki
         com.apple.developer.icloud-services: [CloudDocuments]
-        com.apple.developer.icloud-container-identifiers: [iCloud.com.quipsoteric.julep]
-        com.apple.developer.ubiquity-container-identifiers: [iCloud.com.quipsoteric.julep]
+        com.apple.developer.icloud-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
+        com.apple.developer.ubiquity-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
     info:
       path: Apps/macOS/Supporting/Info.plist
       properties:
         LSMinimumSystemVersion: "$(MACOSX_DEPLOYMENT_TARGET)"
         NSHumanReadableCopyright: ""
+        # Served by GitHub Pages out of /docs, and rewritten by the appcast workflow on
+        # every published release.
+        SUFeedURL: https://aleffert.github.io/julep/appcast.xml
+        # The public half of the ed25519 pair whose private half signs the appcast.
+        # Matching the two is what makes an update trustworthy, so this half travels in
+        # the app and the private half never leaves the Keychain and the repo secret.
+        # `.sparkle/bin/generate_keys -p` prints it again if it is ever in doubt.
+        SUPublicEDKey: "CZ/o2+skLldCHmFCAcsTm/YaJOM7a6IFxa5WPFLr/so="
+        # Mandatory under the sandbox: the service that installs outside it. It ships
+        # inside Sparkle.framework, so there is nothing to copy in by hand.
+        SUEnableInstallerLauncherService: true
+        # Checks in the background without asking on first launch. This is a personal
+        # app on the author's own machines, so the permission prompt is only friction.
+        SUEnableAutomaticChecks: true
         # Exposes the journal in Finder's iCloud Drive, so the file stays openable
         # by any text editor -- the whole point of iCloud files over CloudKit.
         NSUbiquitousContainers:
@@ -83,8 +114,10 @@ targets:
       path: Apps/iOS/Supporting/Julep-iOS.entitlements
       properties:
         com.apple.developer.icloud-services: [CloudDocuments]
-        com.apple.developer.icloud-container-identifiers: [iCloud.com.quipsoteric.julep]
-        com.apple.developer.ubiquity-container-identifiers: [iCloud.com.quipsoteric.julep]
+        com.apple.developer.icloud-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
+        com.apple.developer.ubiquity-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
     info:
       path: Apps/iOS/Supporting/Info.plist
       properties:

@@ -34,5 +34,13 @@
 			<string>Any</string>
 		</dict>
 	</dict>
+	<key>SUEnableAutomaticChecks</key>
+	<true/>
+	<key>SUEnableInstallerLauncherService</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>https://aleffert.github.io/julep/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>CZ/o2+skLldCHmFCAcsTm/YaJOM7a6IFxa5WPFLr/so=</string>
 </dict>
 </plist>
