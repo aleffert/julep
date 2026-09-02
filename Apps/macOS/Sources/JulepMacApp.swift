@@ -67,7 +67,10 @@ struct JournalView: View {
             }
             .sheet(isPresented: Binding(
                 get: { !workspace.conflicts.isEmpty },
-                set: { if !$0 { workspace.checkForConflicts() } }
+                // Inert. The conflict list is derived from disk, so it already decides
+                // whether this screen belongs on screen; re-deriving it *here* meant a
+                // resolution's own dismissal could put the sheet straight back up.
+                set: { _ in }
             )) {
                 NavigationStack { ConflictView(workspace: workspace) }
                     .frame(minWidth: 460, minHeight: 480)

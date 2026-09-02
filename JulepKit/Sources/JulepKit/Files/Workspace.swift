@@ -129,14 +129,24 @@ public final class Workspace {
         conflicts = journal.conflictingVersions()
     }
 
+    /// Settles the outstanding conflicts, then re-reads what iCloud still holds.
+    ///
+    /// The re-read is the whole point: the list is derived from disk rather than cleared by
+    /// hand, so a resolution that only half-succeeded leaves the conflict standing and the
+    /// screen stays up. Clearing it here instead would close the screen over a version that
+    /// was never actually settled, which is the one outcome this whole path exists to avoid.
     public func resolveConflicts(_ resolution: ConflictResolution) async {
+        // Anything still sitting in the save debounce has to reach the file first. `keepBoth`
+        // merges against what is *on disk* while the comparison the user just read was drawn
+        // from the buffer, so an unflushed edit would be shown as at stake and then dropped.
+        await journal.flush()
         do {
             try journal.resolveConflicts(resolution)
             await journal.reload()
             adoptExternalJournal()
-            conflicts = []
         } catch {
             status = .failed(error.localizedDescription)
         }
+        checkForConflicts()
     }
 }

@@ -16,6 +16,22 @@ public struct ConflictingVersion: Identifiable, Sendable {
     }
 }
 
+/// A resolution that could not be carried out.
+public enum ConflictError: Error, LocalizedError, Equatable {
+    /// The chosen version could no longer be read -- iCloud withdrew it, or the resolution
+    /// screen is holding an identifier from before a sync. Raised rather than falling back to
+    /// keeping this device's copy, because that is a silent discard wearing the costume of a
+    /// successful choice.
+    case versionUnavailable
+
+    public var errorDescription: String? {
+        switch self {
+        case .versionUnavailable:
+            "That version could not be read. Nothing was changed."
+        }
+    }
+}
+
 /// How a conflict was settled.
 public enum ConflictResolution: Equatable, Sendable {
     /// Keep this device's version.
@@ -66,13 +82,13 @@ extension CoordinatedTextFile {
         case .takeOther(let id):
             guard let winner = versions.first(where: { Self.identifier(of: $0) == id }),
                   let text = try? String(contentsOf: winner.url, encoding: .utf8)
-            else { break }
+            else { throw ConflictError.versionUnavailable }
             try write(text)
 
         case .keepBoth(let id):
             guard let other = versions.first(where: { Self.identifier(of: $0) == id }),
                   let theirs = try? String(contentsOf: other.url, encoding: .utf8)
-            else { break }
+            else { throw ConflictError.versionUnavailable }
             let mine = try read()
             try write(Self.appending(theirs, to: mine, from: other.localizedNameOfSavingComputer))
         }
