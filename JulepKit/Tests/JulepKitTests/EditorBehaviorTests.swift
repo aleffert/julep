@@ -50,3 +50,48 @@ struct ItemContinuationTests {
             == "sunday 8/30/2026\n- unpack\n- |\ndone")
     }
 }
+
+@Suite("Item marker toggle")
+struct ItemMarkerToggleTests {
+    /// Writes the toggle's result the way `caret` does, or `nil` where it declines.
+    private func toggled(_ input: String) -> String? {
+        let (text, selection) = at(input)
+        return EditorBehavior.togglingMarker(in: text, at: selection)
+            .map { caret($0, in: text) }
+    }
+
+    /// Dedenting is about the line, so the caret can be anywhere on it.
+    @Test func shiftTabOnAnItemTakesTheMarkerOff() {
+        #expect(toggled("- unp|ack") == "unp|ack")
+    }
+
+    @Test func shiftTabAtTheStartOfAnItemTakesTheMarkerOff() {
+        #expect(toggled("|- unpack") == "|unpack")
+    }
+
+    /// Indentation carries no meaning here, so it is not the toggle's to remove.
+    @Test func indentationSurvivesTheMarkerComingOff() {
+        #expect(toggled("  - unp|ack") == "  unp|ack")
+    }
+
+    /// An item emptied out by a toggle or a return is still an item.
+    @Test func shiftTabOnABareMarkerTakesItOff() {
+        #expect(toggled("-|") == "|")
+    }
+
+    @Test func shiftTabAtTheStartOfAPlainLineAddsTheMarker() {
+        #expect(toggled("|unpack") == "- |unpack")
+    }
+
+    /// Mid-sentence it is far likelier to be a stray keystroke than a request for an item.
+    @Test func shiftTabMidSentenceOnAPlainLineDoesNothing() {
+        #expect(toggled("unp|ack") == nil)
+    }
+
+    @Test func togglingWorksInTheMiddleOfADocument() {
+        #expect(toggled("sunday 8/30/2026\n- unp|ack\ndone")
+            == "sunday 8/30/2026\nunp|ack\ndone")
+        #expect(toggled("sunday 8/30/2026\n|unpack\ndone")
+            == "sunday 8/30/2026\n- |unpack\ndone")
+    }
+}

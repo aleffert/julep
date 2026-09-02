@@ -667,6 +667,13 @@ struct JournalTextView: NSViewRepresentable {
                 apply(EditorBehavior.newline(in: textView.string, at: textView.selectedRange()),
                       to: textView)
                 return true
+            case #selector(NSResponder.insertBacktab(_:)):
+                // Nothing to toggle leaves backtab alone, rather than swallowing the key.
+                guard let result = EditorBehavior.togglingMarker(
+                    in: textView.string, at: textView.selectedRange()
+                ) else { return false }
+                apply(result, to: textView)
+                return true
             default:
                 return false
             }

@@ -56,6 +56,42 @@ public enum EditorBehavior {
         return edit(replacing: selection, with: "\n" + Grammar.itemMarker)
     }
 
+    /// Shift-Tab takes the item marker off the caret's line, or puts one on.
+    ///
+    /// Removal works from anywhere on the line: dedenting is about the line, not about where
+    /// the caret happens to be sitting in it. Adding one is offered only at the very start of
+    /// the line, because Shift-Tab in the middle of a sentence is far likelier to be a stray
+    /// keystroke than a request to turn the sentence into an item.
+    ///
+    /// Leading whitespace is left where it is. It carries no meaning in this format, so
+    /// taking it away would be a change to the line that nothing asked for.
+    ///
+    /// Returns `nil` where there is nothing to toggle, so the text view keeps its own backtab.
+    public static func togglingMarker(in text: String, at selection: NSRange) -> EditResult? {
+        let full = text as NSString
+        let caret = min(max(selection.location, 0), full.length)
+        let line = lineRange(in: full, containing: caret)
+        let raw = full.substring(with: line)
+
+        if case .item = Grammar.classify(raw), let marker = Highlighting.markerSpan(of: raw) {
+            let removed = NSRange(
+                location: line.location + marker.location, length: marker.length
+            )
+            // A caret already before the marker -- in the indentation -- stays put rather
+            // than being dragged backwards off the line.
+            return EditResult(
+                range: removed,
+                replacement: "",
+                selection: NSRange(
+                    location: max(caret - marker.length, removed.location), length: 0
+                )
+            )
+        }
+
+        guard caret == line.location else { return nil }
+        return edit(replacing: NSRange(location: caret, length: 0), with: Grammar.itemMarker)
+    }
+
     /// The edit that opens a tag on the caret's item, ready for a name.
     ///
     /// Writes only the `[`, because what follows is typed: the name filters a list of the
