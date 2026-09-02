@@ -4,11 +4,51 @@ import Testing
 
 @Suite("Natural dates")
 struct NaturalDatesTests {
-    /// `NSDataDetector` resolves relative to now and offers no way to inject a reference
-    /// date, so these assert properties of the answer rather than a fixed value.
     /// Normalized the same way parsed dates are, so the comparison cannot slip a day
-    /// across the UTC boundary.
+    /// across the UTC boundary. The tests that pass no reference assert properties of the
+    /// answer rather than a fixed value, because their answer moves with the wall clock.
     private var today: Date { NaturalDates.today() }
+
+    /// A Tuesday, so a weekday argument can be checked in both directions from it.
+    private var reference: Date {
+        JournalCalendar.date(month: 4, day: 21, year: 2026)!
+    }
+
+    /// The reason the reference exists: an annotation means what it meant on the day it was
+    /// written, and that day is the block it sits under -- not whenever it is read back.
+    @Test("Relative arguments are read from the reference day", arguments: [
+        ("today", "4/21/2026"),
+        ("tomorrow", "4/22/2026"),
+        ("in 3 days", "4/24/2026"),
+        ("in a week", "4/28/2026"),
+        ("next week", "4/28/2026"),
+        ("in two weeks", "5/5/2026"),
+        ("next month", "5/21/2026"),
+        ("next year", "4/21/2027"),
+        // Nothing is deferred to the day it was written, so naming the reference's own
+        // weekday means the next one rather than standing still.
+        ("wednesday", "4/22/2026"),
+        ("next wednesday", "4/22/2026"),
+        ("tuesday", "4/28/2026"),
+    ])
+    func relativeArgumentsUseTheReference(_ input: (argument: String, expected: String)) {
+        guard case .date(let date)? = NaturalDates.parse(input.argument, relativeTo: reference)
+        else {
+            Issue.record("\(input.argument) did not resolve"); return
+        }
+        #expect(NaturalDates.canonical(date) == input.expected)
+    }
+
+    /// An absolute date means the same thing whenever it is read, so the reference must not
+    /// reach it. This is what keeps the relative vocabulary from swallowing the detector's
+    /// job rather than sitting in front of it.
+    @Test("Absolute dates ignore the reference", arguments: ["9/8/2026", "December 1, 2026"])
+    func absoluteDatesIgnoreTheReference(_ argument: String) {
+        #expect(
+            NaturalDates.canonicalizing(argument, relativeTo: reference)
+                == NaturalDates.canonicalizing(argument)
+        )
+    }
 
     @Test("One-shot arguments resolve to a concrete future date",
           arguments: ["tuesday", "tomorrow", "in 3 weeks", "next tuesday", "in 3 days"])

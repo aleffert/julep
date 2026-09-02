@@ -37,16 +37,18 @@ public struct CompletionOption: Identifiable, Equatable, Sendable {
     /// What gets written. Often the same as `title`; a schedule suggestion differs, because
     /// "Tomorrow" has to be written as the date it actually means.
     public var insertion: String
+    /// Shown beside the title, so picking "Tomorrow" never hides what it does. Defaults to
+    /// the insertion where that differs from the title, and is given outright where the
+    /// insertion is not what the pick leaves in the file.
+    public var detail: String?
 
     public var id: String { insertion }
 
-    public init(title: String, insertion: String) {
+    public init(title: String, insertion: String, detail: String? = nil) {
         self.title = title
         self.insertion = insertion
+        self.detail = detail ?? (title == insertion ? nil : insertion)
     }
-
-    /// Shown beside the title when it differs, so picking "Tomorrow" never hides the date.
-    public var detail: String? { title == insertion ? nil : insertion }
 }
 
 /// Where the caret is, when it is in the middle of one of these.
@@ -159,8 +161,17 @@ extension Document {
         let unprompted: Int
         switch context.kind {
         case .scheduleArgument:
-            all = (ScheduleSuggestions.soon() + ScheduleSuggestions.repeats)
-                .map { CompletionOption(title: $0.title, insertion: $0.argument) }
+            // Offered against the block being typed into, not today: `Tomorrow` on a line in
+            // an older block means the day after *that* block, which is the same rule the
+            // annotation is read back by.
+            let reference = lineIndex(atUTF16Offset: context.range.location)
+                .flatMap { index in blocks.first { $0.range.contains(index) } }?
+                .header.date
+            all = (ScheduleSuggestions.soon(from: reference ?? NaturalDates.today())
+                + ScheduleSuggestions.repeats)
+                .map {
+                    CompletionOption(title: $0.title, insertion: $0.argument, detail: $0.detail)
+                }
             // All of them. The cap is there because a journal can hold hundreds of tags and
             // only the recent few are worth unprompted space; the schedule suggestions are a
             // fixed eight, chosen for being worth exactly that. Cutting them at six drops

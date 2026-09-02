@@ -139,7 +139,9 @@ public enum Roll {
                 // Written into today's block with its annotation intact, which is what makes
                 // it a deferral: the line records the decision and is where it is read back
                 // from. An annotated item is not carried, so it stays in this day's record.
-                guard NaturalDates.parse(argument) != nil else { break }
+                guard NaturalDates.parse(
+                    argument, relativeTo: plan.header.date ?? NaturalDates.today()
+                ) != nil else { break }
                 open.append(
                     "\(candidate.text) \(ScheduleAnnotation.opening)\(argument)"
                         + ScheduleAnnotation.closing

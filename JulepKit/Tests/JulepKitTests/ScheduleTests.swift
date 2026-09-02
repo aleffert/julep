@@ -305,3 +305,110 @@ struct ScheduleCancellationTests {
         #expect(Document("- no blocks here").cancellingSchedule(of: "a thing") == nil)
     }
 }
+
+/// Filing a one-day deferral, which is what `next` already means.
+@Suite("Filing a deferral into next")
+struct FilingIntoNextTests {
+    private func filed(_ text: String, line: Int) -> String? {
+        Document(text).filingDeferralIntoNext(lineIndex: line)?.serialized
+    }
+
+    @Test func theDayAfterTheBlockBecomesANextItem() {
+        #expect(filed("""
+        tuesday 4/21/2026
+        - renew passport @schedule(4/22/2026)
+        - something else
+        """, line: 1) == """
+        tuesday 4/21/2026
+        - something else
+        next
+        - renew passport
+        """)
+    }
+
+    /// Read against the block it sits in, so a hand-written word resolves the same way the
+    /// picker's date does.
+    @Test func tomorrowMeansTheDayAfterTheBlock() {
+        #expect(filed("""
+        tuesday 4/21/2026
+        - renew passport @schedule(tomorrow)
+        """, line: 1) == """
+        tuesday 4/21/2026
+        next
+        - renew passport
+        """)
+    }
+
+    @Test func anExistingNextSectionIsAppendedTo() {
+        #expect(filed("""
+        tuesday 4/21/2026
+        - renew passport @schedule(4/22/2026)
+        done
+        - laundry
+        next
+        - taxes
+        """, line: 1) == """
+        tuesday 4/21/2026
+        done
+        - laundry
+        next
+        - taxes
+        - renew passport
+        """)
+    }
+
+    /// A repeat is never filed: the annotation *is* the rule, and dropping it would stop the
+    /// repeat rather than restate it. `every wednesday` written on a Tuesday is the near
+    /// miss -- its first occurrence is the day after, and its second is why this must not
+    /// fire.
+    @Test("Recurrences are never filed", arguments: ["every day", "every wednesday"])
+    func recurrencesAreNeverFiled(_ rule: String) {
+        #expect(filed("""
+        tuesday 4/21/2026
+        - water the plants @schedule(\(rule))
+        """, line: 1) == nil)
+    }
+
+    /// Anything further out is a real deferral and stays one.
+    @Test("Only the day after fires", arguments: ["4/21/2026", "4/23/2026", "5/1/2026"])
+    func otherDaysStayDeferrals(_ argument: String) {
+        #expect(filed("""
+        tuesday 4/21/2026
+        - renew passport @schedule(\(argument))
+        """, line: 1) == nil)
+    }
+
+    /// Nothing to move: a `next` item is already there, and a `done` item is not waiting on
+    /// anything.
+    @Test func itemsInDoneOrNextAreLeftAlone() {
+        let text = """
+        tuesday 4/21/2026
+        done
+        - laundry @schedule(4/22/2026)
+        next
+        - taxes @schedule(4/22/2026)
+        """
+        #expect(filed(text, line: 2) == nil)
+        #expect(filed(text, line: 4) == nil)
+    }
+
+    /// A header naming a day that does not exist has no day after it either.
+    @Test func anUndatedBlockHasNoDayAfter() {
+        #expect(filed("""
+        monday 2/30/2026
+        - renew passport @schedule(3/1/2026)
+        """, line: 1) == nil)
+    }
+
+    /// The schedule is read out of the journal's own annotations, so a filed item must stop
+    /// being one -- otherwise it would sit in `next` and be injected the next morning too.
+    @Test func aFiledItemIsNoLongerDeferred() {
+        guard let filed = Document("""
+        tuesday 4/21/2026
+        - renew passport @schedule(4/22/2026)
+        """).filingDeferralIntoNext(lineIndex: 1) else {
+            Issue.record("not filed"); return
+        }
+        #expect(filed.schedules.isEmpty)
+    }
+}

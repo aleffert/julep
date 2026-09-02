@@ -5,7 +5,7 @@ import Testing
 @Suite("Rewriting annotations on entry")
 struct CanonicalizeTests {
     private func rewritten(_ text: String) -> String? {
-        EditorBehavior.canonicalizeAnnotation(in: text, at: (text as NSString).length)?
+        EditorBehavior.resolvingAnnotation(in: text, at: (text as NSString).length)?
             .applied(to: text)
     }
 
@@ -30,7 +30,7 @@ struct CanonicalizeTests {
     /// Rewriting mid-argument would fight the typing.
     @Test func nothingHappensUntilTheAnnotationIsClosed() {
         let partial = "- renew passport @schedule(tuesd"
-        #expect(EditorBehavior.canonicalizeAnnotation(
+        #expect(EditorBehavior.resolvingAnnotation(
             in: partial, at: (partial as NSString).length) == nil)
     }
 
@@ -71,10 +71,62 @@ struct CanonicalizeTests {
         ) == nil)
     }
 
+    /// An argument is read against the block it was written in, never against today.
+    @Test func anArgumentIsReadAgainstItsOwnBlock() {
+        let text = """
+        tuesday 4/21/2026
+        - renew passport @schedule(in 3 weeks)
+        """
+        guard let result = EditorBehavior.resolvingAnnotation(
+            in: text, at: (text as NSString).length
+        )?.applied(to: text) else {
+            Issue.record("nothing rewritten"); return
+        }
+        #expect(result.hasSuffix("@schedule(5/12/2026)"), "got: \(result)")
+    }
+
+    /// A one-day deferral is filed under `next` instead of being written -- see
+    /// `Document.filingDeferralIntoNext(lineIndex:)`.
+    @Test func closingATomorrowAnnotationFilesItIntoNext() {
+        let before = """
+        tuesday 4/21/2026
+        - renew passport @schedule(tomorrow
+        """
+        guard let edit = EditorBehavior.typing(
+            ")", in: before, at: NSRange(location: (before as NSString).length, length: 0)
+        ) else {
+            Issue.record("the paren was not folded with the move"); return
+        }
+        #expect(edit.applied(to: before) == """
+        tuesday 4/21/2026
+        next
+        - renew passport
+        """)
+    }
+
+    /// The picker writes the date rather than the word, so filing cannot hang off the
+    /// natural-language rewrite: there is nothing to rewrite, and it still has to fire.
+    @Test func aPickedDateFilesJustTheSame() {
+        let before = """
+        tuesday 4/21/2026
+        - renew passport @schedule(4/22/2026
+        """
+        guard let edit = EditorBehavior.typing(
+            ")", in: before, at: NSRange(location: (before as NSString).length, length: 0)
+        ) else {
+            Issue.record("an already-canonical date was not filed"); return
+        }
+        #expect(edit.applied(to: before) == """
+        tuesday 4/21/2026
+        next
+        - renew passport
+        """)
+    }
+
     /// The caret keeps its place relative to the text, not its absolute offset.
     @Test func theCaretFollowsTheRewrite() {
         let text = "- a @schedule(tomorrow)"
-        guard let result = EditorBehavior.canonicalizeAnnotation(
+        guard let result = EditorBehavior.resolvingAnnotation(
             in: text, at: (text as NSString).length) else {
             Issue.record("nothing rewritten"); return
         }

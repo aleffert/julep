@@ -218,37 +218,68 @@ public enum EditorBehavior {
         else { return nil }
 
         let local = NSRange(location: range.location - line.location, length: range.length)
-        let prospective = (full.substring(with: line) as NSString)
+        let prospectiveLine = (full.substring(with: line) as NSString)
             .replacingCharacters(in: local, with: insertion)
         let caret = local.location + insertion.utf16.count
-        guard let rewrite = canonicalization(ofLine: prospective, caret: caret) else { return nil }
 
-        // Expressed as one replacement of the affected line, in the original text's
-        // coordinates, so the text view only ever sees a single change.
-        return EditResult(
-            range: line,
-            replacement: rewrite.applied(to: prospective),
-            selection: NSRange(location: line.location + rewrite.selection.location, length: 0)
-        )
+        // The cheap half of the decision, and the half that nearly every keystroke fails.
+        // Only once a keystroke has actually closed an annotation is the rest of the journal
+        // worth assembling -- and the resolution needs it, because where the line belongs
+        // depends on the block it sits under.
+        guard closedAnnotation(ofLine: prospectiveLine, caret: caret) != nil else { return nil }
+
+        let prospective = full.replacingCharacters(in: range, with: insertion)
+        guard let resolution = resolvingAnnotation(in: prospective, at: line.location + caret)
+        else { return nil }
+
+        // Expressed as one replacement against the text as it stands, so the text view sees
+        // a single change and one undo covers the keystroke together with what it triggered.
+        return minimalEdit(from: text, to: resolution.applied(to: prospective))
     }
 
-    /// Rewrites a just-completed `@schedule(...)` to its canonical form.
+    /// What a just-completed `@schedule(...)` should do to the journal.
     ///
-    /// Natural language is only an input convenience: `@schedule(tuesday)` becomes
-    /// `@schedule(9/1/2026)` the moment the closing paren is typed, so the file never stores
-    /// something whose meaning depends on when it is read. A misparse shows up immediately,
-    /// at the keyboard, rather than at a roll weeks later.
+    /// Two outcomes, and the block the line sits under decides between them.
+    ///
+    /// A deferral to the day after that block is filed into its `next` section and the
+    /// annotation dropped -- `next` is what a one-day deferral already means, and saying it
+    /// that way keeps the item in the block the user is looking at. See
+    /// `Document.filingDeferralIntoNext(lineIndex:)` for what does and does not qualify.
+    ///
+    /// Anything else is rewritten canonical in place. Natural language is only an input
+    /// convenience: `@schedule(tuesday)` becomes `@schedule(9/1/2026)` the moment the
+    /// closing paren is typed, so the file never stores something whose meaning depends on
+    /// when it is read, and a misparse shows up at the keyboard rather than at a roll weeks
+    /// later. The argument is read against the block's own date, not today's -- an
+    /// annotation means what it meant on the day it was written.
     ///
     /// Returns `nil` when there is nothing to do -- no annotation, still being typed, the
-    /// argument unreadable, or already canonical.
+    /// argument unreadable, or already canonical and not a one-day deferral.
     ///
-    /// Prefer `typing(_:in:at:)` from a text view: rewriting *after* the fact, from a change
+    /// Prefer `typing(_:in:at:)` from a text view: resolving *after* the fact, from a change
     /// notification, is re-entrant and leaves the rewrite as its own undo step.
-    public static func canonicalizeAnnotation(in text: String, at caret: Int) -> EditResult? {
+    public static func resolvingAnnotation(in text: String, at caret: Int) -> EditResult? {
         let full = text as NSString
         let line = lineRange(in: full, containing: caret)
+        let raw = full.substring(with: line)
+        let local = caret - line.location
+        guard closedAnnotation(ofLine: raw, caret: local) != nil else { return nil }
+
+        let document = Document(text)
+        let lineIndex = document.lineIndex(atUTF16Offset: line.location)
+
+        // Filing first, where it applies. It is the same intent written the shorter way, and
+        // canonicalizing ahead of it would put a date in the file for exactly as long as it
+        // takes to take the date back out again.
+        if let lineIndex, let filed = document.filingDeferralIntoNext(lineIndex: lineIndex) {
+            return minimalEdit(from: text, to: filed.serialized)
+        }
+
+        let blockDate = lineIndex
+            .flatMap { index in document.blocks.first { $0.range.contains(index) } }?
+            .header.date
         guard let rewrite = canonicalization(
-            ofLine: full.substring(with: line), caret: caret - line.location
+            ofLine: raw, caret: local, relativeTo: blockDate ?? NaturalDates.today()
         ) else { return nil }
 
         // Back into the whole text's coordinates.
@@ -261,22 +292,29 @@ public enum EditorBehavior {
         )
     }
 
-    /// The same rewrite, for one line and in that line's own coordinates.
+    /// The annotation on `line` that the caret has finished, if there is one.
     ///
-    /// The line is all the information the decision needs, which is what lets `typing` reach
-    /// it without assembling the rest of the journal first.
-    static func canonicalization(ofLine line: String, caret: Int) -> EditResult? {
+    /// Only once the caret has passed the closing paren: acting mid-argument would fight the
+    /// typing. Line-local, which is what lets `typing` ask on every keystroke without
+    /// assembling the rest of the journal to find out there was nothing to do.
+    static func closedAnnotation(ofLine line: String, caret: Int) -> ScheduleAnnotation? {
         guard case .item(let item) = Grammar.classify(line),
-              let annotation = item.annotation
+              let annotation = item.annotation,
+              caret >= annotation.span.location + annotation.span.length
         else { return nil }
+        return annotation
+    }
 
-        // Only once the caret has passed the closing paren: rewriting mid-argument would
-        // fight the typing.
+    /// The canonical rewrite alone, for one line and in that line's own coordinates.
+    static func canonicalization(
+        ofLine line: String, caret: Int, relativeTo reference: Date = NaturalDates.today()
+    ) -> EditResult? {
+        guard let annotation = closedAnnotation(ofLine: line, caret: caret) else { return nil }
         let span = annotation.span
-        guard caret >= span.location + span.length else { return nil }
 
-        guard let canonical = NaturalDates.canonicalizing(annotation.argument),
-              canonical != annotation.argument
+        guard let canonical = NaturalDates.canonicalizing(
+            annotation.argument, relativeTo: reference
+        ), canonical != annotation.argument
         else { return nil }
 
         let argumentStart = span.location + ScheduleAnnotation.opening.utf16.count

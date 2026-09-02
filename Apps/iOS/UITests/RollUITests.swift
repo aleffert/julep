@@ -105,18 +105,38 @@ final class ScheduleUITests: JournalUITestCase {
         XCTAssertTrue(app.textViews.firstMatch.waitForExistence(timeout: 5))
     }
 
-    /// natural-dates: what gets written is concrete, never "tuesday".
+    /// natural-dates: what gets written is concrete, never "friday".
+    ///
+    /// Further out than the day after the block on purpose: a one-day deferral is filed
+    /// under `next` rather than written, which is the test below.
     func testATypedNaturalDateIsRewrittenConcrete() {
+        launch(journal: "monday 8/31/2026\n- renew passport")
+        let editor = app.textViews.firstMatch
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        editor.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85)).tap()
+        editor.typeText(" @schedule(friday)")
+
+        XCTAssertFalse(editorText.contains("@schedule(friday)"),
+                       "natural language should not survive in the file: \(editorText)")
+        XCTAssertTrue(editorText.contains("@schedule("))
+        XCTAssertNotNil(try? Regex(#"@schedule\(\d{1,2}/\d{1,2}/\d{4}\)"#))
+    }
+
+    /// A deferral to the day after the block is what `next` already means, so the item is
+    /// filed there and the annotation dropped. This is the inline way to add a `next` item,
+    /// which on iOS is the only quick one: the `@schedule(` picker is right there on the
+    /// toolbar and a section label is not.
+    func testADeferralToTheDayAfterIsFiledIntoNext() {
         launch(journal: "monday 8/31/2026\n- renew passport")
         let editor = app.textViews.firstMatch
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         editor.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.85)).tap()
         editor.typeText(" @schedule(tuesday)")
 
-        XCTAssertFalse(editorText.contains("@schedule(tuesday)"),
-                       "natural language should not survive in the file: \(editorText)")
-        XCTAssertTrue(editorText.contains("@schedule("))
-        XCTAssertNotNil(try? Regex(#"@schedule\(\d{1,2}/\d{1,2}/\d{4}\)"#))
+        XCTAssertTrue(editorText.contains("next\n- renew passport"),
+                      "the item was not filed into next: \(editorText)")
+        XCTAssertFalse(editorText.contains("@schedule("),
+                       "the annotation should be gone: \(editorText)")
     }
 
     /// The picked date has to land in the annotation being typed.

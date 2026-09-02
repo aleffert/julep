@@ -249,10 +249,6 @@ public enum Diagnostics {
 
     // MARK: - Section order
 
-    /// Roll writes open -> done -> next. Reading tolerates any order; this only points out
-    /// where the file drifted from the convention.
-    private static let conventionalOrder: [SectionLabel] = [.done, .next]
-
     private static func sectionOrderProblems(
         _ document: Document, blocks: [Block]
     ) -> [Diagnostic] {
@@ -260,7 +256,8 @@ public enum Diagnostics {
             let labelled = block.sections.filter { $0.label != nil }
             let labels = labelled.compactMap(\.label)
             guard labels.count > 1 else { return nil }
-            guard labels != conventionalOrder.filter(labels.contains) else { return nil }
+            guard labels != SectionLabel.conventionalOrder.filter(labels.contains)
+            else { return nil }
 
             return Diagnostic(
                 lineIndex: block.headerIndex,
@@ -275,7 +272,7 @@ public enum Diagnostics {
 
     private static func reorderFix(for block: Block, in document: Document) -> Fix? {
         let ordered = block.sections.sorted { left, right in
-            rank(left.label) < rank(right.label)
+            SectionLabel.rank(of: left.label) < SectionLabel.rank(of: right.label)
         }
         guard let start = block.sections.compactMap(sectionStart).min(),
               let end = block.sections.compactMap(sectionEnd).max()
@@ -310,11 +307,4 @@ public enum Diagnostics {
         section.itemIndices.last ?? section.labelIndex
     }
 
-    private static func rank(_ label: SectionLabel?) -> Int {
-        switch label {
-        case .none: 0
-        case .done: 1
-        case .next: 2
-        }
-    }
 }

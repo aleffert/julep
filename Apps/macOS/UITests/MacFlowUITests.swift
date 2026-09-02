@@ -114,15 +114,32 @@ final class MacFlowUITests: MacJournalUITestCase {
         XCTAssertTrue(editor.waitForExistence(timeout: 5))
     }
 
-    /// natural-dates: what lands in the file is concrete, never "tuesday".
+    /// natural-dates: what lands in the file is concrete, never "friday".
+    ///
+    /// The argument is deliberately further out than the day after the block: a one-day
+    /// deferral is filed under `next` instead of being written, which is the test below.
     func testATypedNaturalDateIsRewrittenConcrete() {
+        launch(journal: "monday 8/31/2026\n- renew passport")
+        focusEditorAtEnd()
+        editor.typeText(" @schedule(friday)")
+
+        XCTAssertFalse(editorText.contains("@schedule(friday)"),
+                       "natural language should not survive: \(editorText)")
+        XCTAssertTrue(editorText.contains("@schedule("))
+    }
+
+    /// A deferral to the day after the block is what `next` already means, so it is filed
+    /// there rather than written as an annotation. The block is a Monday, so "tuesday" is
+    /// the day after it -- read against the block, never against today.
+    func testADeferralToTheDayAfterIsFiledIntoNext() {
         launch(journal: "monday 8/31/2026\n- renew passport")
         focusEditorAtEnd()
         editor.typeText(" @schedule(tuesday)")
 
-        XCTAssertFalse(editorText.contains("@schedule(tuesday)"),
-                       "natural language should not survive: \(editorText)")
-        XCTAssertTrue(editorText.contains("@schedule("))
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "next\n- renew passport"),
+                      "the item was not filed into next: \(journalOnDisk())")
+        XCTAssertFalse(journalOnDisk().contains("@schedule("),
+                       "the annotation should be gone: \(journalOnDisk())")
     }
 
     func testScheduledItemsAreListed() {

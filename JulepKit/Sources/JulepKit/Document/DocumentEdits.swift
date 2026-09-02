@@ -46,7 +46,7 @@ extension Document {
         // Re-derive structure after the removal rather than adjusting indices by hand; the
         // block's header cannot have moved, since an item always sits below it.
         return Document(lines: updated)
-            .insertingDone(raw, intoBlockAt: block.headerIndex)
+            .inserting(raw, into: .done, ofBlockAt: block.headerIndex)
     }
 
     /// Moves the item on `lineIndex` between its block's `done` section and its open one.
@@ -93,17 +93,24 @@ extension Document {
 
     /// Adds `raw` to the newest block's `done` section. What a decision recorded today goes
     /// into -- see `cancellingSchedule(of:)`.
-    func insertingIntoNewestDoneSection(_ raw: String) -> Document? {
-        guard let newest = blocks.first else { return nil }
-        return insertingDone(raw, intoBlockAt: newest.headerIndex)
-    }
-
-    /// Puts `raw` in one block's `done` section, creating the section if it has none.
     ///
     /// The `done` section specifically, and not only because that is where finished things
     /// belong: roll carries the other sections forward, so a line placed anywhere else would
     /// follow the user around forever.
-    private func insertingDone(_ raw: String, intoBlockAt headerIndex: Int) -> Document? {
+    func insertingIntoNewestDoneSection(_ raw: String) -> Document? {
+        guard let newest = blocks.first else { return nil }
+        return inserting(raw, into: .done, ofBlockAt: newest.headerIndex)
+    }
+
+    /// Puts `raw` in one block's `label` section, creating the section if it has none.
+    ///
+    /// A section created here lands where `SectionLabel.conventionalOrder` says it goes:
+    /// before the first section that ranks after it, and otherwise after everything the
+    /// block already holds. Positioned off the sections' own lines rather than the block's
+    /// range, which runs on through the blank line that separates one block from the next.
+    private func inserting(
+        _ raw: String, into label: SectionLabel, ofBlockAt headerIndex: Int
+    ) -> Document? {
         // Structure is re-derived rather than adjusted by hand; a caller may have removed a
         // line already, and a block's header cannot have moved because an item always sits
         // below it.
@@ -111,17 +118,18 @@ extension Document {
         else { return nil }
 
         let insertion: (index: Int, lines: [String])
-        if let done = target.section(.done) {
-            let last = done.itemIndices.last ?? done.labelIndex
+        if let existing = target.section(label) {
+            let last = existing.itemIndices.last ?? existing.labelIndex
             insertion = ((last ?? target.headerIndex) + 1, [raw])
-        } else if let nextLabel = target.section(.next)?.labelIndex {
-            // done comes before next in the conventional order.
-            insertion = (nextLabel, ["done", raw])
+        } else if let following = target.sections.first(where: {
+            SectionLabel.rank(of: $0.label) > SectionLabel.rank(of: label)
+        })?.labelIndex {
+            insertion = (following, [label.rawValue, raw])
         } else {
             let lastContent = target.sections
                 .compactMap { $0.itemIndices.last ?? $0.labelIndex }
                 .max()
-            insertion = ((lastContent ?? target.headerIndex) + 1, ["done", raw])
+            insertion = ((lastContent ?? target.headerIndex) + 1, [label.rawValue, raw])
         }
 
         var updated = lines
@@ -130,5 +138,52 @@ extension Document {
             at: insertion.index
         )
         return Document(lines: updated)
+    }
+
+    /// Files an item deferred to the day after its own block into that block's `next`
+    /// section, dropping the annotation.
+    ///
+    /// A one-day deferral is what `next` already means, said the long way round: an
+    /// annotation to write, an occurrence to compute, and a line that disappears out of the
+    /// block being written to reappear in the one after it. Filing it says the same thing in
+    /// the file the user is looking at, and costs nothing to undo or re-read. It is also how
+    /// `next` gets an inline entry point -- on iOS the `@schedule(` picker is the quick way
+    /// to file something, and there was no equivalent for putting an item under `next`.
+    ///
+    /// `nil` where it does not apply, so the caller can leave the line as written: a line
+    /// that is not an annotated item, an undated block, an argument that is not the day
+    /// after that block, or an item already sitting in `done` or `next` -- there is nothing
+    /// to move, and a `done` item is not waiting on anything.
+    public func filingDeferralIntoNext(lineIndex: Int) -> Document? {
+        guard lines.indices.contains(lineIndex),
+              case .item(let item) = lines[lineIndex].kind,
+              let annotation = item.annotation,
+              let block = blocks.first(where: { $0.range.contains(lineIndex) }),
+              let blockDate = block.header.date,
+              block.openSection?.itemIndices.contains(lineIndex) == true,
+              let argument = NaturalDates.parse(annotation.argument, relativeTo: blockDate)
+        else { return nil }
+
+        let due: Date
+        switch argument {
+        case .date(let date):
+            due = date
+        case .recurrence:
+            // A repeat is never filed. The annotation *is* the rule -- it is read back out
+            // of this line every time the schedule is derived -- so dropping it would stop
+            // the repeat rather than restate it. `every day` is the near miss: its first
+            // occurrence is the day after, and its second is the reason this returns.
+            return nil
+        }
+        guard due == NaturalDates.day(1, after: blockDate) else { return nil }
+
+        // Nothing but the annotation on the line: there would be no item left to file.
+        let text = item.textWithoutAnnotation
+        guard !text.isEmpty else { return nil }
+
+        var updated = lines
+        updated.remove(at: lineIndex)
+        return Document(lines: updated)
+            .inserting(Grammar.itemMarker + text, into: .next, ofBlockAt: block.headerIndex)
     }
 }

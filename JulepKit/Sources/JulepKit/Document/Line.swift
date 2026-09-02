@@ -8,6 +8,17 @@ public enum SectionLabel: String, Equatable, Sendable, CaseIterable {
 
     /// For the app's own prose; `rawValue` is what the file holds. See `Weekday.displayName`.
     public var displayName: String { rawValue.capitalized }
+
+    /// Roll writes open -> done -> next, and that is where the app puts a section it has to
+    /// create. Reading tolerates any order -- the corpus has `next` before `done` -- so this
+    /// is a convention for writing, never a rule for parsing.
+    public static let conventionalOrder: [SectionLabel] = [.done, .next]
+
+    /// Position in that order, with the unlabeled open section always first.
+    public static func rank(of label: SectionLabel?) -> Int {
+        guard let label, let index = conventionalOrder.firstIndex(of: label) else { return 0 }
+        return index + 1
+    }
 }
 
 /// A parsed `<weekday> M/D/YYYY` header.

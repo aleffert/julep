@@ -180,11 +180,27 @@ struct CompletionOptionsTests {
     }
 
     /// A schedule suggestion is written as the date it means, and shows that date beside the
-    /// label so picking "Tomorrow" never hides which day that was.
+    /// label so picking "Next week" never hides which day that was.
     @Test func aScheduleOptionCarriesItsConcreteArgument() {
         let offered = document.completions(for: scheduleContext(""))
-        #expect(offered.contains { $0.title == "Tomorrow" && $0.detail != nil })
+        #expect(offered.contains { $0.title == "Next week" && $0.detail == $0.insertion })
         #expect(offered.contains { $0.title == "Every week" && $0.insertion == "every week" })
+    }
+
+    /// Offered against the block being typed into, and `Tomorrow` says what it will actually
+    /// do: the date it writes is taken straight back out again when the line is filed under
+    /// `next`, so showing that date would describe something that does not happen.
+    @Test func tomorrowIsOfferedAgainstTheBlockAndReadsAsNext() {
+        let document = Document("""
+        tuesday 4/21/2026
+        - a
+        """)
+        let context = CompletionContext(
+            kind: .scheduleArgument, range: NSRange(location: 20, length: 0), typed: ""
+        )
+        let tomorrow = document.completions(for: context).first { $0.title == "Tomorrow" }
+        #expect(tomorrow?.insertion == "4/22/2026")
+        #expect(tomorrow?.detail == "next")
     }
 
     /// Unlike tags, the schedule suggestions are not capped: the set is fixed and every one

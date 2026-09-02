@@ -21,12 +21,16 @@ public struct ScheduleSuggestion: Identifiable, Equatable, Sendable {
     public var title: String
     /// What gets written between the parentheses.
     public var argument: String
+    /// What to show beside the title, where the argument is not what the pick will leave in
+    /// the file. `nil` to let the picker fall back to showing the argument itself.
+    public var detail: String?
 
     public var id: String { argument }
 
-    public init(title: String, argument: String) {
+    public init(title: String, argument: String, detail: String? = nil) {
         self.title = title
         self.argument = argument
+        self.detail = detail
     }
 }
 
@@ -39,7 +43,12 @@ public enum ScheduleSuggestions {
             .map { label, days in
                 ScheduleSuggestion(
                     title: label,
-                    argument: NaturalDates.canonical(NaturalDates.day(days, after: today))
+                    argument: NaturalDates.canonical(NaturalDates.day(days, after: today)),
+                    // The day after is filed under `next` rather than deferred, so the date
+                    // is not what picking this leaves behind, and showing it would describe
+                    // something that does not happen. See
+                    // `Document.filingDeferralIntoNext(lineIndex:)`.
+                    detail: days == 1 ? SectionLabel.next.rawValue : nil
                 )
             }
     }

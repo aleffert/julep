@@ -107,7 +107,13 @@ extension Document {
                 // An argument the app cannot read is not an intent it can act on. It is left
                 // undecided rather than treated as a cancellation, so a typo cannot silently
                 // end a repeat -- the unreadable annotation is visible in the line itself.
-                guard let parsed = NaturalDates.parse(argument) else { continue }
+                //
+                // Read against the block it sits in, which is the day it was written. A
+                // one-shot is canonicalized to a date on entry and so reads the same either
+                // way; one written by hand into the file is not, and means what it meant
+                // there. This is the rule a recurrence already follows, in `start` below.
+                guard let parsed = NaturalDates.parse(argument, relativeTo: blockDate)
+                else { continue }
 
                 decided.insert(text)
                 switch parsed {

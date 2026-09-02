@@ -33,6 +33,13 @@ enum JournalCalendar {
         calendar.date(byAdding: .day, value: days, to: date) ?? date
     }
 
+    /// The same, for the units a relative phrase can name. Optional where `adding(days:to:)`
+    /// is not: a month or a year can land on a day that does not exist, and rolling that
+    /// forward would turn a phrase the user typed into a date they did not mean.
+    static func adding(_ value: Int, _ component: Calendar.Component, to date: Date) -> Date? {
+        calendar.date(byAdding: component, value: value, to: date)
+    }
+
     static func parts(of date: Date) -> (month: Int, day: Int, year: Int) {
         let components = calendar.dateComponents([.year, .month, .day], from: date)
         return (components.month ?? 0, components.day ?? 0, components.year ?? 0)
