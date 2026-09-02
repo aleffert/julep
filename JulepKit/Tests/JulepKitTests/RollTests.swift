@@ -74,7 +74,7 @@ struct RollPlanTests {
 
 @Suite("Rolling")
 struct RollApplyTests {
-    /// One action: everything open comes forward, in the section it came from, no prompts.
+    /// One action: everything unresolved comes forward as a todo, no prompts.
     @Test func rollCarriesEverythingForwardInOneStep() {
         let document = Document("""
         sunday 8/30/2026
@@ -90,10 +90,11 @@ struct RollApplyTests {
         let lines = rolled.serialized.components(separatedBy: "\n")
         #expect(lines[0] == "wednesday 9/2/2026")
         #expect(lines[1] == "- chase down the rebate")
-        #expect(lines[2] == "next")
-        #expect(lines[3] == "- harass landlord")
+        // What was queued under `next` was queued for today, so today it is a todo.
+        #expect(lines[2] == "- harass landlord")
+        #expect(rolled.blocks[0].section(.next) == nil)
         // Finished items stay behind; only what is unresolved comes forward.
-        #expect(!lines[0...3].contains("- already finished"))
+        #expect(!lines[0...2].contains("- already finished"))
     }
 
     let document = Document(Corpus.text)
@@ -107,12 +108,11 @@ struct RollApplyTests {
 
         #expect(lines[0] == "wednesday 9/2/2026")
         #expect(lines[1] == "- chase down the rebate")
-        #expect(lines[2] == "next")
-        #expect(lines[3] == "- harass landlord")
-        #expect(lines[4] == "")
-        #expect(lines[5] == "delta 3 days")
-        #expect(lines[6] == "")
-        #expect(lines[7] == "sunday 8/30/2026")
+        #expect(lines[2] == "- harass landlord")
+        #expect(lines[3] == "")
+        #expect(lines[4] == "delta 3 days")
+        #expect(lines[5] == "")
+        #expect(lines[6] == "sunday 8/30/2026")
     }
 
     /// A one-day gap is what most days are, and the header already says which day it is.

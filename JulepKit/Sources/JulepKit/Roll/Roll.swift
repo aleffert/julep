@@ -2,7 +2,7 @@ import Foundation
 
 /// What the user decided about one item during triage.
 public enum TriageDecision: Equatable, Sendable {
-    /// Copy it forward, keeping the section it was in.
+    /// Copy it forward into the new day's open section.
     case carry
     /// It actually got done.
     case done
@@ -39,8 +39,8 @@ public struct RollPlan: Equatable, Sendable {
 
 /// Builds and applies a roll.
 ///
-/// One action: every open and `next` item comes forward, each into the section it came from,
-/// and pruning happens afterwards in the editor. An earlier version walked the items asking
+/// One action: every open and `next` item comes forward as one of the new day's todos, and
+/// pruning happens afterwards in the editor. An earlier version walked the items asking
 /// about each one; that turned out to be a form to fill in rather than a decision gate.
 public enum Roll {
     /// How many consecutive carries before an item is flagged as a `@schedule` candidate.
@@ -114,7 +114,6 @@ public enum Roll {
     ) -> Document {
         var open: [String] = []
         var done: [String] = []
-        var next: [String] = []
 
         // Due items enter the new day's open section. Nothing records that they were
         // delivered: the block they land in is dated, and the next roll's window starts
@@ -126,10 +125,10 @@ public enum Roll {
         for candidate in plan.candidates {
             switch decisions[candidate.text] ?? .carry {
             case .carry:
-                switch candidate.section {
-                case .next: next.append(candidate.text)
-                case .done, .none: open.append(candidate.text)
-                }
+                // `next` is what was planned for the day after, so rolling into that day
+                // makes those items todos like any other. Everything lands in the open
+                // section, in the order it was written.
+                open.append(candidate.text)
             case .done:
                 // Recorded against today rather than backdated -- roll never edits history.
                 done.append(candidate.text)
@@ -152,7 +151,6 @@ public enum Roll {
         var lines = [plan.header.rendered]
         lines += open.map { "- \($0)" }
         if !done.isEmpty { lines += ["done"] + done.map { "- \($0)" } }
-        if !next.isEmpty { lines += ["next"] + next.map { "- \($0)" } }
         lines.append("")
         // A one-day gap is the ordinary case and the header already says so -- writing
         // `delta 1 day` above every block would be noise on all but the days that skipped.
