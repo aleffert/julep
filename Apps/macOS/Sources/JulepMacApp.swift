@@ -11,12 +11,19 @@ struct JulepMacApp: App {
         startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil
     )
 
+    /// Owned here rather than by the view. Quitting has to be able to finish the last write,
+    /// and the app delegate is the only thing that learns the app is quitting.
+    @State private var workspace = Workspace()
+
+    @NSApplicationDelegateAdaptor(SaveOnQuitDelegate.self) private var delegate
+
     init() { ContainerDiagnostic.runIfRequested() }
 
     var body: some Scene {
         Window("Julep", id: "journal") {
-            JournalView()
+            JournalView(workspace: workspace)
                 .frame(minWidth: 520, minHeight: 400)
+                .onAppear { delegate.workspace = workspace }
         }
         .commands {
             // Directly under About Julep, where a Mac looks for it.
@@ -36,8 +43,29 @@ struct JulepMacApp: App {
     }
 }
 
+/// Holds the app open long enough to finish the last write when the user quits.
+///
+/// `applicationShouldTerminate` is the only hook that can *delay* termination; by the time a
+/// will-terminate notification arrives there is nothing left to wait in. Without this,
+/// quitting inside the save debounce -- the four hundred milliseconds after a keystroke --
+/// drops that keystroke on the floor.
+@MainActor
+final class SaveOnQuitDelegate: NSObject, NSApplicationDelegate {
+    var workspace: Workspace?
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard let workspace else { return .terminateNow }
+        Task {
+            await workspace.flush()
+            sender.reply(toApplicationShouldTerminate: true)
+        }
+        return .terminateLater
+    }
+}
+
 struct JournalView: View {
-    @State private var workspace = Workspace()
+    let workspace: Workspace
+
     @State private var offeredFix: OfferedFix?
     @State private var isShowingSchedule = false
 
