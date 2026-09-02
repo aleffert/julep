@@ -103,20 +103,30 @@ app=$(xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
 [tasks.uitest]
 description = "Run the iOS UI tests on the pinned simulator"
 depends = ["generate"]
+# The filter must not become the verdict. Without pipefail the status of this task is
+# grep's, so a run that printed "** TEST FAILED **" *passed* -- grep found what it was
+# looking for. `|| true` keeps grep out of the reckoning entirely, so pipefail can only
+# ever report xcodebuild's own status.
 run = """
+set -o pipefail
 xcodebuild -project Julep.xcodeproj -scheme Julep-iOS \
     -destination "platform=iOS Simulator,id=$JULEP_SIMULATOR_UDID" \
-    -configuration Debug test 2>&1 | grep -E "Test Case|Test Suite 'All tests'|error:|\\*\\* TEST"
+    -configuration Debug test 2>&1 \
+  | { grep -E "Test Case|Test Suite 'All tests'|error:|\\*\\* TEST" || true; }
 """
 
 [tasks.uitest-mac]
 description = "Run the macOS UI tests"
 depends = ["generate"]
+# See uitest: the grep would otherwise decide whether this passed. That matters most
+# here, where the runner can fail to start at all -- no test case runs, and the task
+# still reports success, which reads as "the suite is green" and is the opposite.
 run = """
+set -o pipefail
 xcodebuild -project Julep.xcodeproj -scheme Julep-macOS \
     -destination 'platform=macOS' -configuration Debug \
     -allowProvisioningUpdates -allowProvisioningDeviceRegistration test 2>&1 \
-  | grep -E "Test Case|error:|Testing failed|encountered an error|\\*\\* TEST"
+  | { grep -E "Test Case|error:|Testing failed|encountered an error|\\*\\* TEST" || true; }
 """
 
 [tasks.schedule]
