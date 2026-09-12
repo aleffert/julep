@@ -169,6 +169,8 @@ targets:
     platform: macOS
     sources:
       - Apps/macOS/UITests
+      # Scenarios that must hold on both shells, plus the fixture they share.
+      - Apps/SharedUITests
     dependencies:
       - target: Julep-macOS
     # The runner must be unsandboxed. Sandboxed, its home is redirected into its own
@@ -189,6 +191,7 @@ targets:
     platform: iOS
     sources:
       - Apps/iOS/UITests
+      - Apps/SharedUITests
     dependencies:
       - target: Julep-iOS
     settings:

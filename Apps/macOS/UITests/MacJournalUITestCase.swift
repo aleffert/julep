@@ -11,9 +11,9 @@ import XCTest
 @MainActor
 class MacJournalUITestCase: XCTestCase {
     var app: XCUIApplication!
-    private var containerPath: String!
+    private let fixture = JournalFixture(root: MacJournalUITestCase.sandboxRoot)
 
-    private static let sandboxRoot = FileManager.default
+    static let sandboxRoot = FileManager.default
         .homeDirectoryForCurrentUser
         .appending(path: "Library/Containers/com.quipsoteric.julep/Data/tmp/uitests")
 
@@ -23,15 +23,7 @@ class MacJournalUITestCase: XCTestCase {
 
     @discardableResult
     func launch(journal: String) -> XCUIApplication {
-        let directory = Self.sandboxRoot.appending(path: UUID().uuidString)
-        containerPath = directory.path(percentEncoded: false)
-        try! FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try! journal.write(to: directory.appending(path: "journal.txt"),
-                           atomically: true, encoding: .utf8)
-
-        app = XCUIApplication()
-        app.launchArguments = ["--local-container", containerPath]
-        app.launch()
+        app = fixture.launch(journal: journal)
         return app
     }
 
@@ -53,18 +45,10 @@ class MacJournalUITestCase: XCTestCase {
         app.descendants(matching: .any).matching(identifier: identifier).firstMatch
     }
 
-    func journalOnDisk() -> String {
-        (try? String(contentsOf: URL(filePath: containerPath).appending(path: "journal.txt"),
-                     encoding: .utf8)) ?? ""
-    }
+    func journalOnDisk() -> String { fixture.onDisk() }
 
     func waitForJournalOnDisk(toContain needle: String, timeout: TimeInterval = 5) -> Bool {
-        let deadline = Date().addingTimeInterval(timeout)
-        while Date() < deadline {
-            if journalOnDisk().contains(needle) { return true }
-            Thread.sleep(forTimeInterval: 0.15)
-        }
-        return false
+        fixture.waitForJournal(toContain: needle, timeout: timeout)
     }
 
     /// Puts the caret at the very end of the text, the only position placeable reliably.

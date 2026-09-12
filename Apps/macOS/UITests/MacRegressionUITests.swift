@@ -232,36 +232,4 @@ final class MacRegressionUITests: MacJournalUITestCase {
         XCTAssertTrue(text.contains("delta 1 day"), "an untouched line vanished: \(text)")
         XCTAssertTrue(text.hasSuffix("- chase down the rebate @schedule(9/8/2026)"), "got: \(text)")
     }
-
-    /// Undoing an accepted tag has to put back exactly what was typed, and nothing else.
-    /// Reported as "when we undo a tag autocomplete it screws up the text".
-    func testUndoingATagCompletionRestoresWhatWasTyped() {
-        launch(journal: "monday 8/31/2026\n- [orchid] record walkthrough\n- unpack")
-        focusEditorAtEnd()
-        editor.typeText("\n[orc")
-        XCTAssertTrue(element("picker.option.orchid").waitForExistence(timeout: 5),
-                      "the tag list never dropped down")
-        app.typeKey(.return, modifierFlags: [])
-        XCTAssertTrue(editorText.hasSuffix("- [orchid] "), "did not complete: \(editorText)")
-
-        app.typeKey("z", modifierFlags: .command)
-        XCTAssertTrue(editorText.hasSuffix("- [orc"),
-                      "undo did not restore what was typed: \(editorText)")
-    }
-
-    /// And the caret has to come back where the typing left it, so the next keystroke
-    /// continues the name rather than landing inside the brackets.
-    func testTypingAfterUndoingATagCompletionContinuesTheName() {
-        launch(journal: "monday 8/31/2026\n- [orchid] record walkthrough\n- unpack")
-        focusEditorAtEnd()
-        editor.typeText("\n[orc")
-        XCTAssertTrue(element("picker.option.orchid").waitForExistence(timeout: 5),
-                      "the tag list never dropped down")
-        app.typeKey(.return, modifierFlags: [])
-        app.typeKey("z", modifierFlags: .command)
-
-        editor.typeText("h")
-        XCTAssertTrue(editorText.hasSuffix("- [orch"),
-                      "typing after the undo did not continue the name: \(editorText)")
-    }
 }

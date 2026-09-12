@@ -73,34 +73,6 @@ final class EditingUITests: JournalUITestCase {
         XCTAssertTrue(editorText.hasSuffix("- [orchid] "), "got: \(editorText)")
     }
 
-    /// Taking back a tag completion has to leave the caret where the typing left it, so the
-    /// next keystroke carries on writing the name rather than landing inside the brackets.
-    /// The rule is `EditorBehavior.caret(afterUndoRestoring:in:)`, shared with the Mac; this
-    /// is the iOS shell actually collapsing through it.
-    func testTypingAfterUndoingATagCompletionContinuesTheName() {
-        let editor = editorFocusedAtEnd(
-            journal: "monday 8/31/2026\n- [orchid] record walkthrough\n- unpack"
-        )
-        editor.typeText("\n")
-        app.buttons["toolbar.tag"].tap()
-        XCTAssertTrue(app.buttons["picker.option.orchid"].waitForExistence(timeout: 5),
-                      "the strip offered nothing")
-        editor.typeText("orc")
-
-        let option = app.buttons["picker.option.orchid"]
-        XCTAssertTrue(option.waitForExistence(timeout: 5), "the strip did not offer the tag")
-        option.tap()
-        XCTAssertTrue(editorText.hasSuffix("- [orchid] "), "did not complete: \(editorText)")
-
-        app.buttons["toolbar.undo"].tap()
-        XCTAssertTrue(editorText.hasSuffix("- [orc"),
-                      "undo did not restore what was typed: \(editorText)")
-
-        editor.typeText("h")
-        XCTAssertTrue(editorText.hasSuffix("- [orch"),
-                      "typing after the undo did not continue the name: \(editorText)")
-    }
-
     /// The handful offered unprompted is a starting point, not the whole list. Typing is how
     /// a tag further down the file is reached, which is the entire reason to type at all.
     func testTypingReachesATagBeyondTheOfferedHandful() {

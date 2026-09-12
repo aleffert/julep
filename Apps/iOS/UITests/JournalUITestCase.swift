@@ -12,7 +12,7 @@ import XCTest
 @MainActor
 class JournalUITestCase: XCTestCase {
     var app: XCUIApplication!
-    private var containerPath: String!
+    private let fixture = JournalFixture(root: URL(filePath: "/tmp/julep-uitests"))
 
     override func setUp() {
         continueAfterFailure = false
@@ -21,15 +21,7 @@ class JournalUITestCase: XCTestCase {
     /// Launches with `journal` as the file's contents.
     @discardableResult
     func launch(journal: String) -> XCUIApplication {
-        containerPath = "/tmp/julep-uitests/\(UUID().uuidString)"
-        let directory = URL(filePath: containerPath)
-        try! FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-        try! journal.write(to: directory.appending(path: "journal.txt"),
-                           atomically: true, encoding: .utf8)
-
-        app = XCUIApplication()
-        app.launchArguments = ["--local-container", containerPath]
-        app.launch()
+        app = fixture.launch(journal: journal)
         return app
     }
 
@@ -59,21 +51,9 @@ class JournalUITestCase: XCTestCase {
     }
 
     /// The journal as it currently sits on disk, after giving the debounced save a moment.
-    func journalOnDisk() -> String {
-        let url = URL(filePath: containerPath).appending(path: "journal.txt")
-        for _ in 0..<20 {
-            if let text = try? String(contentsOf: url, encoding: .utf8) { return text }
-            Thread.sleep(forTimeInterval: 0.1)
-        }
-        return ""
-    }
+    func journalOnDisk() -> String { fixture.onDisk() }
 
     func waitForJournalOnDisk(toContain needle: String, timeout: TimeInterval = 5) -> Bool {
-        let deadline = Date().addingTimeInterval(timeout)
-        while Date() < deadline {
-            if journalOnDisk().contains(needle) { return true }
-            Thread.sleep(forTimeInterval: 0.15)
-        }
-        return false
+        fixture.waitForJournal(toContain: needle, timeout: timeout)
     }
 }
