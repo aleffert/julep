@@ -22,6 +22,8 @@ final class IOSJournalPage: JournalPage {
     /// Typing one would work too, but the button is the affordance a phone actually offers.
     func openTag() { app.buttons["toolbar.tag"].tap() }
 
+    func openSchedule() { editor.typeText(" \(ScheduleOpening.text)") }
+
     func offersCompletion(named name: String, timeout: TimeInterval) -> Bool {
         app.buttons["picker.option.\(name)"].waitForExistence(timeout: timeout)
     }

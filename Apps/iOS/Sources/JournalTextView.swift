@@ -498,7 +498,8 @@ struct JournalTextView: UIViewRepresentable {
             let argument = dateInput.argument
             apply(
                 EditorBehavior.accepting(
-                    CompletionOption(title: argument, insertion: argument), for: context
+                    CompletionOption(title: argument, insertion: argument),
+                    for: context, in: textView.text
                 ),
                 to: textView
             )
@@ -514,7 +515,8 @@ struct JournalTextView: UIViewRepresentable {
                       in: textView.text, at: textView.selectedRange
                   )
             else { return }
-            apply(EditorBehavior.accepting(option, for: context), to: textView)
+            apply(EditorBehavior.accepting(option, for: context, in: textView.text),
+                  to: textView)
             refreshCompletions()
         }
 

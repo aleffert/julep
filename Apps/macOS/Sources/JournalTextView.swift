@@ -275,6 +275,9 @@ struct JournalTextView: NSViewRepresentable {
             shouldChangeTextIn range: NSRange,
             replacementString: String?
         ) -> Bool {
+            // `apply` edits through this same callback, as it does on iOS. Folding an edit
+            // that arrived from a fold would re-enter here.
+            guard !isApplying else { return true }
             guard let replacementString,
                   let folded = EditorBehavior.typing(
                       replacementString, in: textView.string, at: range
@@ -466,7 +469,8 @@ struct JournalTextView: NSViewRepresentable {
             guard let journal = textView as? JournalNSTextView,
                   let context = journal.completionContext
             else { return }
-            apply(EditorBehavior.accepting(option, for: context), to: textView)
+            apply(EditorBehavior.accepting(option, for: context, in: textView.string),
+                  to: textView)
         }
 
         // MARK: - Gutter
@@ -684,13 +688,15 @@ struct JournalTextView: NSViewRepresentable {
         /// Applies a targeted replacement through the text view's own editing machinery, so
         /// undo keeps working and fast typing cannot race a whole-buffer rewrite.
         func apply(_ result: EditResult, to textView: NSTextView) {
+            // Set before `shouldChangeText`, not after: that call runs the delegate below,
+            // which folds typing and would otherwise fold this edit a second time.
+            isApplying = true
+            defer { isApplying = false }
             guard textView.shouldChangeText(in: result.range,
                                             replacementString: result.replacement)
             else { return }
-            isApplying = true
             textView.textStorage?.replaceCharacters(in: result.range, with: result.replacement)
             textView.didChangeText()
-            isApplying = false
             textView.setSelectedRange(result.selection)
             refreshGutter(textView)
         }

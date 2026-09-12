@@ -155,7 +155,11 @@ final class MacRegressionUITests: MacJournalUITestCase {
     /// which is worse than not undoing at all. Deferrals are read out of the journal now, so
     /// that disagreement has nowhere to live.
     func testOneUndoTakesBackARollEntirely() {
-        let journal = "sunday 8/30/2026\n- chase down the rebate @schedule(12/1/2026)"
+        // Still ahead of today, so the roll carries nothing and the only edit is the roll
+        // itself. A deferral already due is injected into the new block, which is a second
+        // thing for the undo to take back and not what this covers.
+        let journal = "sunday 8/30/2026\n- chase down the rebate "
+            + "@schedule(\(dateNotYetDue(inDays: 90)))"
         launch(journal: journal)
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         XCTAssertTrue(editorText.contains("chase down the rebate"), "the journal never loaded")

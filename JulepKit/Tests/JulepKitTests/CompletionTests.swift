@@ -89,7 +89,7 @@ struct CompletionContextTests {
         let text = "- [wo"
         guard let found = context(text, caret: 5) else { Issue.record("no context"); return }
         let edit = EditorBehavior.accepting(
-            CompletionOption(title: "work", insertion: "work"), for: found
+            CompletionOption(title: "work", insertion: "work"), for: found, in: text
         )
         #expect(edit.applied(to: text) == "- [work] ")
         #expect(edit.selection == NSRange(location: 9, length: 0))
@@ -100,9 +100,35 @@ struct CompletionContextTests {
         guard let found = context(text, caret: (text as NSString).length)
         else { Issue.record("no context"); return }
         let edit = EditorBehavior.accepting(
-            CompletionOption(title: "Tomorrow", insertion: "9/8/2026"), for: found
+            CompletionOption(title: "Tomorrow", insertion: "9/8/2026"), for: found, in: text
         )
         #expect(edit.applied(to: text) == "- renew passport @schedule(9/8/2026)")
+    }
+
+    /// Picking a deferral to the day after the block is the same decision as typing it, and
+    /// resolves the same way: filed into `next`, with the annotation dropped. Which used to
+    /// depend on which shell you were holding -- the Mac folded it by re-entering the typing
+    /// delegate, and the phone guarded against exactly that.
+    @Test func acceptingAOneDayDeferralFilesItIntoNext() {
+        let text = "monday 8/31/2026\n- renew passport @schedule("
+        guard let found = context(text, caret: (text as NSString).length)
+        else { Issue.record("no context"); return }
+        let edit = EditorBehavior.accepting(
+            CompletionOption(title: "Tomorrow", insertion: "9/1/2026"), for: found, in: text
+        )
+        #expect(edit.applied(to: text) == "monday 8/31/2026\nnext\n- renew passport")
+    }
+
+    /// Anything further out is a date the journal should keep saying, so the annotation stays.
+    @Test func acceptingAFurtherDeferralKeepsTheAnnotation() {
+        let text = "monday 8/31/2026\n- renew passport @schedule("
+        guard let found = context(text, caret: (text as NSString).length)
+        else { Issue.record("no context"); return }
+        let edit = EditorBehavior.accepting(
+            CompletionOption(title: "Next week", insertion: "9/8/2026"), for: found, in: text
+        )
+        #expect(edit.applied(to: text)
+            == "monday 8/31/2026\n- renew passport @schedule(9/8/2026)")
     }
 
     /// Whatever is accepted has to read back as the thing it was meant to be.
@@ -110,7 +136,7 @@ struct CompletionContextTests {
         let text = "- [wo"
         guard let found = context(text, caret: 5) else { Issue.record("no context"); return }
         let line = EditorBehavior.accepting(
-            CompletionOption(title: "work", insertion: "work"), for: found
+            CompletionOption(title: "work", insertion: "work"), for: found, in: text
         ).applied(to: text)
         guard case .item(let item) = Grammar.classify(line) else {
             Issue.record("not an item: \(line)")

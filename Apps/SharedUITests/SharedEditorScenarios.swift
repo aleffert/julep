@@ -54,6 +54,34 @@ class SharedEditorScenarios: XCTestCase {
         XCTAssertTrue(page.text.hasSuffix("- [orchid] "), "got: \(page.text)")
     }
 
+    /// A deferral to the day after the block is the same decision however it is made, so
+    /// picking it resolves the way typing it does: filed into `next`, annotation dropped.
+    ///
+    /// This used to depend on which shell you were holding. The Mac folded the resolution in
+    /// by re-entering the delegate that folds typing; the phone guarded against exactly that
+    /// re-entrancy, and so wrote the annotation instead. Same pick, two journals.
+    func testAcceptingATomorrowDeferralFilesItIntoNext() {
+        page.launch(journal: "monday 8/31/2026\n- renew passport")
+        page.openSchedule()
+        XCTAssertTrue(page.offersCompletion(named: "9/1/2026"),
+                      "the schedule list did not offer the day after the block")
+        page.acceptCompletion(named: "9/1/2026")
+        XCTAssertTrue(page.text.hasSuffix("next\n- renew passport"), "got: \(page.text)")
+    }
+
+    /// Anything further out is a date the journal should keep saying, so it stays written.
+    func testAcceptingAFurtherDeferralKeepsTheAnnotation() {
+        page.launch(journal: "monday 8/31/2026\n- renew passport")
+        page.openSchedule()
+        // A week after the block's own monday, which is what the list offers -- the
+        // suggestions are computed from the block, not from today.
+        XCTAssertTrue(page.offersCompletion(named: "9/7/2026"),
+                      "the schedule list did not offer a week out")
+        page.acceptCompletion(named: "9/7/2026")
+        XCTAssertTrue(page.text.hasSuffix("- renew passport @schedule(9/7/2026)"),
+                      "got: \(page.text)")
+    }
+
     /// Taking it back restores exactly what was typed -- no more, no less.
     func testUndoingATagCompletionRestoresWhatWasTyped() {
         typeTagPrefix()

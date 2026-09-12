@@ -20,6 +20,9 @@ protocol JournalPage: AnyObject {
     /// Opens a tag on the caret's item, by whatever affordance the platform offers.
     func openTag()
 
+    /// Opens a schedule annotation on the caret's item, ready for its argument.
+    func openSchedule()
+
     /// Takes the named suggestion from the open completion list.
     func acceptCompletion(named name: String) 
 

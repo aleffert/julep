@@ -63,11 +63,15 @@ final class RollUITests: JournalUITestCase {
 
 final class ScheduleUITests: JournalUITestCase {
     /// schedule-view: a deferral months out is verifiable rather than an act of faith.
+    ///
+    /// The date has to still be ahead of today: a row renders its due date only until the
+    /// deferral comes due, and reads "due now" from then on.
     func testScheduledItemsAreListedWithTheirDates() {
+        let due = dateNotYetDue(inDays: 90)
         launch(journal: """
         monday 8/31/2026
         - a thing
-        - renew passport @schedule(12/1/2026)
+        - renew passport @schedule(\(due))
         - pay rent @schedule(every month)
         """)
         XCTAssertTrue(app.textViews.firstMatch.waitForExistence(timeout: 10))
@@ -78,7 +82,7 @@ final class ScheduleUITests: JournalUITestCase {
 
         // The one-shot shows its concrete date; the repeat shows its rule.
         XCTAssertTrue(app.staticTexts.containing(
-            NSPredicate(format: "label CONTAINS %@", "12/1/2026")
+            NSPredicate(format: "label CONTAINS %@", due)
         ).firstMatch.exists, "the deferral's date is not shown")
         XCTAssertTrue(app.staticTexts.containing(
             NSPredicate(format: "label CONTAINS %@", "Every month")
@@ -88,7 +92,7 @@ final class ScheduleUITests: JournalUITestCase {
     /// An annotation is the deferral, so it counts the moment it is written -- there is no
     /// second state it has to reach first, and nothing that has to happen at a roll.
     func testAnAnnotationCountsAsSoonAsItIsWritten() {
-        launch(journal: "monday 8/31/2026\n- renew passport @schedule(12/1/2026)")
+        launch(journal: "monday 8/31/2026\n- renew passport @schedule(\(dateNotYetDue(inDays: 90)))")
         XCTAssertTrue(app.textViews.firstMatch.waitForExistence(timeout: 10))
         element("nav.schedule").tap()
 

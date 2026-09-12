@@ -25,20 +25,6 @@ class JournalUITestCase: XCTestCase {
         return app
     }
 
-    /// A deferral date far enough ahead that it is not yet due, in the journal's own format.
-    ///
-    /// Computed rather than written into the fixture. A literal date is only in the future
-    /// until the calendar reaches it, and a roll then legitimately injects the item into the
-    /// new block -- so a test asserting it was *not* carried starts failing on a day nobody
-    /// chose, for a reason that has nothing to do with the code it covers.
-    func dateNotYetDue(inDays days: Int = 30) -> String {
-        let day = Calendar.current.date(byAdding: .day, value: days, to: Date())!
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = "M/d/yyyy"
-        return formatter.string(from: day)
-    }
-
     /// Looks up an element by identifier regardless of the type it reports, since a custom
     /// drawn mark can surface as a button or a plain element depending on its traits.
     func element(_ identifier: String) -> XCUIElement {

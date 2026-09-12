@@ -124,18 +124,36 @@ extension EditorBehavior {
         return start
     }
 
-    /// The edit that accepts `option`, closing the construct behind it.
+    /// The edit that accepts `option`, closing the construct behind it -- together with any
+    /// rewrite that closing triggers.
+    ///
+    /// Folded for the same reason typing is: closing a `@schedule(...)` can file the item
+    /// into `next` or rewrite its argument concrete, and doing that afterwards would leave a
+    /// second undo step. It has to be asked for here rather than left to happen on the way
+    /// out. On the Mac it used to happen by accident -- `apply` ran through the delegate that
+    /// folds typing, and re-entered it -- while iOS guarded against exactly that re-entrancy.
+    /// The same pick therefore filed the item into `next` on one platform and wrote an
+    /// annotation on the other.
+    ///
+    /// `text` is the buffer `context` was computed against.
     public static func accepting(
-        _ option: CompletionOption, for context: CompletionContext
+        _ option: CompletionOption, for context: CompletionContext, in text: String
     ) -> EditResult {
         let replacement = option.insertion + context.kind.closing
-        return EditResult(
+        let accepted = EditResult(
             range: context.range,
             replacement: replacement,
             selection: NSRange(
                 location: context.range.location + (replacement as NSString).length, length: 0
             )
         )
+        let prospective = accepted.applied(to: text)
+        guard let resolution = resolvingAnnotation(
+            in: prospective, at: accepted.selection.location
+        ) else { return accepted }
+        // One replacement against the text as it stands, so the pick and what it triggered
+        // are a single undoable edit.
+        return minimalEdit(from: text, to: resolution.applied(to: prospective)) ?? accepted
     }
 }
 

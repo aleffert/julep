@@ -21,6 +21,8 @@ final class MacJournalPage: JournalPage {
     /// no tag button to reach for.
     func openTag() { editor.typeText("[") }
 
+    func openSchedule() { editor.typeText(" \(ScheduleOpening.text)") }
+
     func offersCompletion(named name: String, timeout: TimeInterval) -> Bool {
         app.descendants(matching: .any)
             .matching(identifier: "picker.option.\(name)")

@@ -73,7 +73,7 @@ final class MacFlowUITests: MacJournalUITestCase {
         launch(journal: """
         monday 8/31/2026
         - a thing
-        - call landlord @schedule(9/1/2026)
+        - call landlord @schedule(\(dateNotYetDue(inDays: 90)))
         """)
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         element("nav.schedule").click()
@@ -88,7 +88,8 @@ final class MacFlowUITests: MacJournalUITestCase {
     /// Stopping a deferral is recorded, not erased. The annotation that created it stays
     /// exactly where it was written; a newer one supersedes it.
     func testStoppingADeferralIsWrittenIntoTheJournal() {
-        launch(journal: "monday 8/31/2026\n- renew passport @schedule(12/1/2026)")
+        let due = dateNotYetDue(inDays: 90)
+        launch(journal: "monday 8/31/2026\n- renew passport @schedule(\(due))")
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         element("nav.schedule").click()
 
@@ -98,13 +99,14 @@ final class MacFlowUITests: MacJournalUITestCase {
 
         XCTAssertTrue(waitForJournalOnDisk(toContain: "- renew passport @schedule(done)"),
                       "the cancellation was not recorded: \(journalOnDisk())")
-        XCTAssertTrue(journalOnDisk().contains("- renew passport @schedule(12/1/2026)"),
+        XCTAssertTrue(journalOnDisk().contains("- renew passport @schedule(\(due))"),
                       "the original annotation should still be there")
     }
 
     /// The schedule list must be closable, and must show deferrals not yet filed.
     func testScheduleListShowsPendingItemsAndCloses() {
-        launch(journal: "monday 8/31/2026\n- renew passport @schedule(12/1/2026)")
+        let due = dateNotYetDue(inDays: 90)
+        launch(journal: "monday 8/31/2026\n- renew passport @schedule(\(due))")
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         element("nav.schedule").click()
 
@@ -146,7 +148,7 @@ final class MacFlowUITests: MacJournalUITestCase {
         launch(journal: """
         monday 8/31/2026
         - a thing
-        - renew passport @schedule(12/1/2026)
+        - renew passport @schedule(\(dateNotYetDue(inDays: 90)))
         """)
         XCTAssertTrue(editor.waitForExistence(timeout: 10))
         element("nav.schedule").click()

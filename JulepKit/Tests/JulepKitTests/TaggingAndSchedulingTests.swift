@@ -63,7 +63,8 @@ struct TaggingTests {
             in: withBracket, at: opened.selection
         ) else { Issue.record("no context"); return }
         let line = EditorBehavior.accepting(
-            CompletionOption(title: "work", insertion: "work"), for: context
+            CompletionOption(title: "work", insertion: "work"),
+            for: context, in: withBracket
         ).applied(to: withBracket)
 
         #expect(line == "- [work] unpack")
@@ -109,7 +110,8 @@ struct SchedulingTests {
             return opened
         }
         return EditorBehavior.accepting(
-            CompletionOption(title: argument, insertion: argument), for: context
+            CompletionOption(title: argument, insertion: argument),
+            for: context, in: opened
         ).applied(to: opened)
     }
 
