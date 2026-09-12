@@ -38,8 +38,29 @@ struct JulepMacApp: App {
                     NSApp.sendAction(#selector(JournalNSTextView.toggleDone(_:)), to: nil, from: nil)
                 }
                 .keyboardShortcut(.return, modifiers: .command)
+
+                Divider()
+
+                // The toolbar button's twin, for the hands that never leave the keyboard.
+                RollCommand(workspace: workspace)
             }
         }
+    }
+}
+
+/// Roll, as a menu item.
+///
+/// A view rather than a bare `Button` for the reason in `CheckForUpdatesView`: a command
+/// menu only follows a `disabled` state through a view that observes what it depends on, and
+/// rolling a journal that has not finished loading would replace it with an empty one.
+struct RollCommand: View {
+    let workspace: Workspace
+
+    var body: some View {
+        Button("Roll") { workspace.roll() }
+            .keyboardShortcut("r", modifiers: [.command, .shift])
+            .disabled(workspace.status != .ready)
+            .accessibilityIdentifier("menu.roll")
     }
 }
 
@@ -69,13 +90,6 @@ struct JournalView: View {
     @State private var offeredFix: OfferedFix?
     @State private var isShowingSchedule = false
 
-    /// One action. Everything open comes forward; the editor is where pruning happens.
-    private func roll() {
-        guard let rolled = Roll.roll(document: workspace.document, today: NaturalDates.today())
-        else { return }
-        workspace.replaceJournal(with: rolled.serialized)
-    }
-
     var body: some View {
         editor
             .toolbar {
@@ -84,7 +98,7 @@ struct JournalView: View {
                         .accessibilityIdentifier("nav.schedule")
                 }
                 ToolbarItem {
-                    Button("Roll", systemImage: "arrow.turn.down.right") { roll() }
+                    Button("Roll", systemImage: "arrow.turn.down.right") { workspace.roll() }
                         .disabled(workspace.status != .ready)
                         .accessibilityIdentifier("nav.roll")
                 }

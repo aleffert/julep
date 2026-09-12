@@ -556,14 +556,17 @@ struct JournalTextView: UIViewRepresentable {
             refreshToolbarButtons()
         }
 
-        /// UIKit selects whatever a text undo put back. Taking back a check-off puts back the
-        /// whole run of lines the item moved through, which on a phone fills the screen and
-        /// reads as "everything is selected" -- so it is collapsed to a caret at the change,
-        /// which is where the insertion point belongs anyway.
+        /// UIKit selects whatever a text undo put back -- on a phone, taking back a check-off
+        /// fills the screen and reads as "everything is selected". Where the caret goes
+        /// instead is `EditorBehavior.caret(afterUndoRestoring:in:)`, which macOS collapses
+        /// through as well so the two cannot drift.
         private func collapseSelection(in textView: UITextView) {
             let selection = textView.selectedRange
             guard selection.length > 0 else { return }
-            textView.selectedRange = NSRange(location: selection.location, length: 0)
+            textView.selectedRange = NSRange(
+                location: EditorBehavior.caret(afterUndoRestoring: selection, in: textView.text),
+                length: 0
+            )
         }
 
         private func barButton(

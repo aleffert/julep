@@ -91,6 +91,16 @@ public final class Workspace {
         document = Document(value)
     }
 
+    /// Brings everything still open forward onto today. One action: the editor is where
+    /// pruning happens.
+    ///
+    /// Does nothing when there is nothing to bring forward, so a shell can offer this
+    /// unconditionally rather than deciding for itself whether a roll would be a no-op.
+    public func roll(today: Date = NaturalDates.today()) {
+        guard let rolled = Roll.roll(document: document, today: today) else { return }
+        replaceJournal(with: rolled.serialized)
+    }
+
     public func load(containerIdentifier: String = Container.defaultIdentifier) async {
         await load { try Container.resolve(identifier: containerIdentifier) }
     }

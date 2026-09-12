@@ -62,6 +62,29 @@ final class MacEditingUITests: MacJournalUITestCase {
                       "the done item did not come back open: \(editorText)")
     }
 
+    /// Roll from the menu, the same operation the toolbar button runs. Menu items reach the
+    /// app by a different route than a button does, so one working proves nothing about the
+    /// other.
+    func testMenuCommandRollsTheJournal() {
+        launch(journal: "sunday 8/30/2026\n- chase down the rebate")
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        XCTAssertTrue(editorText.contains("chase down the rebate"), "the journal never loaded")
+
+        app.menuBars.menuItems["Roll"].click()
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "delta "), "the roll did not happen")
+    }
+
+    /// And by its shortcut, which is the point of putting it on the menu at all.
+    func testCommandShiftRRollsTheJournal() {
+        launch(journal: "sunday 8/30/2026\n- chase down the rebate")
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        XCTAssertTrue(editorText.contains("chase down the rebate"), "the journal never loaded")
+
+        editor.click()
+        app.typeKey("r", modifierFlags: [.command, .shift])
+        XCTAssertTrue(waitForJournalOnDisk(toContain: "delta "), "the roll did not happen")
+    }
+
     func testEditsAreSavedToTheJournalFile() {
         launch(journal: "monday 8/31/2026\n- unpack")
         focusEditorAtEnd()

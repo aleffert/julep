@@ -45,12 +45,16 @@ final class RollUITests: JournalUITestCase {
     }
 
     /// An annotated item is a decision already made: its line stays put and is not carried.
+    ///
+    /// The deferral has to still be ahead of today, or it is due -- and a due deferral is
+    /// *supposed* to enter the new block, which is what `testDueDeferralsAreInjected` covers.
     func testAnnotatedItemsAreNotCarried() {
-        rollNow(journal: "sunday 8/30/2026\n- chase down the rebate @schedule(9/8/2026)")
+        let due = dateNotYetDue()
+        rollNow(journal: "sunday 8/30/2026\n- chase down the rebate @schedule(\(due))")
         XCTAssertTrue(waitForJournalOnDisk(toContain: "delta "), "got: \(journalOnDisk())")
 
         let text = journalOnDisk()
-        XCTAssertTrue(text.contains("- chase down the rebate @schedule(9/8/2026)"),
+        XCTAssertTrue(text.contains("- chase down the rebate @schedule(\(due))"),
                       "the annotated line should stay where it was written")
         XCTAssertEqual(text.components(separatedBy: "chase down the rebate").count - 1, 1,
                        "it should not also be carried forward")

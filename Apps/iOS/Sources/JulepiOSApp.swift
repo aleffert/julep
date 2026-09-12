@@ -26,13 +26,6 @@ struct JournalView: View {
     /// its menu is opened.
     private var tags: () -> [String] { { workspace.document.recentTags() } }
 
-    /// One action. Everything open comes forward; the editor is where pruning happens.
-    private func roll() {
-        guard let rolled = Roll.roll(document: workspace.document, today: NaturalDates.today())
-        else { return }
-        workspace.replaceJournal(with: rolled.serialized)
-    }
-
     var body: some View {
         NavigationStack {
             editor
@@ -42,7 +35,7 @@ struct JournalView: View {
                             .accessibilityIdentifier("nav.schedule")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Roll", systemImage: "arrow.turn.down.right") { roll() }
+                        Button("Roll", systemImage: "arrow.turn.down.right") { workspace.roll() }
                             .disabled(workspace.status != .ready)
                             .accessibilityIdentifier("nav.roll")
                     }

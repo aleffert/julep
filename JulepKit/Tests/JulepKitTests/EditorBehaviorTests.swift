@@ -95,3 +95,49 @@ struct ItemMarkerToggleTests {
             == "sunday 8/30/2026\n- |unpack\ndone")
     }
 }
+
+/// Marks the span an undo restored with `«»`, and writes the text back with `|` where the
+/// caret lands -- so the two ends of the rule read side by side.
+private func caretAfterUndo(_ marked: String) -> String {
+    let start = (marked as NSString).range(of: "«").location
+    let stripped = marked.replacingOccurrences(of: "«", with: "") as NSString
+    let end = stripped.range(of: "»").location
+    let text = stripped.replacingOccurrences(of: "»", with: "")
+    let location = EditorBehavior.caret(
+        afterUndoRestoring: NSRange(location: start, length: end - start), in: text
+    )
+    let utf16 = Array(text.utf16)
+    return String(decoding: utf16[..<location], as: UTF16.self)
+        + "|"
+        + String(decoding: utf16[location...], as: UTF16.self)
+}
+
+@Suite("Where the caret lands after an undo")
+struct UndoCaretTests {
+    /// Taking back a tag completion puts back the half-written name, so typing has to carry
+    /// on writing it. With the caret left at the front, `[orc` became `[horc`.
+    @Test func restoringOneLineLeavesTheCaretAfterIt() {
+        #expect(caretAfterUndo("monday 8/31/2026\n- unpack\n- [«orc»")
+            == "monday 8/31/2026\n- unpack\n- [orc|")
+    }
+
+    /// Taking back a check-off puts back every line the item moved through. The caret
+    /// belongs at the change rather than at the far end of the whole day.
+    @Test func restoringSeveralLinesLeavesTheCaretAtTheChange() {
+        #expect(caretAfterUndo("monday 8/31/2026\n«- unpack\ndone»")
+            == "monday 8/31/2026\n|- unpack\ndone")
+    }
+
+    /// A deletion taken back selects nothing, and there is no end to move to.
+    @Test func restoringNothingLeavesTheCaretWhereItIs() {
+        #expect(caretAfterUndo("- unp«»ack") == "- unp|ack")
+    }
+
+    /// The selection and the text arrive from different callbacks, so a span reaching past
+    /// the end is possible and must not read off the end of the buffer.
+    @Test func aSpanPastTheEndFallsBackToItsStart() {
+        #expect(EditorBehavior.caret(
+            afterUndoRestoring: NSRange(location: 3, length: 99), in: "- unpack"
+        ) == 3)
+    }
+}

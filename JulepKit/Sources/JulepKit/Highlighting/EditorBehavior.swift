@@ -364,6 +364,28 @@ public enum EditorBehavior {
         )
     }
 
+    // MARK: - Undo
+
+    /// Where the caret belongs after an undo or redo has put `restored` back.
+    ///
+    /// Both shells select whatever a text undo restores, and neither wants that selection:
+    /// what the user needs back is the caret, not a highlight. Where it goes depends on what
+    /// came back. A span that fits on one line is the text that was being typed -- taking
+    /// back a completion puts back exactly the half-written name -- so the caret belongs
+    /// after it, where the typing left it; left at the front, the next keystroke lands
+    /// inside the tag and `[orc` becomes `[horc`. A span crossing lines is a check-off or a
+    /// roll, which moved an item between sections: that span is genuinely that wide, and the
+    /// caret belongs at the change rather than at the far end of everything that shifted.
+    public static func caret(afterUndoRestoring restored: NSRange, in text: String) -> Int {
+        let full = text as NSString
+        guard restored.length > 0, NSMaxRange(restored) <= full.length else {
+            return restored.location
+        }
+        return full.substring(with: restored).contains("\n")
+            ? restored.location
+            : NSMaxRange(restored)
+    }
+
     // MARK: - Line geometry
 
     private static func edit(replacing range: NSRange, with insertion: String) -> EditResult {

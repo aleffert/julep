@@ -608,17 +608,19 @@ struct JournalTextView: NSViewRepresentable {
         /// Undo moves the text without going through the delegate's change callback, so what
         /// rides on an edit has to be brought up to date by hand.
         ///
-        /// AppKit selects whatever a text undo put back. Checking an item off moves a line
-        /// between two sections, so the edit that did it spans everything between the item's
-        /// old place and its new one -- and taking it back therefore selects the whole day.
-        /// Narrowing the edit was not enough on its own: the span is genuinely that wide, so
-        /// the selection is collapsed to a caret at the change, which is where the insertion
-        /// point belongs anyway. iOS does the same, for the same reason.
+        /// AppKit selects whatever a text undo put back, and the caret is what the user
+        /// wants instead. Where it goes is `EditorBehavior.caret(afterUndoRestoring:in:)`,
+        /// which iOS collapses through as well so the two cannot drift.
         private func afterUndoOrRedo() {
             guard let textView else { return }
             let selection = textView.selectedRange()
             if selection.length > 0 {
-                textView.setSelectedRange(NSRange(location: selection.location, length: 0))
+                textView.setSelectedRange(NSRange(
+                    location: EditorBehavior.caret(
+                        afterUndoRestoring: selection, in: textView.string
+                    ),
+                    length: 0
+                ))
             }
             refreshGutter(textView)
         }
