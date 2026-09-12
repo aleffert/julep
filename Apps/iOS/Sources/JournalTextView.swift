@@ -7,6 +7,10 @@ import JulepKit
 /// This is the requirement the whole project exists for. Notes turns `- ` into a list widget
 /// and fights every line; here `- ` is two literal characters, and autocapitalization -- an
 /// active antagonist against a uniformly lowercase journal -- is off.
+///
+/// That is a rule about what lands in the file, not about typing unaided. Autocorrection is on
+/// where the caret is in prose and off where it is in the journal's structure, which
+/// `EditorBehavior.isProse(in:at:)` decides and `setInputViews` applies.
 struct JournalTextView: UIViewRepresentable {
     /// The whole journal as one string. A function rather than a value: it is only wanted
     /// when an outside change actually has to be adopted, and joining the document back
@@ -41,12 +45,21 @@ struct JournalTextView: UIViewRepresentable {
         textView.font = context.coordinator.theme.font
         textView.typingAttributes = context.coordinator.theme.baseAttributes
 
+        // Autocorrection is decided per caret position and turned on from `setInputViews`;
+        // off is the right start, because offset zero is a day header.
         textView.autocorrectionType = .no
         textView.autocapitalizationType = .none
         textView.smartQuotesType = .no
         textView.smartDashesType = .no
         textView.smartInsertDeleteType = .no
-        textView.spellCheckingType = .no
+        // `.default` means "follow autocorrection", so the underlines go where the
+        // corrections go and there is one decision rather than two.
+        textView.spellCheckingType = .default
+        // Both put provisional text in the buffer before the user has accepted anything, and
+        // every buffer change here is forwarded to the workspace as an edit to splice -- so a
+        // prediction nobody took would be written into the document and then taken back out.
+        textView.inlinePredictionType = .no
+        textView.mathExpressionCompletionType = .no
         textView.dataDetectorTypes = []
 
         (textView.textLayoutManager?.textContentManager as? NSTextContentStorage)?
@@ -86,32 +99,34 @@ struct JournalTextView: UIViewRepresentable {
         let text = self.text()
         context.coordinator.isAdopting = true
         defer { context.coordinator.isAdopting = false }
-        if revisionIsUndoable {
-            // Through the text view's own replace, so it lands in the undo stack. A roll or
-            // an accepted fix-it rewrites the journal wholesale, and one the user cannot take
-            // back is a one-way door on their own file.
-            //
-            // Applied as the smallest edit that produces the new text rather than as a
-            // whole-buffer replacement, so undo puts back the change rather than selecting
-            // the entire journal.
-            //
-            // One plain edit is now enough. A roll used to write the journal *and* a schedule
-            // file, so undo had to reverse both at once and the two were grouped by hand;
-            // deferrals live in the journal itself now, so taking back the text takes back
-            // all of it.
-            if let edit = EditorBehavior.minimalEdit(from: textView.text, to: text),
-               let range = textView.range(edit.range) {
-                textView.replace(range, withText: edit.replacement)
+        textView.changingText {
+            if revisionIsUndoable {
+                // Through the text view's own replace, so it lands in the undo stack. A roll or
+                // an accepted fix-it rewrites the journal wholesale, and one the user cannot take
+                // back is a one-way door on their own file.
+                //
+                // Applied as the smallest edit that produces the new text rather than as a
+                // whole-buffer replacement, so undo puts back the change rather than selecting
+                // the entire journal.
+                //
+                // One plain edit is now enough. A roll used to write the journal *and* a schedule
+                // file, so undo had to reverse both at once and the two were grouped by hand;
+                // deferrals live in the journal itself now, so taking back the text takes back
+                // all of it.
+                if let edit = EditorBehavior.minimalEdit(from: textView.text, to: text),
+                   let range = textView.range(edit.range) {
+                    textView.replace(range, withText: edit.replacement)
+                }
+            } else {
+                // Arrived from another device. Not the user's edit, so not theirs to undo.
+                textView.text = text
             }
-        } else {
-            // Arrived from another device. Not the user's edit, so not theirs to undo.
-            textView.text = text
-        }
 
-        textView.selectedRange = NSRange(
-            location: min(selection.location, (text as NSString).length),
-            length: 0
-        )
+            textView.selectedRange = NSRange(
+                location: min(selection.location, (text as NSString).length),
+                length: 0
+            )
+        }
     }
 
     func makeCoordinator() -> Coordinator {
@@ -206,6 +221,13 @@ struct JournalTextView: UIViewRepresentable {
             return true
         }
 
+        /// The caret is placed before the keyboard appears, so settling this here means the
+        /// keyboard arrives already knowing whether it corrects -- rather than being reloaded
+        /// once it is up.
+        func textViewDidBeginEditing(_ textView: UITextView) {
+            refreshCompletions()
+        }
+
         func textViewDidChange(_ textView: UITextView) {
             refreshGutter(textView)
             refreshToolbarButtons()
@@ -222,12 +244,17 @@ struct JournalTextView: UIViewRepresentable {
         /// Only the former registers with the undo manager -- mutating storage behind the
         /// text view's back left every edit made here unundoable, so checking an item off in
         /// the gutter was a one-way door where on the Mac it was not.
+        ///
+        /// Through `changingText`, so the keyboard is told about an edit it did not make --
+        /// see there for what goes wrong when it is not.
         func apply(_ result: EditResult, to textView: UITextView) {
             guard let range = textView.range(result.range) else { return }
-            isApplying = true
-            textView.replace(range, withText: result.replacement)
-            isApplying = false
-            textView.selectedRange = result.selection
+            textView.changingText {
+                isApplying = true
+                textView.replace(range, withText: result.replacement)
+                isApplying = false
+                textView.selectedRange = result.selection
+            }
             refreshGutter(textView)
         }
 
@@ -455,12 +482,24 @@ struct JournalTextView: UIViewRepresentable {
         ///
         /// `input: nil` is the system keyboard, which is what everything but the calendar
         /// wants back.
+        ///
+        /// Autocorrection rides along for that same reason: only a reload makes a change to
+        /// it take effect, so deciding it anywhere else would mean a second reload for the
+        /// same keystroke. The keyboard keeps its suggestion row either way -- measured, on
+        /// iOS 26 -- so what the reload changes is whether the row proposes anything, not how
+        /// tall the keyboard is.
         private func setInputViews(accessory: UIView?, input: UIView? = nil) {
             guard let textView else { return }
-            guard textView.inputAccessoryView !== accessory || textView.inputView !== input
+            let corrects: UITextAutocorrectionType =
+                EditorBehavior.isProse(in: textView.text, at: textView.selectedRange)
+                ? .yes : .no
+            guard textView.inputAccessoryView !== accessory
+                || textView.inputView !== input
+                || textView.autocorrectionType != corrects
             else { return }
             textView.inputAccessoryView = accessory
             textView.inputView = input
+            textView.autocorrectionType = corrects
             textView.reloadInputViews()
         }
 

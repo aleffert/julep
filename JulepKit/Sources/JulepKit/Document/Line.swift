@@ -86,6 +86,11 @@ public struct Item: Equatable, Sendable {
         self.annotation = annotation
     }
 
+    /// The parts of the item that are structure rather than prose, in the line's own
+    /// coordinates. What the data detector is kept out of, and what the keyboard's
+    /// autocorrection is kept out of.
+    public var structure: [Span] { [tag?.span, annotation?.span].compactMap { $0 } }
+
     /// The item without its `@schedule(...)`, which is what moves to the schedule store.
     /// The annotated line itself stays where it was written.
     public var textWithoutAnnotation: String {

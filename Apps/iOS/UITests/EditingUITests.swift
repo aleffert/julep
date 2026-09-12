@@ -122,4 +122,65 @@ final class EditingUITests: JournalUITestCase {
         editor.typeText("\nfeed the cat")
         XCTAssertTrue(waitForJournalOnDisk(toContain: "feed the cat"))
     }
+
+    /// Taps the keys themselves. `typeText` hands the string to the text view, which is not
+    /// where corrections come from -- they come from the keyboard, and only a key it thinks a
+    /// thumb pressed makes it offer one.
+    private func tapKeys(_ keys: String) throws {
+        guard app.keys["a"].waitForExistence(timeout: 5) else {
+            throw XCTSkip(
+                "no software keyboard, so nothing can be autocorrected: turn off the "
+                    + "simulator's I/O > Keyboard > Connect Hardware Keyboard"
+            )
+        }
+        for key in keys { app.keys[key == " " ? "space" : String(key)].tap() }
+    }
+
+    /// autocorrect-prose. Typing a journal on a phone without corrections is miserable, so
+    /// they are on wherever the text is the user's own words.
+    ///
+    /// Typed onto a line a *return* produced, deliberately: that line is written by the app
+    /// rather than the keyboard, and while the keyboard was not told about it, it went on
+    /// composing against the item above -- `unpack` and a freshly typed `recieve` reached the
+    /// correction engine as the single word `unpackrecieve`, so nothing was ever corrected.
+    func testProseIsAutocorrected() throws {
+        let editor = editorFocusedAtEnd(journal: "monday 8/31/2026\n- unpack")
+        editor.typeText("\n")
+        try tapKeys("recieve ")
+        XCTAssertTrue(editorText.hasSuffix("- receive "), "got: \(editorText)")
+    }
+
+    /// undo-with-a-correction. A correction is the keyboard's edit landing in the middle of
+    /// the user's typing, and the two have to come back off the stack as one thing: an undo
+    /// that took back only the correction would leave `recieve` sitting there as the result of
+    /// asking for the word to go away.
+    func testUndoTakesBackACorrectedWordWhole() throws {
+        let editor = editorFocusedAtEnd(journal: "monday 8/31/2026\n- unpack")
+        editor.typeText("\n")
+        try tapKeys("recieve ")
+        XCTAssertTrue(editorText.hasSuffix("- receive "), "got: \(editorText)")
+
+        app.buttons["toolbar.undo"].tap()
+        XCTAssertTrue(editorText.hasSuffix("- "), "got: \(editorText)")
+        XCTAssertFalse(editorText.contains("recieve"), "the misspelling came back: \(editorText)")
+
+        // And the return that started the item is its own step, leaving the journal as seeded.
+        app.buttons["toolbar.undo"].tap()
+        XCTAssertEqual(editorText, "monday 8/31/2026\n- unpack")
+        XCTAssertFalse(app.buttons["toolbar.undo"].isEnabled, "something is still on the stack")
+
+        app.buttons["toolbar.redo"].tap()
+        app.buttons["toolbar.redo"].tap()
+        XCTAssertTrue(editorText.hasSuffix("- receive "), "got: \(editorText)")
+    }
+
+    /// autocorrect-structure. A tag name is an identifier rather than a word: `[work]` and
+    /// `[Work]` are two different tags, and the strip is already offering the real spellings.
+    func testTagNamesAreNotAutocorrected() throws {
+        let editor = editorFocusedAtEnd(journal: "monday 8/31/2026\n- unpack")
+        editor.typeText("\n")
+        app.buttons["toolbar.tag"].tap()
+        try tapKeys("definately ")
+        XCTAssertTrue(editorText.hasSuffix("- [definately "), "got: \(editorText)")
+    }
 }

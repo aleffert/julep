@@ -364,6 +364,38 @@ public enum EditorBehavior {
         )
     }
 
+    // MARK: - Text services
+
+    /// Whether the caret sits in prose -- the user's own words -- rather than in the
+    /// journal's own structure.
+    ///
+    /// This is what autocorrection follows. Typing a journal on a phone without it is
+    /// miserable, but it is a dictionary, and the structure is not written in a dictionary's
+    /// language: it capitalizes weekday names, which `Grammar` reads only lowercase, and it
+    /// would rewrite a half-typed tag into the nearest real word -- `[work]` and `[Work]` are
+    /// two different tags. So it is allowed where an item's text is the user's sentence, and
+    /// nowhere else.
+    public static func isProse(in text: String, at selection: NSRange) -> Bool {
+        let full = text as NSString
+        let caret = min(max(selection.location, 0), full.length)
+        let line = lineRange(in: full, containing: caret)
+        guard case .item(let item) = Grammar.classify(full.substring(with: line))
+        else { return false }
+
+        // An unclosed `[` or `@schedule(` is not a span on the line yet -- the name is still
+        // being typed, which is exactly when the completion strip is offering the real
+        // spellings and the keyboard has no business proposing its own.
+        guard completionContext(in: text, at: NSRange(location: caret, length: 0)) == nil
+        else { return false }
+
+        // Strictly inside, so the position just past a closing paren is prose again rather
+        // than a boundary that costs its own keyboard reload.
+        let local = caret - line.location
+        return !item.structure.contains {
+            local > $0.location && local < $0.location + $0.length
+        }
+    }
+
     // MARK: - Undo
 
     /// Where the caret belongs after an undo or redo has put `restored` back.

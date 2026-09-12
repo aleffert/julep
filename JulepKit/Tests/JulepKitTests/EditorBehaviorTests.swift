@@ -141,3 +141,55 @@ struct UndoCaretTests {
         ) == 3)
     }
 }
+
+@Suite("Prose")
+struct ProseTests {
+    private func isProse(_ marked: String) -> Bool {
+        let (text, selection) = at(marked)
+        return EditorBehavior.isProse(in: text, at: selection)
+    }
+
+    /// An item is a sentence the user wrote, which is the one place a dictionary belongs.
+    @Test func itemTextIsProse() {
+        #expect(isProse("- unp|ack"))
+        #expect(isProse("- |unpack"))
+    }
+
+    /// The structural lines are written in the grammar's language, not English. Autocorrection
+    /// capitalizes weekday names, and `Grammar` reads them only lowercase.
+    @Test func structuralLinesAreNot() {
+        #expect(!isProse("mond|ay 8/31/2026"))
+        #expect(!isProse("do|ne"))
+        #expect(!isProse("delta 1| day"))
+        #expect(!isProse("|"))
+    }
+
+    /// A tag name is an identifier: `[work]` and `[Work]` are two different tags.
+    @Test func aTagIsNot() {
+        #expect(!isProse("- [wo|rk] unpack"))
+    }
+
+    @Test func anAnnotationArgumentIsNot() {
+        #expect(!isProse("- unpack @schedule(9/8|/2026)"))
+    }
+
+    /// The boundary itself is prose, so closing an annotation does not cost the keyboard a
+    /// reload for the caret position it lands on.
+    @Test func thePositionPastAStructureIsProseAgain() {
+        #expect(isProse("- [work]| unpack"))
+        #expect(isProse("- unpack @schedule(9/8/2026)|"))
+    }
+
+    /// Half-typed, so neither is a span on the line yet -- and this is when the completion
+    /// strip is offering the real spellings.
+    @Test func oneBeingTypedIsNot() {
+        #expect(!isProse("- [wo|"))
+        #expect(!isProse("- unpack @schedule(tue|"))
+    }
+
+    /// A bracket is only a tag at the start of an item. Anywhere else it is punctuation, and
+    /// the sentence around it is still a sentence.
+    @Test func aBracketMidSentenceIsProse() {
+        #expect(isProse("- see [note| about the boxes"))
+    }
+}

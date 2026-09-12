@@ -63,8 +63,8 @@ extension Highlighting {
         guard end > start else { return [] }
 
         // The structural parts of the item, which the detector's findings must not overlap.
-        let structure = [item.tag?.span, item.annotation?.span].compactMap { span in
-            span.map { NSRange(location: $0.location, length: $0.length) }
+        let structure = item.structure.map {
+            NSRange(location: $0.location, length: $0.length)
         }
 
         let region = NSRange(location: start, length: end - start)
