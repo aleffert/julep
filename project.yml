@@ -31,7 +31,7 @@ settingGroups:
   iOSBuild:
     # Its own stream: TestFlight refuses a build number it has already seen, so this only ever
     # increases, one step per upload.
-    CURRENT_PROJECT_VERSION: "13"
+    CURRENT_PROJECT_VERSION: "14"
 
 packages:
   JulepKit:

@@ -83,6 +83,26 @@ struct GlanceTests {
     }
 }
 
+@Suite("Header display")
+struct HeaderDisplayTests {
+    private let header = DayHeader(weekday: .sunday, month: 8, day: 30, year: 2026)
+
+    @Test func theFullFormIsWhatTheAppSaysElsewhere() {
+        #expect(header.displayRendered == "Sunday 8/30/2026")
+    }
+
+    /// For the widget's small size, where the full date truncates mid-year.
+    @Test func theShortFormDropsOnlyTheYear() {
+        #expect(header.displayRenderedWithoutYear == "Sunday 8/30")
+    }
+
+    /// Unpadded, like every other date the journal writes.
+    @Test func theShortFormDoesNotPadTheNumbers() {
+        let early = DayHeader(weekday: .friday, month: 1, day: 2, year: 2026)
+        #expect(early.displayRenderedWithoutYear == "Friday 1/2")
+    }
+}
+
 @Suite("Rolling twice")
 @MainActor
 struct RollingTwiceTests {

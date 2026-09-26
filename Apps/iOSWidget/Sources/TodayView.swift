@@ -27,9 +27,8 @@ struct TodayView: View {
             // header earns its place exactly when the newest block is *not* today's.
             if glance.canRoll { header(glance) }
             items(glance)
-            Spacer(minLength: 0)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
     }
 
     // MARK: - Header
@@ -40,8 +39,8 @@ struct TodayView: View {
         HStack(alignment: .firstTextBaseline, spacing: 4) {
             // The items below are real either way, but they are a previous day's leftovers
             // rather than a list anyone has looked at today, and the date is what says so.
-            Text(glance.header?.displayRendered ?? "Nothing written yet")
-                .font(.caption)
+            Text(title(glance))
+                .font(.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(.secondary)
                 .lineLimit(1)
@@ -50,9 +49,21 @@ struct TodayView: View {
             Button(intent: RollIntent()) {
                 Label("Roll", systemImage: "arrow.turn.down.right")
                     .labelStyle(.iconOnly)
-                    .font(.caption)
+                    .font(.subheadline)
             }
             .buttonStyle(.bordered)
+        }
+    }
+
+    private func title(_ glance: Glance) -> String {
+        guard let header = glance.header else { return "Nothing written yet" }
+        switch family {
+        case .systemSmall:
+            // 158 points cannot hold "Sunday 8/30/2026" beside the roll button; the year is
+            // what gives way, rather than the date truncating part way through it.
+            return header.displayRenderedWithoutYear
+        default:
+            return header.displayRendered
         }
     }
 
@@ -62,30 +73,46 @@ struct TodayView: View {
     private func items(_ glance: Glance) -> some View {
         if glance.items.isEmpty {
             Text(glance.header == nil ? "Roll to start the first block" : "Nothing open")
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
         } else {
-            ForEach(glance.items.prefix(limit), id: \.lineIndex) { open in
-                ItemRow(open: open)
-            }
-            let hidden = glance.items.count - limit
-            if hidden > 0 {
-                Text("+\(hidden) more")
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
+            // How many items fit is a question only the layout can answer. Asked rather than
+            // assumed: a count per widget size is right at exactly one text size, and a widget
+            // follows whatever the reader has chosen -- so a number tuned by eye goes wrong for
+            // anyone who has moved theirs, and goes wrong again the next time the font changes
+            // here. The candidates run longest first, so the ordinary day, where everything
+            // fits, is answered by the first one.
+            ViewThatFits(in: .vertical) {
+                ForEach(candidateCounts(for: glance.items), id: \.self) { count in
+                    list(glance.items, showing: count)
+                }
             }
         }
     }
 
-    /// How many items fit. A widget does not scroll, so anything past this is counted instead of
-    /// drawn -- which is still honest about how much is open.
-    private var limit: Int {
-        switch family {
-        case .systemSmall: 3
-        case .systemMedium: 4
-        case .systemLarge: 11
-        default: 4
+    private func list(_ items: [Glance.OpenItem], showing count: Int) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            ForEach(items.prefix(count), id: \.lineIndex) { open in
+                ItemRow(open: open)
+            }
+            // Part of the candidate, not an afterthought: whether this line is there changes
+            // the height, so a candidate measured without it would claim to fit and then not.
+            if count < items.count {
+                Text("+\(items.count - count) more")
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Item counts to offer the layout, longest first.
+    ///
+    /// The ceiling bounds the work rather than the layout: no widget is tall enough to draw
+    /// this many rows at any text size, so it never decides what is shown -- it only stops a
+    /// journal with two hundred open items from being measured two hundred ways.
+    private func candidateCounts(for items: [Glance.OpenItem]) -> [Int] {
+        Array((1...min(items.count, 20)).reversed())
     }
 
     // MARK: - Unavailable
@@ -96,7 +123,7 @@ struct TodayView: View {
             Image(systemName: "exclamationmark.icloud")
                 .foregroundStyle(.secondary)
             Text("Can't see the journal")
-                .font(.caption)
+                .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -115,27 +142,27 @@ private struct ItemRow: View {
     var body: some View {
         HStack(alignment: .center, spacing: 6) {
             Button(intent: MarkDoneIntent(lineIndex: open.lineIndex, text: item.text)) {
-                // A hollow ring, not a checkbox: nothing is checked off without a tap. Drawn
-                // smaller than the margin's, which sits beside body text rather than a caption.
+                // A hollow ring, not a checkbox: nothing is checked off without a tap. The
+                // margin's own size and stroke, so it reads as the same affordance.
                 //
                 // The padding is the tap target, not the look. A ring this size is well under
                 // what a finger wants, and a widget row has no room to make the ring itself
                 // bigger.
                 Circle()
-                    .strokeBorder(.tertiary, lineWidth: 1.2)
-                    .frame(width: 10, height: 10)
-                    .padding(4)
+                    .strokeBorder(.tertiary, lineWidth: 1.5)
+                    .frame(width: 16, height: 16)
+                    .padding(5)
                     .contentShape(.rect)
             }
             .buttonStyle(.plain)
 
             Text(text)
-                .font(.caption)
+                .font(.subheadline)
                 .lineLimit(1)
         }
         // The ring's tap padding would otherwise space the rows further apart than the text
         // wants; taken back here so the list reads as a list.
-        .padding(.vertical, -4)
+        .padding(.vertical, -5)
     }
 
     /// The item exactly as the file writes it, brackets and all, with the tag coloured.

@@ -77,4 +77,11 @@ extension DayHeader {
     public var displayRendered: String {
         "\(weekday.displayName) \(month)/\(day)/\(year)"
     }
+
+    /// The same without the year, for somewhere too narrow to hold one -- the widget at its
+    /// small size, where the full date truncates mid-year and says less than this does. The
+    /// year is the least informative part of a header whose whole job is "this is not today".
+    public var displayRenderedWithoutYear: String {
+        "\(weekday.displayName) \(month)/\(day)"
+    }
 }
