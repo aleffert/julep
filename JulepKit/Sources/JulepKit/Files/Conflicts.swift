@@ -1,5 +1,19 @@
 import Foundation
 
+/// Where a disagreeing version came from, which is what decides how it can be settled.
+public enum ConflictSource: Equatable, Sendable {
+    /// iCloud is holding a version another device wrote.
+    case otherDevice
+    /// This device's own file, changed outside the app -- the widget rolling it, another editor
+    /// -- in the same lines this app had changed.
+    ///
+    /// Not an iCloud conflict, and not reported as one: both writes are local, so the sync
+    /// engine has no divergence to hold versions for. File coordination does not help either;
+    /// it serialises the two writes and the later one still wins wholesale. This is what is
+    /// left when a three-way merge cannot settle it. See `TextMerge`.
+    case fileOnDisk
+}
+
 /// A version of the file that disagrees with the one on this device.
 public struct ConflictingVersion: Identifiable, Sendable {
     public var id: String
@@ -7,12 +21,20 @@ public struct ConflictingVersion: Identifiable, Sendable {
     public var deviceName: String?
     public var modified: Date?
     public var text: String
+    public var source: ConflictSource
 
-    public init(id: String, deviceName: String?, modified: Date?, text: String) {
+    public init(
+        id: String,
+        deviceName: String?,
+        modified: Date?,
+        text: String,
+        source: ConflictSource = .otherDevice
+    ) {
         self.id = id
         self.deviceName = deviceName
         self.modified = modified
         self.text = text
+        self.source = source
     }
 }
 
@@ -40,6 +62,14 @@ public enum ConflictResolution: Equatable, Sendable {
     case takeOther(id: String)
     /// Keep both, with the loser appended to the file so nothing is dropped.
     case keepBoth(id: String)
+    /// Take a merge of the two that the user accepted, carrying the text it produced.
+    ///
+    /// Carried rather than recomputed so the file gets exactly what the screen offered. iCloud
+    /// does not hand over the ancestor the other device branched from, so this merge was taken
+    /// against this device's own last-known content -- right whenever the two were in step
+    /// before they diverged, which is usual and not guaranteed. That is precisely why it is
+    /// offered and accepted rather than applied. See `TextMerge`.
+    case merge(id: String, text: String)
 }
 
 extension CoordinatedTextFile {
@@ -89,8 +119,17 @@ extension CoordinatedTextFile {
             guard let other = versions.first(where: { Self.identifier(of: $0) == id }),
                   let theirs = try? String(contentsOf: other.url, encoding: .utf8)
             else { throw ConflictError.versionUnavailable }
-            let mine = try read()
-            try write(Self.appending(theirs, to: mine, from: other.localizedNameOfSavingComputer))
+            // One coordinated pass: read-then-write in two leaves a window for someone else's
+            // write to land between them and be overwritten by a "keep both" of all things.
+            try update { mine in
+                Self.appending(theirs, to: mine, from: other.localizedNameOfSavingComputer)
+            }
+
+        case .merge(_, let text):
+            // Written as it stands: this is the text the user was shown and accepted, and
+            // merging it again against the file would be answering a question they just
+            // answered.
+            try write(text)
         }
 
         for version in versions { version.isResolved = true }

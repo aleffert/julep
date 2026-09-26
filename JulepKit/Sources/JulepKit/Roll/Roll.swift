@@ -46,6 +46,16 @@ public enum Roll {
     /// How many consecutive carries before an item is flagged as a `@schedule` candidate.
     public static let defaultNudgeThreshold = 4
 
+    /// Whether a roll would add anything.
+    ///
+    /// False once the newest block is already today's. `apply` only ever prepends, so a second
+    /// roll on the same day writes a duplicate header rather than doing nothing -- which
+    /// matters most where the action can be taken without the journal in view, as it can from
+    /// the widget.
+    public static func isNeeded(document: Document, today: Date) -> Bool {
+        document.blocks.first?.header.date != today
+    }
+
     public static func plan(
         document: Document,
         today: Date,

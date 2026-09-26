@@ -30,6 +30,47 @@ struct CoordinatedTextFileTests {
         #expect(try file.read() == "second")
     }
 
+    @Test func updateReadsAndWritesInOnePass() throws {
+        let file = CoordinatedTextFile(fileURL: try temporaryFile())
+        try file.write("before")
+        try file.update { $0 + " and after" }
+        #expect(try file.read() == "before and after")
+    }
+
+    /// What the widget does when the journal has already been rolled: look, decide there is
+    /// nothing to do, and leave the file exactly as it was.
+    @Test func updateReturningNilLeavesTheFileAlone() throws {
+        let url = try temporaryFile()
+        let file = CoordinatedTextFile(fileURL: url)
+        try file.write("untouched")
+        let before = try FileManager.default.attributesOfItem(atPath: url.path)[.modificationDate] as? Date
+
+        try file.update { _ in nil }
+
+        #expect(try file.read() == "untouched")
+        let after = try FileManager.default.attributesOfItem(atPath: url.path)[.modificationDate] as? Date
+        #expect(before == after)
+    }
+
+    @Test func updateSeesAnEmptyFileAsEmptyText() throws {
+        let file = CoordinatedTextFile(fileURL: try temporaryFile())
+        try file.update { existing in
+            #expect(existing == "")
+            return "written"
+        }
+        #expect(try file.read() == "written")
+    }
+
+    @Test func aThrowFromInsideUpdateComesBackOut() throws {
+        struct Refused: Error {}
+        let file = CoordinatedTextFile(fileURL: try temporaryFile())
+        try file.write("kept")
+        #expect(throws: Refused.self) {
+            try file.update { _ in throw Refused() }
+        }
+        #expect(try file.read() == "kept")
+    }
+
     @Test func externalChangesAreReported() async throws {
         let url = try temporaryFile()
         let file = CoordinatedTextFile(fileURL: url)

@@ -97,6 +97,12 @@ struct JournalTextView: UIViewRepresentable {
         // The workspace's document already holds this change -- it is what produced it -- so
         // the buffer must not report it back as an edit to splice on top.
         let text = self.text()
+        let edit = EditorBehavior.minimalEdit(from: textView.text, to: text)
+        // Computed against the text as it stands, before either branch below rewrites it.
+        // Both branches need it: a roll prepends and a merge takes in what another writer
+        // prepended, and in either case an offset restored as-is lands a block too early.
+        let caret = edit.map { EditorBehavior.caret(at: selection.location, through: $0) }
+            ?? selection.location
         context.coordinator.isAdopting = true
         defer { context.coordinator.isAdopting = false }
         textView.changingText {
@@ -113,17 +119,17 @@ struct JournalTextView: UIViewRepresentable {
                 // file, so undo had to reverse both at once and the two were grouped by hand;
                 // deferrals live in the journal itself now, so taking back the text takes back
                 // all of it.
-                if let edit = EditorBehavior.minimalEdit(from: textView.text, to: text),
-                   let range = textView.range(edit.range) {
+                if let edit, let range = textView.range(edit.range) {
                     textView.replace(range, withText: edit.replacement)
                 }
             } else {
-                // Arrived from another device. Not the user's edit, so not theirs to undo.
+                // Arrived from another device, or from a merge with one. Not the user's edit,
+                // so not theirs to undo.
                 textView.text = text
             }
 
             textView.selectedRange = NSRange(
-                location: min(selection.location, (text as NSString).length),
+                location: min(caret, (text as NSString).length),
                 length: 0
             )
         }

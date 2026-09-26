@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import WidgetKit
 import JulepKit
 
 @main
@@ -17,7 +18,7 @@ struct JournalView: View {
     @State private var workspace = Workspace()
     @State private var offeredFix: OfferedFix?
     @State private var isShowingSchedule = false
-    @State private var suspensionSave = SuspensionSave()
+    @State private var pendingSave = PendingSave()
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -35,7 +36,10 @@ struct JournalView: View {
                             .accessibilityIdentifier("nav.schedule")
                     }
                     ToolbarItem(placement: .topBarTrailing) {
-                        Button("Roll", systemImage: "arrow.turn.down.right") { workspace.roll() }
+                        Button("Roll", systemImage: "arrow.turn.down.right") {
+                            workspace.roll()
+                            pendingSave.run(workspace)
+                        }
                             .disabled(workspace.status != .ready)
                             .accessibilityIdentifier("nav.roll")
                     }
@@ -51,11 +55,14 @@ struct JournalView: View {
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .active:
-                break
+                // The widget rolls the journal from its own process while this one is suspended,
+                // and a suspended process's file presenter hears nothing -- so on the way back
+                // in, the file is authoritative and has to be re-read.
+                Task { await workspace.reload() }
             case .inactive, .background:
-                suspensionSave.run(workspace)
+                pendingSave.run(workspace)
             @unknown default:
-                suspensionSave.run(workspace)
+                pendingSave.run(workspace)
             }
         }
         .sheet(isPresented: Binding(
@@ -121,14 +128,17 @@ struct JournalView: View {
     }
 }
 
-/// Keeps the process alive long enough to finish the last write as it is being suspended.
+/// Sees a write through to the file, and tells the widget once it is there.
 ///
 /// A background task assertion, not just a `Task`: once iOS suspends the app, work in flight
 /// simply stops until the app is foregrounded again -- which for an app the system later
 /// reclaims is never. The assertion is what turns "start writing" into "finish writing".
+///
+/// The widget reads the journal file rather than a summary the app hands it, so it is told after
+/// the write lands, not when it was scheduled. Reloading any earlier just shows the old journal.
 @MainActor
 @Observable
-final class SuspensionSave {
+final class PendingSave {
     private var assertion: UIBackgroundTaskIdentifier = .invalid
 
     func run(_ workspace: Workspace) {
@@ -142,6 +152,7 @@ final class SuspensionSave {
         }
         Task {
             await workspace.flush()
+            WidgetCenter.shared.reloadAllTimelines()
             end()
         }
     }

@@ -102,4 +102,62 @@ class SharedEditorScenarios: XCTestCase {
         XCTAssertTrue(page.text.hasSuffix("- [orch"),
                       "typing after the undo did not continue the name: \(page.text)")
     }
+
+    /// Redo has to put the insertion point back where the undone text ends, not where the undo
+    /// left it, or the next keystroke lands inside what was just restored.
+    ///
+    /// Asserted by typing rather than by counting what one undo removes: typing is coalesced
+    /// into undo groups by the text view, and how much of `abc` comes back is its business. The
+    /// caret is this test's business.
+    ///
+    /// Deliberately typed *past* the tag before undoing. Undoing back into `[orc` reopens the
+    /// completion context, and the strip replaces the keyboard toolbar the undo button lives
+    /// on -- so a scenario that undoes that far cannot reach the button it needs next.
+    func testRedoRestoresTheTextAndTheInsertionPointWithIt() {
+        typeTagPrefix()
+        page.acceptCompletion(named: "orchid")
+        page.type("abc")
+        let complete = page.text
+
+        page.undo()
+        page.redo()
+        XCTAssertEqual(page.text, complete, "redo did not restore the text")
+
+        page.type("d")
+        XCTAssertTrue(page.text.hasSuffix("abcd"),
+                      "the caret did not come back with the text: \(page.text)")
+    }
+
+    /// Undo and redo are each other's inverse for the insertion point too, not only for the
+    /// text, however many times they are used.
+    func testTheInsertionPointSurvivesRepeatedUndoAndRedo() {
+        typeTagPrefix()
+        page.acceptCompletion(named: "orchid")
+        page.type("abc")
+        let complete = page.text
+
+        page.undo()
+        page.redo()
+        page.undo()
+        page.redo()
+        XCTAssertEqual(page.text, complete, "the text drifted across repeated undo and redo")
+
+        page.type("d")
+        XCTAssertTrue(page.text.hasSuffix("abcd"),
+                      "the caret drifted across repeated undo and redo: \(page.text)")
+    }
+
+    /// Undoing leaves the caret at the end of what survived, so typing carries on from there
+    /// rather than from wherever the edit began.
+    func testTypingAfterAnUndoContinuesFromWhatSurvived() {
+        typeTagPrefix()
+        page.acceptCompletion(named: "orchid")
+        page.type("abc")
+
+        page.undo()
+        let survived = page.text
+        page.type("z")
+        XCTAssertEqual(page.text, survived + "z",
+                       "typing after the undo did not continue from the end: \(page.text)")
+    }
 }

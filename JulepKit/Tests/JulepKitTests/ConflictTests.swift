@@ -46,3 +46,88 @@ struct ConflictTests {
         #expect(try file.read() == Corpus.text)
     }
 }
+
+/// The disagreement that is not an iCloud conflict: this device's own file, changed by another
+/// local process in the same lines the app had changed.
+@Suite("File-on-disk conflicts")
+@MainActor
+struct FileOnDiskConflictTests {
+    private func loadedWorkspace() async throws -> (Workspace, URL) {
+        let directory = URL.temporaryDirectory.appending(path: "julep-fod-\(UUID().uuidString)")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        let url = directory.appending(path: "journal.txt")
+        try "a\nb\nc".write(to: url, atomically: true, encoding: .utf8)
+
+        let workspace = Workspace(saveDebounce: .milliseconds(10))
+        await workspace.load(resolving: { Container(documentsURL: directory) })
+        return (workspace, url)
+    }
+
+    /// Standing up the disagreement: the buffer and the file changed the same line.
+    private func conflicted() async throws -> (Workspace, URL) {
+        let (workspace, url) = try await loadedWorkspace()
+        workspace.journalText = "a\nMINE\nc"
+        try "a\nTHEIRS\nc".write(to: url, atomically: true, encoding: .utf8)
+        await workspace.flush()
+        return (workspace, url)
+    }
+
+    @Test func itIsSurfacedAlongsideTheICloudOnes() async throws {
+        let (workspace, _) = try await conflicted()
+        #expect(workspace.conflicts.count == 1)
+        #expect(workspace.conflicts.first?.source == .fileOnDisk)
+        #expect(workspace.conflicts.first?.text == "a\nTHEIRS\nc")
+    }
+
+    /// It has no `NSFileVersion` behind it, so it has to be settled by its own route rather
+    /// than by the one that marks iCloud versions resolved.
+    @Test func keepingThisDevicesVersionWritesItAndClearsTheConflict() async throws {
+        let (workspace, url) = try await conflicted()
+        await workspace.resolveConflicts(.keepCurrent)
+        await workspace.flush()
+
+        #expect(workspace.conflicts.isEmpty)
+        #expect(try String(contentsOf: url, encoding: .utf8) == "a\nMINE\nc")
+    }
+
+    @Test func takingTheFileAdoptsItAndClearsTheConflict() async throws {
+        let (workspace, url) = try await conflicted()
+        await workspace.resolveConflicts(.takeOther(id: Workspace.fileOnDiskID))
+        await workspace.flush()
+
+        #expect(workspace.conflicts.isEmpty)
+        #expect(workspace.journalText == "a\nTHEIRS\nc")
+        #expect(try String(contentsOf: url, encoding: .utf8) == "a\nTHEIRS\nc")
+        #expect(workspace.document.serialized == "a\nTHEIRS\nc", "the parsed document went stale")
+    }
+
+    @Test func keepingBothKeepsEveryLineAndFlagsTheSeam() async throws {
+        let (workspace, url) = try await conflicted()
+        await workspace.resolveConflicts(.keepBoth(id: Workspace.fileOnDiskID))
+        await workspace.flush()
+
+        let written = try String(contentsOf: url, encoding: .utf8)
+        #expect(written.contains("MINE"))
+        #expect(written.contains("THEIRS"))
+        #expect(workspace.conflicts.isEmpty)
+    }
+
+    /// Overlapping changes are exactly what a merge could not settle, so none is offered.
+    @Test func noMergeIsOfferedForWhatAMergeAlreadyRefused() async throws {
+        let (workspace, _) = try await conflicted()
+        let version = try #require(workspace.conflicts.first)
+        #expect(workspace.mergeOffer(for: version) == nil)
+    }
+
+    /// And a version that *does* merge is offered as one, rather than made into a choice.
+    @Test func aMergeableVersionIsOffered() async throws {
+        let (workspace, _) = try await loadedWorkspace()
+        let version = ConflictingVersion(
+            id: "other", deviceName: "Mac", modified: nil, text: "prepended\na\nb\nc"
+        )
+        #expect(workspace.mergeOffer(for: version) == "prepended\na\nb\nc")
+
+        workspace.journalText = "a\nb\nC"
+        #expect(workspace.mergeOffer(for: version) == "prepended\na\nb\nC")
+    }
+}

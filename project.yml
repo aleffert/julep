@@ -17,12 +17,21 @@ settings:
     SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
     # The product version, shared: "Julep 1.0.2" should mean the same thing on both
     # platforms, and it is the number a user sees.
-    MARKETING_VERSION: "1.0.12"
+    MARKETING_VERSION: "1.0.13"
     # A default for the test bundles, which generate their Info.plists and need *a*
     # value. The two app targets override it: build numbers are per-platform
     # bookkeeping, and each store treats them as its own stream. Sharing one counter
     # meant a Mac release burned an iOS build number and back again.
     CURRENT_PROJECT_VERSION: "1"
+
+# The iOS build number, in one place. An app extension's CFBundleVersion has to match its
+# containing app's or the upload is rejected, and two copies of a number that has to move
+# together is a number that eventually does not.
+settingGroups:
+  iOSBuild:
+    # Its own stream: TestFlight refuses a build number it has already seen, so this only ever
+    # increases, one step per upload.
+    CURRENT_PROJECT_VERSION: "13"
 
 packages:
   JulepKit:
@@ -110,7 +119,7 @@ targets:
         PRODUCT_NAME: Julep
         PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
         # What Sparkle compares. Only ever increases.
-        CURRENT_PROJECT_VERSION: "11"
+        CURRENT_PROJECT_VERSION: "12"
         ENABLE_HARDENED_RUNTIME: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: Julep
 
@@ -128,6 +137,8 @@ targets:
         buildPhase: resources
     dependencies:
       - package: JulepKit
+      # Embedded into the app's PlugIns. A widget only exists as part of its host app.
+      - target: Julep-iOSWidget
     entitlements:
       path: Apps/iOS/Supporting/Julep-iOS.entitlements
       properties:
@@ -155,14 +166,49 @@ targets:
             NSUbiquitousContainerName: Julep
             NSUbiquitousContainerSupportedFolderLevels: Any
     settings:
+      groups: [iOSBuild]
       base:
         PRODUCT_NAME: Julep
         PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
-        # Its own stream: TestFlight refuses a build number it has already seen, so
-        # this only ever increases, one step per upload.
-        CURRENT_PROJECT_VERSION: "12"
         TARGETED_DEVICE_FAMILY: "1"
         ASSETCATALOG_COMPILER_APPICON_NAME: Julep
+
+  # The home screen widget. iOS only: a widget is the answer to "what is open" on a phone,
+  # where the app is not already on screen.
+  Julep-iOSWidget:
+    type: app-extension
+    platform: iOS
+    sources:
+      - Apps/iOSWidget/Sources
+    dependencies:
+      - package: JulepKit
+    # The same container the app reads, resolved in the widget's own process. A summary the
+    # app left behind would only be as fresh as the last time the phone app ran, and this
+    # journal is edited on the Mac too.
+    entitlements:
+      path: Apps/iOSWidget/Supporting/Julep-iOSWidget.entitlements
+      properties:
+        com.apple.developer.icloud-services: [CloudDocuments]
+        com.apple.developer.icloud-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
+        com.apple.developer.ubiquity-container-identifiers:
+          [iCloud.com.quipsoteric.julep]
+    info:
+      path: Apps/iOSWidget/Supporting/Info.plist
+      properties:
+        # What the widget gallery calls the group these widgets belong to.
+        CFBundleDisplayName: Julep
+        CFBundleShortVersionString: "$(MARKETING_VERSION)"
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      groups: [iOSBuild]
+      base:
+        PRODUCT_NAME: JulepWidget
+        PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep.widget
+        TARGETED_DEVICE_FAMILY: "1"
+        SKIP_INSTALL: YES
 
   Julep-macOSUITests:
     type: bundle.ui-testing

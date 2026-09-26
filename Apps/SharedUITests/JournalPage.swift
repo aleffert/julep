@@ -31,6 +31,9 @@ protocol JournalPage: AnyObject {
 
     func undo()
 
+    /// Puts back what `undo` took, by whatever affordance the platform offers.
+    func redo()
+
     /// The journal as the editor currently shows it.
     var text: String { get }
 }

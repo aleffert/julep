@@ -113,6 +113,7 @@ public final class TextFileStore {
         text = loaded
         isApplyingExternalChange = false
         isLoaded = true
+        baseline = loaded
 
         file.startObserving { [weak self] in
             Task { @MainActor in await self?.reloadFromDisk() }
@@ -151,20 +152,30 @@ public final class TextFileStore {
         // ahead of the file no matter what it says, so nothing on disk is worth taking.
         // And once everything is saved, an echo is recognised by matching what was written.
         guard !hasUnsavedChanges else { return }
-        guard disk != lastWritten else { return }
+        guard disk != baseline else { return }
 
         // Assigning would otherwise schedule a save of what was just read.
         isApplyingExternalChange = true
         text = disk
         isApplyingExternalChange = false
         externalChangeIsUndoable = false
+        baseline = disk
         externalRevision += 1
         onExternalChange?()
     }
 
-    /// What this store last put on disk, so its own writes can be recognised when the file
-    /// presenter reports them back.
-    private var lastWritten: String?
+    /// The content the buffer and the file are both known to descend from.
+    ///
+    /// Two jobs, and they are the same value: it recognises this store's own writes when the
+    /// file presenter reports them back, and it is the ancestor a three-way merge is taken
+    /// against when the file has moved on. That second job is why it is updated wherever the
+    /// buffer and the file are known to agree -- after a load and after adopting an outside
+    /// change, not only after a write. A stale ancestor does not fail loudly: it produces a
+    /// merge that looks clean while undoing the other side's edits.
+    ///
+    /// `nil` means the file's contents are not known, which is only true after a failed write.
+    /// Nothing is merged against an unknown ancestor.
+    private var baseline: String?
 
     /// Whether the buffer is ahead of the file. While it is, nothing on disk is worth
     /// adopting -- it can only be older.
@@ -200,26 +211,179 @@ public final class TextFileStore {
     /// run rather than racing it.
     private func startWriting() {
         materialize()
-        guard writeTask == nil, let file, isLoaded else { return }
+        guard writeTask == nil, let file, isLoaded, mergeConflict == nil else { return }
 
         writeTask = Task { [weak self] in
-            while let self, self.lastWritten != self.text {
+            while let self, self.baseline != self.text, self.mergeConflict == nil {
                 let value = self.text
+                let base = self.baseline
                 // Recorded before the write: the file presenter can report the change while
                 // this is still awaiting, and the echo has to be recognisable by then.
-                self.lastWritten = value
+                // Corrected below on the passes where something other than `value` landed.
+                self.baseline = value
                 do {
-                    try await Task.detached(priority: .utility) { try file.write(value) }.value
+                    let outcome = try await Task.detached(priority: .utility) {
+                        try Self.write(value, basedOn: base, to: file)
+                    }.value
                     self.writeError = nil
+                    switch outcome {
+                    case .wrote:
+                        break
+                    case .merged(let text):
+                        self.baseline = text
+                        self.adopt(merged: text, mergedFrom: value)
+                    case .conflicted(let disk):
+                        // The buffer still descends from `base`, so that stays the ancestor.
+                        // What is on disk is held for the user to choose against, and nothing
+                        // is written until they do.
+                        self.baseline = base
+                        self.mergeConflict = MergeConflict(onDisk: disk, inBuffer: value)
+                    }
                 } catch {
-                    self.lastWritten = nil
+                    // What the file now holds is unknown, so nothing is merged against it
+                    // until a load or a successful write establishes an ancestor again.
+                    self.baseline = nil
                     self.writeError = error.localizedDescription
                     break
                 }
             }
             guard let self else { return }
-            self.hasUnsavedChanges = self.lastWritten != self.text
+            self.hasUnsavedChanges = self.baseline != self.text
             self.writeTask = nil
         }
     }
+
+    /// One pass of the write, inside a single coordinated access to the file.
+    ///
+    /// Read-modify-write rather than a blind replace: between this store's last write and this
+    /// one, the widget may have rolled the journal from its own process. Coordination alone does
+    /// not help there -- it serialises the two writes and the later one still wins wholesale --
+    /// and it is not an iCloud conflict either, because both writes are on this device and the
+    /// sync engine has no divergence to report. Merging is what keeps both.
+    nonisolated private static func write(
+        _ value: String,
+        basedOn base: String?,
+        to file: CoordinatedTextFile
+    ) throws -> WriteOutcome {
+        var outcome = WriteOutcome.wrote
+        try file.update { disk in
+            // The file is where this store left it, or its contents are unknown after a failed
+            // write. Either way there is nothing trustworthy to merge against.
+            guard let base, disk != base else { return value }
+            switch TextMerge.merge(base: base, mine: value, theirs: disk) {
+            case .merged(let merged):
+                outcome = .merged(merged)
+                return merged
+            case .conflicted:
+                outcome = .conflicted(disk)
+                return nil
+            }
+        }
+        return outcome
+    }
+
+    /// What one pass of the write loop settled.
+    private enum WriteOutcome: Sendable {
+        /// The file was where this store left it. The buffer is now on disk unchanged.
+        case wrote
+        /// The file had moved on elsewhere, and both sides' changes were combined into this.
+        case merged(String)
+        /// The file had moved on in the same lines the buffer changed. Nothing was written.
+        case conflicted(String)
+    }
+
+    /// Takes a merged file into the buffer.
+    ///
+    /// The buffer can have moved on while the merge was in flight. Those keystrokes descend
+    /// from `value`, which makes `value` their ancestor and combining them the same three-way
+    /// merge over again -- rather than an overwrite that would swallow them.
+    private func adopt(merged: String, mergedFrom value: String) {
+        let adopted: String
+        if text == value {
+            adopted = merged
+        } else {
+            switch TextMerge.merge(base: value, mine: text, theirs: merged) {
+            case .merged(let combined):
+                adopted = combined
+            case .conflicted:
+                // Typed into the very lines the other side changed, in the moment between the
+                // merge and this. There is nothing to take without choosing for them.
+                mergeConflict = MergeConflict(onDisk: merged, inBuffer: text)
+                baseline = value
+                return
+            }
+        }
+
+        // Not the user's edit, so not theirs to undo -- but the editor still has to place the
+        // caret as though the text arrived around it rather than replacing it underneath.
+        announce(adopted)
+    }
+
+    // MARK: - Merge conflicts
+
+    /// A disagreement between the buffer and the file that a merge could not settle.
+    ///
+    /// Never resolved by guessing. While one stands, nothing is written: the file keeps what the
+    /// other writer put there and the buffer keeps what was typed, so whichever the user picks,
+    /// the other was still on disk or on screen until they picked.
+    public private(set) var mergeConflict: MergeConflict?
+
+    /// The ancestor a merge would be taken against, for one this store will *offer* rather than
+    /// apply. `nil` when the file's contents are not known.
+    public var mergeBaseline: String? { baseline }
+
+    public func resolveMergeConflict(_ resolution: MergeConflictResolution) {
+        guard let conflict = mergeConflict else { return }
+        mergeConflict = nil
+
+        switch resolution {
+        case .use(let chosen):
+            // Whatever the user picked now descends from what is on disk, so the ordinary write
+            // path puts it there and the merge on the way finds nothing left to settle.
+            baseline = conflict.onDisk
+            if chosen == text {
+                hasUnsavedChanges = true
+                scheduleSave()
+            } else {
+                announce(chosen)
+            }
+
+        case .takeTheirs:
+            announce(conflict.onDisk)
+            baseline = conflict.onDisk
+            hasUnsavedChanges = false
+        }
+    }
+
+    /// Puts text into the buffer as a change from outside, so the editor takes it on.
+    private func announce(_ value: String) {
+        // Assigning would otherwise schedule a save of what was just taken on.
+        isApplyingExternalChange = true
+        text = value
+        isApplyingExternalChange = false
+        externalChangeIsUndoable = false
+        externalRevision += 1
+        onExternalChange?()
+    }
+}
+
+/// The buffer and the file, when they cannot both be kept.
+public struct MergeConflict: Equatable, Sendable {
+    /// What another writer -- the widget, another editor -- left in the file.
+    public var onDisk: String
+    /// What this app has, and has not been able to save.
+    public var inBuffer: String
+
+    public init(onDisk: String, inBuffer: String) {
+        self.onDisk = onDisk
+        self.inBuffer = inBuffer
+    }
+}
+
+public enum MergeConflictResolution: Equatable, Sendable {
+    /// Put this text on the file, over what the other writer left. Keeping what was typed here
+    /// is this with the buffer's own text; so is an accepted merge, and so is keeping both.
+    case use(String)
+    /// Take the file and discard what was typed here.
+    case takeTheirs
 }

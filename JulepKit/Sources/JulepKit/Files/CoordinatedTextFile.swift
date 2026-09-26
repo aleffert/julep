@@ -30,37 +30,61 @@ public final class CoordinatedTextFile: NSObject, NSFilePresenter, @unchecked Se
     /// A missing file reads as empty rather than throwing -- an empty journal is a legitimate
     /// starting state, not an error.
     public func read() throws -> String {
-        var result: Result<String, Error> = .success("")
-        var coordinationError: NSError?
-
-        NSFileCoordinator(filePresenter: self)
-            .coordinate(readingItemAt: fileURL, options: [], error: &coordinationError) { url in
-                result = Result {
-                    guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false))
-                    else { return "" }
-                    return try String(contentsOf: url, encoding: .utf8)
-                }
-            }
-
-        if let coordinationError { throw coordinationError }
-        return try result.get()
+        try coordinate(.reading) { try Self.contents(of: $0) }
     }
 
     public func write(_ text: String) throws {
-        var writeError: Error?
-        var coordinationError: NSError?
+        try coordinate(.writing) { try text.write(to: $0, atomically: true, encoding: .utf8) }
+    }
 
-        NSFileCoordinator(filePresenter: self)
-            .coordinate(writingItemAt: fileURL, options: .forReplacing, error: &coordinationError) { url in
-                do {
-                    try text.write(to: url, atomically: true, encoding: .utf8)
-                } catch {
-                    writeError = error
-                }
-            }
+    /// Reads, transforms and writes in one coordinated pass. Returning `nil` from `transform`
+    /// leaves the file alone.
+    ///
+    /// The seam a second process edits the journal through -- the widget rolling it while the
+    /// app is not running. A `read()` followed by a separate `write()` leaves a window between
+    /// them in which someone else's write lands and is then overwritten, and the journal is the
+    /// one file in this app where losing a write is unrecoverable.
+    public func update(_ transform: (String) throws -> String?) throws {
+        try coordinate(.writing) { url in
+            guard let updated = try transform(try Self.contents(of: url)) else { return }
+            try updated.write(to: url, atomically: true, encoding: .utf8)
+        }
+    }
+
+    private static func contents(of url: URL) throws -> String {
+        guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return "" }
+        return try String(contentsOf: url, encoding: .utf8)
+    }
+
+    private enum Access {
+        case reading
+        case writing
+    }
+
+    /// The two halves of every coordinated access: the coordinator's own error, and whatever the
+    /// accessor threw inside it. Both have to come back out, and the accessor cannot throw
+    /// through the coordinator's block.
+    private func coordinate<T>(_ access: Access, _ accessor: (URL) throws -> T) throws -> T {
+        var result: Result<T, Error>?
+        var coordinationError: NSError?
+        let coordinator = NSFileCoordinator(filePresenter: self)
+        let body: (URL) -> Void = { url in result = Result { try accessor(url) } }
+
+        switch access {
+        case .reading:
+            coordinator.coordinate(
+                readingItemAt: fileURL, options: [], error: &coordinationError, byAccessor: body
+            )
+        case .writing:
+            coordinator.coordinate(
+                writingItemAt: fileURL, options: .forReplacing, error: &coordinationError, byAccessor: body
+            )
+        }
 
         if let coordinationError { throw coordinationError }
-        if let writeError { throw writeError }
+        // Unreachable: the coordinator either runs the accessor or reports why it did not.
+        guard let result else { throw CocoaError(.fileReadUnknown) }
+        return try result.get()
     }
 
     // MARK: - Observation

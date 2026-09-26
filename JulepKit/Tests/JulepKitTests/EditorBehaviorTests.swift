@@ -193,3 +193,71 @@ struct ProseTests {
         #expect(isProse("- see [note| about the boxes"))
     }
 }
+
+@Suite("Insertion point")
+struct CaretMappingTests {
+    private func edit(_ range: NSRange, _ replacement: String) -> EditResult {
+        EditResult(range: range, replacement: replacement, selection: NSRange(location: 0, length: 0))
+    }
+
+    @Test func aCaretBeforeTheChangeDoesNotMove() {
+        #expect(EditorBehavior.caret(at: 2, through: edit(NSRange(location: 5, length: 0), "new")) == 2)
+    }
+
+    /// Text arriving exactly where the caret sits carries the caret with it. The caret belongs
+    /// to what the user was writing, and that text is now further down the file -- leaving it
+    /// put would drop them at the top of a block someone else's roll just wrote.
+    @Test func anInsertionAtTheCaretCarriesItAlong() {
+        #expect(EditorBehavior.caret(at: 5, through: edit(NSRange(location: 5, length: 0), "new")) == 8)
+    }
+
+    /// A caret at the start of a run being replaced stays at the start: there is no content
+    /// ahead of it that moved.
+    @Test func aCaretAtTheStartOfAReplacedRunStaysPut() {
+        #expect(EditorBehavior.caret(at: 5, through: edit(NSRange(location: 5, length: 3), "xy")) == 5)
+    }
+
+    @Test func aCaretAfterAnInsertionMovesByWhatWasInserted() {
+        #expect(EditorBehavior.caret(at: 10, through: edit(NSRange(location: 0, length: 0), "abc")) == 13)
+    }
+
+    @Test func aCaretAfterADeletionMovesBackByWhatWasRemoved() {
+        #expect(EditorBehavior.caret(at: 10, through: edit(NSRange(location: 0, length: 4), "")) == 6)
+    }
+
+    @Test func aCaretAfterAReplacementMovesByTheDifference() {
+        #expect(EditorBehavior.caret(at: 10, through: edit(NSRange(location: 0, length: 4), "abcdef")) == 12)
+    }
+
+    /// The replaced run is gone, so there is no position inside it to keep. The end of what
+    /// replaced it is the nearest place that still means anything.
+    @Test func aCaretInsideAReplacedRunLandsAtItsEnd() {
+        #expect(EditorBehavior.caret(at: 3, through: edit(NSRange(location: 2, length: 6), "xy")) == 4)
+    }
+
+    /// The case the mapping exists for. A roll prepends a block, so a caret restored by its
+    /// raw offset lands a block earlier in the journal than where it was left.
+    @Test func aRollDoesNotDragTheCaretBackwards() throws {
+        let before = """
+        monday 8/31/2026
+        - [orchid] record walkthrough
+        - unpack
+
+        """
+        let today = JournalCalendar.date(month: 9, day: 2, year: 2026)!
+        let after = try #require(Roll.roll(document: Document(before), today: today)).serialized
+        let edit = try #require(EditorBehavior.minimalEdit(from: before, to: after))
+
+        let end = (before as NSString).length
+        #expect(EditorBehavior.caret(at: end, through: edit) == (after as NSString).length,
+                "a caret at the end of the journal did not stay at the end")
+
+        // And a caret parked in the last item stays in that item rather than sliding into the
+        // block the roll wrote above it.
+        let inUnpack = (before as NSString).range(of: "- unpack").location + 3
+        let mapped = EditorBehavior.caret(at: inUnpack, through: edit)
+        let tail = (after as NSString).substring(from: mapped)
+        #expect(tail.hasPrefix("npack"), "the caret slid out of the item it was in: \(tail.prefix(20))")
+    }
+}
+

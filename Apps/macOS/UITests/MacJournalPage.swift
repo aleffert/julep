@@ -41,5 +41,7 @@ final class MacJournalPage: JournalPage {
 
     func undo() { app.typeKey("z", modifierFlags: .command) }
 
+    func redo() { app.typeKey("z", modifierFlags: [.command, .shift]) }
+
     var text: String { editor.value as? String ?? "" }
 }

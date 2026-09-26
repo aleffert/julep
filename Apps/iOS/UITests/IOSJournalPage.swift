@@ -34,5 +34,9 @@ final class IOSJournalPage: JournalPage {
 
     func undo() { app.buttons["toolbar.undo"].tap() }
 
+    /// The keyboard accessory's button, like undo: it keeps the editor first responder, so the
+    /// insertion point a scenario is about survives being asked about.
+    func redo() { app.buttons["toolbar.redo"].tap() }
+
     var text: String { editor.value as? String ?? "" }
 }

@@ -229,6 +229,24 @@ public enum EditorBehavior {
         )
     }
 
+    /// Where an insertion point belongs once `edit` has been applied underneath it.
+    ///
+    /// Restoring a caret by its raw offset only works while the text before it keeps its
+    /// length. A roll prepends a block and a merge takes in someone else's, so the same number
+    /// of characters from the start is a different place in the journal afterwards -- the caret
+    /// appears to jump backwards by exactly what arrived above it.
+    public static func caret(at location: Int, through edit: EditResult) -> Int {
+        let inserted = (edit.replacement as NSString).length
+        if location >= NSMaxRange(edit.range) {
+            // Everything that moved, moved by the same amount.
+            return location + inserted - edit.range.length
+        }
+        if location <= edit.range.location { return location }
+        // Inside the run that was replaced, which no longer exists to sit in. The end of what
+        // replaced it is the nearest place that still means something.
+        return edit.range.location + inserted
+    }
+
     /// The edit for typing `insertion`, folded together with any rewrite it triggers.
     ///
     /// Returns `nil` when the keystroke needs no special handling, so the text view inserts it

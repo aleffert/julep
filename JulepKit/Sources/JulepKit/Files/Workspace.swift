@@ -95,9 +95,13 @@ public final class Workspace {
     /// pruning happens.
     ///
     /// Does nothing when there is nothing to bring forward, so a shell can offer this
-    /// unconditionally rather than deciding for itself whether a roll would be a no-op.
+    /// unconditionally rather than deciding for itself whether a roll would be a no-op. That
+    /// includes a day already rolled: `Roll.apply` only ever prepends, so rolling twice used to
+    /// write a second block with the same header rather than doing nothing.
     public func roll(today: Date = NaturalDates.today()) {
-        guard let rolled = Roll.roll(document: document, today: today) else { return }
+        guard Roll.isNeeded(document: document, today: today),
+              let rolled = Roll.roll(document: document, today: today)
+        else { return }
         replaceJournal(with: rolled.serialized)
     }
 
@@ -127,16 +131,62 @@ public final class Workspace {
         await journal.flush()
     }
 
+    /// Re-reads the file, in case it changed while the app was not listening.
+    ///
+    /// The file presenter only reports changes to a running process, and the widget rolls the
+    /// journal from its own process while this one is suspended. Without a read on the way back
+    /// in, the app carries on from a buffer that is quietly older than the file and writes over
+    /// the roll. Discards nothing unsaved: see `TextFileStore.reloadFromDisk`.
+    public func reload() async {
+        await journal.reload()
+    }
+
     // MARK: - Conflicts
 
-    /// Versions of the journal that disagree with this device's.
+    /// Versions of the journal that disagree with this device's, from either direction: ones
+    /// iCloud is holding from another device, and the file itself when something local changed
+    /// it in the same lines this app did.
     ///
-    /// Surfaced rather than merged. Two devices editing a hand-maintained journal is rare, but
-    /// silently dropping one side's edits is unrecoverable.
-    public private(set) var conflicts: [ConflictingVersion] = []
+    /// What a three-way merge could settle has already been settled by the time anything
+    /// reaches here. These are the disagreements that are genuinely a choice, and the app does
+    /// not make them.
+    public var conflicts: [ConflictingVersion] {
+        guard let merge = journal.mergeConflict else { return iCloudConflicts }
+        return iCloudConflicts + [ConflictingVersion(
+            id: Self.fileOnDiskID,
+            deviceName: nil,
+            modified: nil,
+            text: merge.onDisk,
+            source: .fileOnDisk
+        )]
+    }
+
+    /// The identifier the file-on-disk disagreement travels under. It has no `NSFileVersion`
+    /// behind it, so it needs a name of its own to be routed by.
+    static let fileOnDiskID = "file-on-disk"
+
+    /// Held rather than computed: reading them asks the file system what iCloud is holding,
+    /// which is not a question to ask on every redraw. Re-derived after every resolution.
+    private var iCloudConflicts: [ConflictingVersion] = []
 
     public func checkForConflicts() {
-        conflicts = journal.conflictingVersions()
+        iCloudConflicts = journal.conflictingVersions()
+    }
+
+    /// What merging a disagreeing version into this device's would produce, or `nil` when the
+    /// two cannot be merged without choosing between them.
+    ///
+    /// Offered, never applied unattended. For a version from another device the ancestor is a
+    /// reasonable assumption rather than a fact -- iCloud does not say what they branched from
+    /// -- so acceptance is what makes it safe. See `TextMerge`.
+    public func mergeOffer(for version: ConflictingVersion) -> String? {
+        guard let base = journal.mergeBaseline else { return nil }
+        switch TextMerge.merge(base: base, mine: journalText, theirs: version.text) {
+        case .merged(let text):
+            return text
+        case .conflicted:
+            return nil
+        }
     }
 
     /// Settles the outstanding conflicts, then re-reads what iCloud still holds.
@@ -146,6 +196,14 @@ public final class Workspace {
     /// screen stays up. Clearing it here instead would close the screen over a version that
     /// was never actually settled, which is the one outcome this whole path exists to avoid.
     public func resolveConflicts(_ resolution: ConflictResolution) async {
+        if let merge = journal.mergeConflict,
+           resolution.id == nil || resolution.id == Self.fileOnDiskID {
+            resolveFileOnDisk(resolution, merge: merge)
+            // `keepCurrent` names no particular disagreement because it answers all of them, so
+            // iCloud's are still to settle below. Anything else named this one and is done.
+            guard resolution.id == nil else { return }
+        }
+
         // Anything still sitting in the save debounce has to reach the file first. `keepBoth`
         // merges against what is *on disk* while the comparison the user just read was drawn
         // from the buffer, so an unflushed edit would be shown as at stake and then dropped.
@@ -158,5 +216,39 @@ public final class Workspace {
             status = .failed(error.localizedDescription)
         }
         checkForConflicts()
+    }
+
+    /// Settles a disagreement with this device's own file.
+    ///
+    /// Nothing to flush and no `NSFileVersion` to mark resolved: the buffer has been held back
+    /// from the file all along, so settling it is choosing what the next ordinary write puts
+    /// there. The document is re-derived because the buffer may have just changed under it.
+    private func resolveFileOnDisk(_ resolution: ConflictResolution, merge: MergeConflict) {
+        switch resolution {
+        case .keepCurrent:
+            journal.resolveMergeConflict(.use(merge.inBuffer))
+        case .takeOther:
+            journal.resolveMergeConflict(.takeTheirs)
+        case .keepBoth:
+            journal.resolveMergeConflict(.use(CoordinatedTextFile.appending(
+                merge.onDisk, to: merge.inBuffer, from: nil
+            )))
+        case .merge(_, let text):
+            journal.resolveMergeConflict(.use(text))
+        }
+        adoptExternalJournal()
+    }
+}
+
+extension ConflictResolution {
+    /// Which disagreement this settles. `keepCurrent` names none, because keeping this
+    /// device's version answers every one of them at once.
+    var id: String? {
+        switch self {
+        case .keepCurrent: nil
+        case .takeOther(let id): id
+        case .keepBoth(let id): id
+        case .merge(let id, _): id
+        }
     }
 }

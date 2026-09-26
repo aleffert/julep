@@ -4,8 +4,13 @@ import JulepKit
 /// Presents versions that disagree, and lets the user pick.
 ///
 /// Deliberately not automatic. The journal is the only copy of years of history, so the app
-/// shows what is at stake and asks; "keep both" is offered first because it is the only
-/// choice that cannot lose anything.
+/// shows what is at stake and asks. What *could* be settled without asking already has been:
+/// a write merges with a change made elsewhere whenever the two did not touch the same lines,
+/// so anything reaching this screen is a genuine choice. See `TextMerge`.
+///
+/// Where a merge is still possible it is offered first, because it is the only choice that
+/// keeps everything without leaving a marker in the file; "keep both" comes next for the same
+/// reason with one.
 ///
 /// What is at stake is shown as a diff rather than as two previews of the file. A roll
 /// prepends, so two versions of a journal are overwhelmingly identical and differ in a
@@ -21,10 +26,15 @@ struct ConflictView: View {
     /// changes, which on this screen means once.
     @State private var comparisons: [String: VersionDiff.Comparison] = [:]
 
+    /// What merging each version in would produce, where that can be done without choosing.
+    /// Computed alongside the comparisons, and for the same reason.
+    @State private var merges: [String: String] = [:]
+
     var body: some View {
         List {
             Section {
-                Text("This journal was edited in two places. Nothing has been changed yet.")
+                Text("This journal was edited in two places at once, in the same lines. "
+                     + "Nothing has been changed yet.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
             }
@@ -33,10 +43,15 @@ struct ConflictView: View {
                 Section {
                     comparison(with: version)
 
+                    if let merged = merges[version.id] {
+                        Button("Merge them") {
+                            resolve(.merge(id: version.id, text: merged))
+                        }
+                    }
                     Button("Keep both") {
                         resolve(.keepBoth(id: version.id))
                     }
-                    Button("Use this version instead") {
+                    Button(takeOtherLabel(version)) {
                         resolve(.takeOther(id: version.id))
                     }
                 } header: {
@@ -58,6 +73,9 @@ struct ConflictView: View {
             comparisons = workspace.conflicts.reduce(into: [:]) { result, version in
                 result[version.id] = VersionDiff.compare(mine: mine, theirs: version.text)
             }
+            merges = workspace.conflicts.reduce(into: [:]) { result, version in
+                result[version.id] = workspace.mergeOffer(for: version)
+            }
         }
         // The binding that presents this screen refuses to close while a conflict stands, so
         // an interactive dismissal would spring straight back. Saying so outright is clearer
@@ -66,9 +84,31 @@ struct ConflictView: View {
     }
 
     private func header(_ version: ConflictingVersion) -> String {
-        let device = version.deviceName ?? "Another device"
-        guard let modified = version.modified else { return device }
-        return "\(device) — \(modified.formatted(date: .abbreviated, time: .shortened))"
+        switch version.source {
+        case .fileOnDisk:
+            return "Changed outside this app"
+        case .otherDevice:
+            let device = version.deviceName ?? "Another device"
+            guard let modified = version.modified else { return device }
+            return "\(device) — \(modified.formatted(date: .abbreviated, time: .shortened))"
+        }
+    }
+
+    /// Named for where the version came from. "Use this version instead" reads as another
+    /// device's copy, which is wrong for the file this app is looking at.
+    private func takeOtherLabel(_ version: ConflictingVersion) -> String {
+        switch version.source {
+        case .fileOnDisk: "Use what is in the file"
+        case .otherDevice: "Use this version instead"
+        }
+    }
+
+    /// What to call the side a line came from.
+    private func otherName(_ version: ConflictingVersion) -> String {
+        switch version.source {
+        case .fileOnDisk: "the file"
+        case .otherDevice: version.deviceName ?? "the other device"
+        }
     }
 
     // MARK: - The difference
@@ -89,7 +129,7 @@ struct ConflictView: View {
         case .tooDifferent(let mineOnly, let theirsOnly):
             VStack(alignment: .leading, spacing: 4) {
                 Text("These versions have diverged too far to compare line by line.")
-                Text("\(mineOnly) lines only here, \(theirsOnly) only on the other device.")
+                Text("\(mineOnly) lines only here, \(theirsOnly) only in the other version.")
                     .foregroundStyle(.secondary)
                 Text("\"Keep both\" is the only choice that keeps all of it.")
                     .foregroundStyle(.secondary)
@@ -103,7 +143,7 @@ struct ConflictView: View {
                     gap(hunks[index - 1].end, hunk.start)
                 }
                 ForEach(hunk.rows) { row in
-                    line(row, otherDevice: version.deviceName)
+                    line(row, other: otherName(version))
                 }
             }
         }
@@ -113,7 +153,7 @@ struct ConflictView: View {
         HStack(spacing: 12) {
             Label("only here", systemImage: "minus")
                 .foregroundStyle(Self.sideColor(for: .mine))
-            Label("only on \(version.deviceName ?? "the other device")", systemImage: "plus")
+            Label("only in \(otherName(version))", systemImage: "plus")
                 .foregroundStyle(Self.sideColor(for: .theirs))
         }
         .font(.caption2)
@@ -132,7 +172,7 @@ struct ConflictView: View {
     /// editor underlines a line it cannot read instead of merely recolouring it. The line is
     /// monospaced because the journal's structure is made of leading spaces, and a
     /// proportional font hides the indentation that says what a line is.
-    private func line(_ row: VersionDiff.Row, otherDevice: String?) -> some View {
+    private func line(_ row: VersionDiff.Row, other: String) -> some View {
         HStack(alignment: .top, spacing: 6) {
             Text(Self.sign(for: row.side))
                 .foregroundStyle(Self.sideColor(for: row.side))
@@ -142,7 +182,7 @@ struct ConflictView: View {
         }
         .font(.system(.caption, design: .monospaced))
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(Self.spoken(row, otherDevice: otherDevice))
+        .accessibilityLabel(Self.spoken(row, other: other))
     }
 
     private static func sign(for side: VersionDiff.Side) -> String {
@@ -171,11 +211,11 @@ struct ConflictView: View {
         }
     }
 
-    private static func spoken(_ row: VersionDiff.Row, otherDevice: String?) -> String {
+    private static func spoken(_ row: VersionDiff.Row, other: String) -> String {
         switch row.side {
         case .shared: row.text
         case .mine: "Only here: \(row.text)"
-        case .theirs: "Only on \(otherDevice ?? "the other device"): \(row.text)"
+        case .theirs: "Only in \(other): \(row.text)"
         }
     }
 
