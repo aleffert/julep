@@ -119,7 +119,7 @@ targets:
         PRODUCT_NAME: Julep
         PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
         # What Sparkle compares. Only ever increases.
-        CURRENT_PROJECT_VERSION: "12"
+        CURRENT_PROJECT_VERSION: "13"
         ENABLE_HARDENED_RUNTIME: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: Julep
 
