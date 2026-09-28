@@ -255,8 +255,10 @@ xcodebuild -exportArchive \
 # at the top of project.yml is only the test bundles' default.
 settings=$(xcodebuild -project "{{config_root}}/Julep.xcodeproj" -scheme Julep-iOS \
     -configuration Release -showBuildSettings 2>/dev/null)
-version=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/{print $2; exit}')
-build=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/{print $2; exit}')
+# Reads to the end rather than stopping at the first match. See publish-mac for what
+# an early exit does to `echo` on the other side of the pipe.
+version=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/ && !seen { print $2; seen = 1 }')
+build=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/ && !seen { print $2; seen = 1 }')
 echo
 echo "uploaded $version ($build) -- App Store Connect processes it before TestFlight"
 echo "shows it, usually a few minutes. Every upload needs a build number no earlier"
@@ -295,8 +297,13 @@ version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app/C
 # alone would wave through exactly that stale archive.
 settings=$(xcodebuild -project "{{config_root}}/Julep.xcodeproj" -scheme Julep-macOS \
     -destination 'platform=macOS' -configuration Release -showBuildSettings 2>/dev/null)
-expected=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/{print $2; exit}')
-expectedBuild=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/{print $2; exit}')
+# Read to the end rather than stopping at the first match. Under `pipefail` an awk that
+# exits early leaves `echo` writing into a closed pipe -- and the settings dump is well
+# past the pipe buffer, so `echo` is still mid-write. It takes SIGPIPE, the pipeline
+# fails, and `set -e` ends the task with nothing printed. It is a race, so it only
+# happened about one run in five, which is the worst rate for noticing.
+expected=$(echo "$settings" | awk -F' = ' '/^ *MARKETING_VERSION =/ && !seen { print $2; seen = 1 }')
+expectedBuild=$(echo "$settings" | awk -F' = ' '/^ *CURRENT_PROJECT_VERSION =/ && !seen { print $2; seen = 1 }')
 build=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Contents/Info.plist")
 
 if [ "$version" != "$expected" ] || [ "$build" != "$expectedBuild" ]; then
