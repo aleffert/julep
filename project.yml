@@ -17,7 +17,7 @@ settings:
     SWIFT_TREAT_WARNINGS_AS_ERRORS: YES
     # The product version, shared: "Julep 1.0.2" should mean the same thing on both
     # platforms, and it is the number a user sees.
-    MARKETING_VERSION: "1.0.14"
+    MARKETING_VERSION: "1.0.15"
     # A default for the test bundles, which generate their Info.plists and need *a*
     # value. The two app targets override it: build numbers are per-platform
     # bookkeeping, and each store treats them as its own stream. Sharing one counter
@@ -119,7 +119,7 @@ targets:
         PRODUCT_NAME: Julep
         PRODUCT_BUNDLE_IDENTIFIER: com.quipsoteric.julep
         # What Sparkle compares. Only ever increases.
-        CURRENT_PROJECT_VERSION: "13"
+        CURRENT_PROJECT_VERSION: "14"
         ENABLE_HARDENED_RUNTIME: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: Julep
 
