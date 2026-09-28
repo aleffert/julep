@@ -15,13 +15,17 @@ struct JulepMacApp: App {
     /// and the app delegate is the only thing that learns the app is quitting.
     @State private var workspace = Workspace()
 
+    /// Owned alongside the workspace rather than by the view: the Find menu lives in this
+    /// scene, and a model made further down would be out of the menu's reach.
+    @State private var search = SearchModel()
+
     @NSApplicationDelegateAdaptor(SaveOnQuitDelegate.self) private var delegate
 
     init() { ContainerDiagnostic.runIfRequested() }
 
     var body: some Scene {
         Window("Julep", id: "journal") {
-            JournalView(workspace: workspace)
+            JournalView(workspace: workspace, search: search)
                 .frame(minWidth: 520, minHeight: 400)
                 .onAppear { delegate.workspace = workspace }
         }
@@ -29,6 +33,17 @@ struct JulepMacApp: App {
             // Directly under About Julep, where a Mac looks for it.
             CommandGroup(after: .appInfo) {
                 CheckForUpdatesView(updater: updaterController.updater)
+            }
+            // The app has no find bar, so it has no Find menu either until this one.
+            CommandGroup(after: .textEditing) {
+                Menu("Find") {
+                    Button("Find\u{2026}") { search.beginSearch() }
+                        .keyboardShortcut("f", modifiers: .command)
+                    Button("Find Next") { search.findNext() }
+                        .keyboardShortcut("g", modifiers: .command)
+                    Button("Find Previous") { search.findPrevious() }
+                        .keyboardShortcut("g", modifiers: [.command, .shift])
+                }
             }
             CommandMenu("Item") {
                 // What clicking the gutter does, for the item the caret is on -- the same
@@ -86,6 +101,7 @@ final class SaveOnQuitDelegate: NSObject, NSApplicationDelegate {
 
 struct JournalView: View {
     let workspace: Workspace
+    let search: SearchModel
 
     @State private var offeredFix: OfferedFix?
     @State private var isShowingSchedule = false
@@ -101,6 +117,17 @@ struct JournalView: View {
                     Button("Roll", systemImage: "arrow.turn.down.right") { workspace.roll() }
                         .disabled(workspace.status != .ready)
                         .accessibilityIdentifier("nav.roll")
+                }
+                // Its own section: searching is not one of the two things you *do* to the
+                // journal, and a spacer is what breaks the row into separate groups.
+                ToolbarSpacer(.flexible)
+                ToolbarItem {
+                    // Read here, in a body, rather than inside the representable's update:
+                    // that is what registers the dependency that brings the update at all.
+                    SearchFieldView(
+                        model: search, term: search.term, isFailing: search.isFailing
+                    )
+                    .frame(width: 180)
                 }
             }
             .sheet(isPresented: $isShowingSchedule) {
@@ -132,7 +159,8 @@ struct JournalView: View {
                     onResync: { workspace.resyncJournal(from: $0) },
                     revision: workspace.journalRevision,
                     revisionIsUndoable: workspace.journalChangeIsUndoable,
-                    onDiagnosticClicked: { offeredFix = OfferedFix(lineIndex: $0, document: workspace.document) }
+                    onDiagnosticClicked: { offeredFix = OfferedFix(lineIndex: $0, document: workspace.document) },
+                    search: search
                 )
             case .failed(let message):
                 ContentUnavailableView(

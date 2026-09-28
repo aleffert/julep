@@ -23,6 +23,9 @@ struct JournalTextView: NSViewRepresentable {
     var revisionIsUndoable: Bool = false
     /// A diagnostic mark was clicked; the fix is offered, never applied here.
     var onDiagnosticClicked: (Int) -> Void = { _ in }
+    /// The toolbar's search field. Finding and selecting a match is the editor's to do, so
+    /// the field's actions are installed from here.
+    var search: SearchModel
 
     func makeNSView(context: Context) -> NSView {
         let container = NSView()
@@ -171,7 +174,12 @@ struct JournalTextView: NSViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(document: document, onEdit: onEdit, onDiagnosticClicked: onDiagnosticClicked)
+        Coordinator(
+            document: document,
+            onEdit: onEdit,
+            onDiagnosticClicked: onDiagnosticClicked,
+            search: search
+        )
     }
 
     @MainActor final class Coordinator: NSObject, NSTextViewDelegate, NSPopoverDelegate {
@@ -182,17 +190,20 @@ struct JournalTextView: NSViewRepresentable {
         var onEdit: (NSRange, String) -> Void
         var onResync: (String) -> Void = { _ in }
         let gutter = GutterView()
+        let search: SearchModel
         private(set) weak var textView: NSTextView?
         private weak var scrollView: NSScrollView?
 
         init(
             document: @escaping () -> Document,
             onEdit: @escaping (NSRange, String) -> Void,
-            onDiagnosticClicked: @escaping (Int) -> Void
+            onDiagnosticClicked: @escaping (Int) -> Void,
+            search: SearchModel
         ) {
             self.document = document
             self.onEdit = onEdit
             self.onDiagnosticClicked = onDiagnosticClicked
+            self.search = search
         }
 
         /// Whether the buffer is currently being overwritten with text the workspace already
@@ -479,12 +490,58 @@ struct JournalTextView: NSViewRepresentable {
                   to: textView)
         }
 
+        // MARK: - Find
+
+        /// Hands the search field the three things it needs from the editor.
+        ///
+        /// Installed once, from `attach`, rather than refreshed on every update like the
+        /// bindings above: these capture the coordinator and the text view, both of which
+        /// outlive any one update.
+        private func installSearch(in textView: NSTextView) {
+            search.caret = { [weak textView] in textView?.selectedRange().location ?? 0 }
+            search.focusEditor = { [weak textView] in
+                guard let textView else { return }
+                _ = textView.window?.makeFirstResponder(textView)
+            }
+            search.perform = { [weak self] term, step in self?.find(term, step) ?? false }
+        }
+
+        /// Selects the match a step lands on, and pops the find indicator around it.
+        ///
+        /// The indicator carries the whole answer here. The search field has the keyboard
+        /// while you are typing, so the selection itself draws grey and unfocused -- easy to
+        /// miss halfway down a journal, and there is no highlight over the other matches to
+        /// read it against.
+        private func find(_ term: String, _ step: SearchModel.Step) -> Bool {
+            guard let textView else { return false }
+            let text = textView.string
+            let selection = textView.selectedRange()
+
+            let match: NSRange?
+            switch step {
+            case .fromAnchor(let anchor):
+                match = JournalSearch.next(from: anchor, of: term, in: text)
+            case .next:
+                // Past the match already selected, so stepping cannot find it again.
+                match = JournalSearch.next(from: NSMaxRange(selection), of: term, in: text)
+            case .previous:
+                match = JournalSearch.previous(from: selection.location, of: term, in: text)
+            }
+            guard let match else { return false }
+
+            textView.setSelectedRange(match)
+            textView.scrollRangeToVisible(match)
+            textView.showFindIndicator(for: match)
+            return true
+        }
+
         // MARK: - Gutter
 
         func attach(textView: NSTextView, scrollView: NSScrollView) {
             self.textView = textView
             self.scrollView = scrollView
             gutter.onClickMark = { [weak self] line in self?.clicked(line: line) }
+            installSearch(in: textView)
 
             // Posted synchronously on the main thread, so the edit is forwarded before
             // anything else can observe a buffer the workspace has not been told about.
